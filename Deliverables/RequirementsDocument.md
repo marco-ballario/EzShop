@@ -65,16 +65,18 @@ actor "Product" as P
 actor "Credit Card System" as CCS
 actor "Manager" as M
 actor "Shop assistant" as SA
-actor "Inventary and catalogue system" as IACS
+actor "Warehouse employee" as WE
+actor "Customer" as CU
 rectangle System{
-  usecase "Application" as SW
+	(Application) as SW
+	C -- SW
+	P -- SW
+	CCS -- SW
+	CU -- SW
+	SW -- WE
+	SW -- M
+	SW -- SA
 }
-C -- SW
-P -- SW
-CCS -- SW
-IACS -- SW
-M -- SW
-SA -- SW
 ```
 
 ## Interfaces
