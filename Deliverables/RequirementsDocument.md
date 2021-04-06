@@ -63,14 +63,18 @@ left to right direction
 actor "Cashier" as C
 actor "Product" as P
 actor "Credit Card System" as CCS
+actor "Manager" as M
+actor "Shop assistant" as SA
 actor "Inventary and catalogue system" as IACS
 rectangle System{
-  usecase "POS System" as SW
+  usecase "Application" as SW
 }
 C -- SW
 P -- SW
 CCS -- SW
 IACS -- SW
+M -- SW
+SA -- SW
 ```
 
 ## Interfaces
