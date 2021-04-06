@@ -78,9 +78,16 @@ IACS -- SW
 
 \<GUIs will be described graphically in a separate document>
 
-| Actor | Logical Interface | Physical Interface  |
+| Actor | Physical Interface | Logical Interface  |
 | ------------- |:-------------:| -----:|
-|   Actor x..     |  |  |
+|   Cashier    | Screen, keyboard |GUI|
+|   Product	   | Laser beam		  |Bar code |
+|	Credit card system | Internet connection |Web services|
+| 	Shop assistant	| Tablet	|GUI|
+|	Warehouse worker| Screen, keyboard |GUI	|
+|	Manager| Screen, keyboard |GUI	|
+|Customer | Mobile|GUI|
+
 
 # Stories and personas
 \<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
