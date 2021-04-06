@@ -58,6 +58,21 @@ EZShop is a software application to:
 
 \<actors are a subset of stakeholders>
 
+```plantuml
+left to right direction
+actor "Cashier" as C
+actor "Product" as P
+actor "Credit Card System" as CCS
+actor "Inventary and catalogue system" as IACS
+rectangle System{
+  usecase "POS System" as SW
+}
+C -- SW
+P -- SW
+CCS -- SW
+IACS -- SW
+```
+
 ## Interfaces
 \<describe here each interface in the context diagram>
 
