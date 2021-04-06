@@ -41,7 +41,15 @@ EZShop is a software application to:
 
 | Stakeholder name  | Description | 
 | ----------------- |:-----------:|
-|   Stakeholder x..     |             | 
+|   Customer     | Person that goes into the shop in order to buy items| 
+|   Cashier     | Worker of the shop that   | 
+|   Warehouse worker     | Worker of the shop that manage the warehouse and the products stored in it  |
+|   Shop assistant     |      Person in charge of helping the customers during the purchase       |
+|   Manager     |     Person managing the shop      |
+|   IT administrator     |       A single person in charge of dealing with IT of the shop    |
+|   Credit Card System     |  Deals with the payment via credit cards  |
+|   Cash register | It stores the money and it's used to scan the products  |
+
 
 # Context Diagram and interfaces
 
