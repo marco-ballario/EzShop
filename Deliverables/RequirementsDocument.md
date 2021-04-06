@@ -63,20 +63,14 @@ left to right direction
 actor "Cashier" as C
 actor "Product" as P
 actor "Credit Card System" as CCS
-actor "Manager" as M
-actor "Shop assistant" as SA
-actor "Warehouse employee" as WE
-actor "Customer" as CU
+actor "Inventary and catalogue system" as IACS
 rectangle System{
-	(Application) as SW
-	C -- SW
-	P -- SW
-	CCS -- SW
-	CU -- SW
-	SW -- WE
-	SW -- M
-	SW -- SA
+  usecase "POS System" as SW
 }
+C -- SW
+P -- SW
+CCS -- SW
+IACS -- SW
 ```
 
 ## Interfaces
@@ -84,15 +78,9 @@ rectangle System{
 
 \<GUIs will be described graphically in a separate document>
 
-| Actor | Physical Interface | Logical Interface  |
+| Actor | Logical Interface | Physical Interface  |
 | ------------- |:-------------:| -----:|
-|   Cashier    | Screen, keyboard |GUI|
-|   Product	   | Laser beam		  |Bar code |
-|	Credit card system | Internet connection |Web services|
-| 	Shop assistant	| Tablet	|GUI|
-|	Warehouse worker| Screen, keyboard |GUI	|
-|	Manager| Screen, keyboard |GUI	|
-|Customer | Mobile|GUI|
+|   Actor x..     |  |  |
 
 # Stories and personas
 \<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
@@ -112,9 +100,27 @@ rectangle System{
 
 | ID        | Description  |
 | ------------- |:-------------:| 
-|  FR1     |  |
-|  FR2     |   |
-| FRx..  | | 
+|  FR1     | Manage sales |
+|  FR11     | Create a transaction |
+|  FR12     | Modify a transaction |
+|  FR13     | Delete a transaction |
+|  FR13     | Insert a product in a transaction |
+|  FR13     | Add points to customer card |
+|  FR2     | Manage inventory  |
+| FR21  | Add product | 
+| FR22  | Remove product | 
+| FR23  | Modify quantity |
+| FR24  | Add delivery informations (date, time, supplier, products) | 
+| FR3  | Manage customers |
+| FR31  | Add customer |
+| FR32  | Delete customer |
+| FR32  | Modify customer informations |
+| FR33  | Summary of customer informations (points, prizes, ...) |
+| FR4  | Support accounting |
+| FR41  | Show the product type and the amount of sold items in a period of time  |
+| FR42  | Summary of expenses and incoming in a period of time |
+| FR43  | Show workers informations |
+
 
 ## Non Functional Requirements
 
