@@ -42,7 +42,7 @@ EZShop is a software application to:
 | Stakeholder name  | Description | 
 | ----------------- |:-----------:|
 |   Customer     | Person that goes into the shop in order to buy items| 
-|   Cashier     | Worker of the shop that   | 
+|   Cashier     | Worker of the shop that  uses the cash register | 
 |   Warehouse worker     | Worker of the shop that manage the warehouse and the products stored in it  |
 |   Shop assistant     |      Person in charge of helping the customers during the purchase       |
 |   Manager     |     Person managing the shop      |
