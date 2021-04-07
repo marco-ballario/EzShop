@@ -50,6 +50,8 @@ EZShop is a software application to:
 |   Credit Card System     |  Deals with the payment via credit cards  |
 |   Cash register | It stores the money and it's used to scan the products  |
 |   Product | Item sold by the shop. Scanned by the cashier  |
+|   Loyalty card | Card assigned to a single registered customer. Used to accumulate points and get prizes  |
+
 
 
 # Context Diagram and interfaces
@@ -219,12 +221,12 @@ rectangle System{
 |  5     | Customer account is updated with the new card number|
 |  6     | New card handed to the customer |
 
-### Use case 2, UC2 - Points added to customer account 
+### Use case 2, UC2 - Customer concludes the shopping 
 | Actors Involved        | Cashier ,customer, product |
 | ------------- |:-------------:| 
 |  Precondition     | All products scanned by the cashier, customer pays, loyalty card scanned before payment  |  
-|  Post condition     | Points are added to customer account |
-|  Nominal Scenario     | The cashier scans all items and the loyalty card, the customer pays the due amount. The points are added to customer account  |
+|  Post condition     | Points are added to customer account, products quantity are updated |
+|  Nominal Scenario     | The cashier scans all items and the loyalty card, the customer pays the due amount. The points are added to customer account and the bought items are removed from the inventory |
 
 
 ##### Scenario 2.1
@@ -237,6 +239,8 @@ rectangle System{
 |  2     | Cashier scans the card |
 |  3     | Payment is performed (both cash and credit card are fine) |
 |  4     | Points are added to the customer account |
+|  5     | Products quantities are updated |
+
 
 
 ##### Scenario 2.2
@@ -249,7 +253,8 @@ rectangle System{
 |  2     | Cashier scans the card |
 |  3     | The cash register makes an error sound to inform the cashier and the customer |
 |  4     | Payment is performed (both cash and credit card are fine) |
-|  5     | Customer doens't gain points |
+|  5     | Products quantities are updated |
+
 
 ### Use case x, UCx
 ..
