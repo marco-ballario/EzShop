@@ -219,8 +219,37 @@ rectangle System{
 |  5     | Customer account is updated with the new card number|
 |  6     | New card handed to the customer |
 
-### Use case 2, UC2
-..
+### Use case 2, UC2 - Points added to customer account 
+| Actors Involved        | Cashier ,customer, product |
+| ------------- |:-------------:| 
+|  Precondition     | All products scanned by the cashier, customer pays, loyalty card scanned before payment  |  
+|  Post condition     | Points are added to customer account |
+|  Nominal Scenario     | The cashier scans all items and the loyalty card, the customer pays the due amount. The points are added to customer account  |
+
+
+##### Scenario 2.1
+| Scenario 2.1 | |
+| ------------- |:-------------:| 
+|  Precondition     | Card is valid |
+|  Post condition     | Points are added to the account  |
+| Step#        | Description  |
+|  1     | Customer hands the fidelity card to the cashier  |  
+|  2     | Cashier scans the card |
+|  3     | Payment is performed (both cash and credit card are fine) |
+|  4     | Points are added to the customer account |
+
+
+##### Scenario 2.2
+| Scenario 2.2 | |
+| ------------- |:-------------:| 
+|  Precondition     | Card is expired |
+|  Post condition     | Points are added to the account  |
+| Step#        | Description  |
+|  1     | Customer hands the fidelity card to the cashier  |  
+|  2     | Cashier scans the card |
+|  3     | The cash register makes an error sound to inform the cashier and the customer |
+|  4     | Payment is performed (both cash and credit card are fine) |
+|  5     | Customer doens't gain points |
 
 ### Use case x, UCx
 ..
