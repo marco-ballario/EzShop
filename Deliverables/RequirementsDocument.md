@@ -49,6 +49,7 @@ EZShop is a software application to:
 |   IT administrator     |       A single person in charge of dealing with IT of the shop    |
 |   Credit Card System     |  Deals with the payment via credit cards  |
 |   Cash register | It stores the money and it's used to scan the products  |
+|   Product | Item sold by the shop. Scanned by the cashier  |
 
 
 # Context Diagram and interfaces
@@ -119,8 +120,8 @@ rectangle System{
 |  FR11     | Create a transaction |
 |  FR12     | Modify a transaction |
 |  FR13     | Delete a transaction |
-|  FR13     | Insert a product in a transaction |
-|  FR13     | Add points to customer card |
+|  FR14     | Insert a product in a transaction |
+|  FR15     | Add points to customer card |
 |  FR2     | Manage inventory  |
 | FR21  | Add product | 
 | FR22  | Remove product | 
