@@ -158,13 +158,13 @@ rectangle System{
 
 
 \<next describe here each use case in the UCD>
-### Use case 1, UC1
-| Actors Involved        |  |
+### Use case 1, UC1 - Registration new customer
+| Actors Involved        | Shop assistant, cashier ,customer |
 | ------------- |:-------------:| 
-|  Precondition     | \<Boolean expression, must evaluate to true before the UC can start> |  
-|  Post condition     | \<Boolean expression, must evaluate to true after UC is finished> |
-|  Nominal Scenario     | \<Textual description of actions executed by the UC> |
-|  Variants     | \<other executions, ex in case of errors> |
+|  Precondition     | The customer requests for a loyalty card |  
+|  Post condition     | The customer is registered, she owns a loyalty card, the card is activated |
+|  Nominal Scenario     | The customer requests to the cashier to have a card, the cashier makes her fill and sign a document which is given to an avaiable shop assistant. The shop assistant creates a new user into the system and activates a card. The card is hand to the customer|
+|  Variants     | The manager can do the shop assistant job if needed |
 
 ##### Scenario 1.1 
 
@@ -178,14 +178,30 @@ rectangle System{
 
 | Scenario 1.1 | |
 | ------------- |:-------------:| 
-|  Precondition     | \<Boolean expression, must evaluate to true before the scenario can start> |
-|  Post condition     | \<Boolean expression, must evaluate to true after scenario is finished> |
+|  Precondition     | Customer not already registered |
+|  Post condition     | Customer registered, owns an activated card |
 | Step#        | Description  |
-|  1     |  |  
-|  2     |  |
-|  ...     |  |
+|  1     | Customer requests a card to the cashier |  
+|  2     | Cashier hands a document to be filled and signed by the customer |
+|  3     | Document delivered to the shop assistant |
+|  4     | Show assistant enters data inside the application  |
+|  5     | Account correctly created |
+|  6     | Card activated |
+|  7     | Card and a copy of the document handed to the customer |
 
 ##### Scenario 1.2
+
+| Scenario 1.2 | |
+| ------------- |:-------------:| 
+|  Precondition     | Customer already registered |
+|  Post condition     | Customer registered, owns an activated card |
+| Step#        | Description  |
+|  1     | Customer requests a card to the cashier |  
+|  2     | Cashier hands a document to be filled and signed by the customer |
+|  3     | Document delivered to the shop assistant |
+|  4     | Show assistant enters data inside the application  |
+|  5     | Application returns an error |
+|  6     | Customer informed that she already owns a card |
 
 ##### Scenario 1.x
 
