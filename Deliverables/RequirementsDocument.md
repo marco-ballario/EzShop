@@ -243,7 +243,7 @@ rectangle System{
 | Scenario 2.2 | |
 | ------------- |:-------------:| 
 |  Precondition     | Card is expired |
-|  Post condition     | Points are added to the account  |
+|  Post condition     | No points are added to the account  |
 | Step#        | Description  |
 |  1     | Customer hands the fidelity card to the cashier  |  
 |  2     | Cashier scans the card |
