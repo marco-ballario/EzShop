@@ -35,24 +35,20 @@ EZShop is a software application to:
 * manage customers
 * support accounting
 
-
 # Stakeholders
-
 
 | Stakeholder name  | Description | 
 | ----------------- |:-----------:|
-|   Customer     | Person that goes into the shop in order to buy items| 
-|   Cashier     | Worker of the shop that  uses the cash register | 
-|   Warehouse worker     | Worker of the shop that manage the warehouse and the products stored in it  |
-|   Shop assistant     |      Person in charge of helping the customers during the purchase       |
-|   Manager     |     Person managing the shop      |
-|   IT administrator     |       A single person in charge of dealing with IT of the shop    |
-|   Credit Card System     |  Deals with the payment via credit cards  |
-|   Cash register | It stores the money and it's used to scan the products  |
-|   Product | Item sold by the shop. Scanned by the cashier  |
-|   Loyalty card | Card assigned to a single registered customer. Used to accumulate points and get prizes  |
-
-
+|	Customer     		| Person that goes into the shop in order to buy items | 
+|   Cashier     		| Shop employees in charge of using the cash register | 
+|   Warehouse employee  | Shop employee that manage the warehouse and the products stored in it  |
+|   Shop assistant     	| Person in charge of helping the customers during the purchase |
+|   Manager     		| Person managing the shop |
+|   IT administrator    | A single person in charge of dealing with IT of the shop |
+|   Credit Card System  | Deals with the payment via credit cards |
+|   Cash register 		| It stores the money and it's used to scan the products |
+|   Product 			| Item sold by the shop. Scanned by the cashier |
+|   Loyalty card 		| Card assigned to a single registered customer. Used to accumulate points and get prizes |
 
 # Context Diagram and interfaces
 
@@ -60,7 +56,6 @@ EZShop is a software application to:
 \<Define here Context diagram using UML use case diagram>
 
 \<actors are a subset of stakeholders>
-
 
 ```plantuml
 left to right direction
@@ -83,7 +78,6 @@ rectangle System{
 }
 ```
 
-
 ## Interfaces
 \<describe here each interface in the context diagram>
 
@@ -99,14 +93,12 @@ rectangle System{
 |	Manager| Screen, keyboard |GUI	|
 |Customer | Mobile|GUI|
 
-
 # Stories and personas
 \<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
 
 \<Persona is-an-instance-of actor>
 
 \<stories will be formalized later as scenarios in use cases>
-
 
 # Functional and non functional requirements
 
@@ -139,25 +131,37 @@ rectangle System{
 | FR42  | Summary of expenses and incoming in a period of time |
 | FR43  | Show workers informations |
 
-
 ## Non Functional Requirements
 
 \<Describe constraints on functional requirements>
 
-| ID        | Type (efficiency, reliability, ..)           | Description  | Refers to |
-| ------------- |:-------------:| :-----:| -----:|
-|  NFR1     |   |  | |
-|  NFR2     | |  | |
-|  NFR3     | | | |
-| NFRx .. | | | | 
-
+| ID | Type | Description | Refers to |
+|-------------|-------------|-----|-----|
+| NFR1 | Usability | Installation time < 5 minutes | - |
+| NFR2 | Usability | Application learning time < 10 minutes | - |
+| NFR3 | Usability | Average application rating from users point of view after a week of usage >= 4/5 stars | - |
+| NFR4 | Usability | Average GUI attractiveness rating from users point of view >= 4/5 stars | - |
+| NFR5 | Usability | Number of functions to be added after a week of usage = 0 | - |
+| NFR6 | Efficiency | Response time to add a new transaction < 0.1 s | FR11 |
+| NFR7 | Efficiency | Response time to add a new product < 0.1 s | FR21 |
+| NFR8 | Efficiency | Response time to add a new customer < 0.1 s | FR31 |
+| NFR9 | Efficiency | Response time to show the product type and the amount of sold items in a period of time < 0.1 s | FR41 |
+| NFR10 | Efficiency | Response time to show the summary of expenses and incoming in a period of time < 0.1 s | FR42 |
+| NFR11 | Reliability | Database backup frequency >= 1 backup/week | - |
+| NFR12 | Reliability | Availability >= 99% of every day of every week | - |
+| NFR13 | Reliability | Overall number of errors per month < 5 | - |
+| NFR14 | Reliability | Overall number of application crash per year <= 1 | - |
+| NFR15 | Maintainability | Effort to restore a database backup <= 1 man-hour | - |
+| NFR16 | Maintainability | Effort to add a new software function <= 2 man-weeks | - |
+| NFR17 | Maintainability | Effort to test the correct behaviour of the application <= 1 man-hour | - |		
+| NFR18 | Portability | Effort to move the application from an old machine to a new one with the same OS <= 2 man-hours | - |
+| NFR19 | Portability | Effort to move the application from an old machine to a new one with a different OS <= 3 man-hours | - |
+| NFR20 | Portability | Effort to change the DBMS <= 3 man-hours	| - |
 
 # Use case diagram and use cases
 
-
 ## Use case diagram
 \<define here UML Use case diagram UCD summarizing all use cases, and their relationships>
-
 
 \<next describe here each use case in the UCD>
 ### Use case 1, UC1 - Registration new customer
@@ -206,8 +210,6 @@ rectangle System{
 |  5     | Application returns an error |
 |  6     | Customer informed that she already owns a valid card |
 
-
-
 ##### Scenario 1.3 
 | Scenario 1.3 | |
 | ------------- |:-------------:| 
@@ -228,7 +230,6 @@ rectangle System{
 |  Post condition     | Points are added to customer account, products quantity are updated |
 |  Nominal Scenario     | The cashier scans all items and the loyalty card, the customer pays the due amount. The points are added to customer account and the bought items are removed from the inventory |
 
-
 ##### Scenario 2.1
 | Scenario 2.1 | |
 | ------------- |:-------------:| 
@@ -240,8 +241,6 @@ rectangle System{
 |  3     | Payment is performed (both cash and credit card are fine) |
 |  4     | Points are added to the customer account |
 |  5     | Products quantities are updated |
-
-
 
 ##### Scenario 2.2
 | Scenario 2.2 | |
@@ -255,11 +254,8 @@ rectangle System{
 |  4     | Payment is performed (both cash and credit card are fine) |
 |  5     | Products quantities are updated |
 
-
 ### Use case x, UCx
 ..
-
-
 
 # Glossary
 
