@@ -100,6 +100,17 @@ rectangle System{
 
 \<stories will be formalized later as scenarios in use cases>
 
+Anna is 55 and she’s the manager of the shop. She is manager of the market like her dad before her, she grew up there and was accustomed with an older style of managing the shop. The new application changed radically her work, giving her more time to spend with her children and family. The system is able to manage a lot of data faster and better than she and her team.
+
+Gianni  is 58 and he’s the warehouse chief. When he was younger, remembering every single item and its quantity in the warehouse was easy. His main problem was keeping the office neat and tidy with all those forms and paper going around to keep track of the goods. The new application is able to reduce time spent writing down numbers and looking for papers, increasing efficiency all around.
+
+Mario is 34 and he’s a shop assistant. With the pandemic creating new difficulties, Mario was too busy helping clients for keeping track of goods to restock through the aisles. The new application can easily keep track of the goods that are bought in order for Mario to be less stressed with following missing goods.
+
+Paola is 23 and she’s a shop assistant for rounding up some money during her engineering studies. The introduction of the new application was something she talked about with Anna some weeks before, and now she proudly uses it, with the all around performance of the market growing day by day.
+
+Mariella is 66 and she’s retired. Her friends always tell her that big super market have more advantages for the customer rather than small local market. She was attached to Anna and the personnel working there. Now knowing that she has a customer card with discounts and points collection was enough to convince others to going back shopping there and she can enjoy same benefit of bigger companies in the place she trust.
+
+
 # Functional and non functional requirements
 
 ## Functional Requirements
