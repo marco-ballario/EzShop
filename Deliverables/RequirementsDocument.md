@@ -255,7 +255,8 @@ rectangle System{
 |  5     | Products quantities are updated |
 
 ### Use case 3, UC3 - Verification of deadlines by the shop assistant
-..
+| Actors Involved        | Shop assistant |
+| ------------- |:-------------:| 
 
 # Glossary
 
