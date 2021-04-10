@@ -1,10 +1,10 @@
 # Requirements Document 
 
-Authors:
+Authors: Cosimo Michelagnoli, Lucia Vencato, Marco Ballario, Pietro Macori
 
-Date:
+Date: 21/04/2021
 
-Version:
+Version: 1.0
 
 # Contents
 
@@ -38,30 +38,27 @@ EZShop is a software application to:
 # Stakeholders
 
 | Stakeholder name  | Description | 
-| ----------------- |:-----------:|
-|	Customer     		| Person that goes into the shop in order to buy items | 
+| ----------------- | ----------- |
+|	Customer     		| A person that goes to the shop to buy items | 
 |   Cashier     		| Shop employees in charge of using the cash register | 
 |   Warehouse employee  | Shop employee that manage the warehouse and the products stored in it  |
-|   Shop assistant     	| Person in charge of helping the customers during the purchase |
-|   Manager     		| Person managing the shop |
-|   IT administrator    | A single person in charge of dealing with IT of the shop |
-|   Credit Card System  | Deals with the payment via credit cards |
-|   Cash register 		| It stores the money and it's used to scan the products |
-|   Product 			| Item sold by the shop. Scanned by the cashier |
-|   Loyalty card 		| Card assigned to a single registered customer. Used to accumulate points and get prizes |
+|   Shop assistant     	| A person in charge of helping customers during the purchase |
+|   Manager     		| The owner of the shop |
+|   IT administrator    | A single employee responsible for the correct functioning of the IT devices of the shop |
+|   Credit card system  | System responsible for credit cards payments |
+|   Cash register 		| System that stores daily money and can scan products |
+|   Product 			| A single item sold by the shop. It's scanned by the cashier |
+|   Loyalty card 		| Physical card owned by a single registered customer. It's used to collect customer data, accumulate points and get prizes and discounts |
 
 # Context Diagram and interfaces
 
 ## Context Diagram
-\<Define here Context diagram using UML use case diagram>
-
-\<actors are a subset of stakeholders>
 
 ```plantuml
 left to right direction
 actor "Cashier" as C
 actor "Product" as P
-actor "Credit Card System" as CCS
+actor "Credit card system" as CCS
 actor "Manager" as M
 actor "Shop assistant" as SA
 actor "Warehouse employee" as WE
@@ -84,7 +81,7 @@ rectangle System{
 \<GUIs will be described graphically in a separate document>
 
 | Actor | Physical Interface | Logical Interface  |
-| ------------- |:-------------:| -----:|
+| ------------- | ------------- | ----- |
 |   Cashier    | Screen, keyboard |GUI|
 |   Product	   | Laser beam		  |Bar code |
 |	Credit card system | Internet connection |Web services|
@@ -120,7 +117,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 \<they match to high level use cases>
 
 | ID        | Description  |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  FR1     | Manage sales |
 |  FR11     | Create a transaction |
 |  FR12     | Modify a transaction |
@@ -139,12 +136,10 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 | FR33  | Summary of customer informations (points, prizes, ...) |
 | FR4  | Support accounting |
 | FR41  | Show the product type and the amount of sold items in a period of time  |
-| FR42  | Summary of expenses and incoming in a period of time |
+| FR42  | Summary of expenses and incomings in a period of time |
 | FR43  | Show workers informations |
 
 ## Non Functional Requirements
-
-\<Describe constraints on functional requirements>
 
 | ID | Type | Description | Refers to |
 |-------------|-------------|-----|-----|
@@ -153,11 +148,11 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 | NFR3 | Usability | Average application rating from users point of view after a week of usage >= 4/5 stars | - |
 | NFR4 | Usability | Average GUI attractiveness rating from users point of view >= 4/5 stars | - |
 | NFR5 | Usability | Number of functions to be added after a week of usage = 0 | - |
-| NFR6 | Efficiency | Response time to add a new transaction < 0.1 s | FR11 |
-| NFR7 | Efficiency | Response time to add a new product < 0.1 s | FR21 |
-| NFR8 | Efficiency | Response time to add a new customer < 0.1 s | FR31 |
-| NFR9 | Efficiency | Response time to show the product type and the amount of sold items in a period of time < 0.1 s | FR41 |
-| NFR10 | Efficiency | Response time to show the summary of expenses and incoming in a period of time < 0.1 s | FR42 |
+| NFR6 | Efficiency | Response time to add a new transaction after a month of usage < 0.1 s | FR11 |
+| NFR7 | Efficiency | Response time to add a new product after a month of usage < 0.1 s | FR21 |
+| NFR8 | Efficiency | Response time to add a new customer after a month of usage < 0.1 s | FR31 |
+| NFR9 | Efficiency | Response time to show product type and amount of sold items in a period of time after a month of usage < 0.1 s | FR41 |
+| NFR10 | Efficiency | Response time to show the summary of expenses and incomings in a period of time after a month of usage < 0.1 s | FR42 |
 | NFR11 | Reliability | Database backup frequency >= 1 backup/week | - |
 | NFR12 | Reliability | Availability >= 99% of every day of every week | - |
 | NFR13 | Reliability | Overall number of errors per month < 5 | - |
@@ -177,10 +172,10 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 \<next describe here each use case in the UCD>
 ### Use case 1, UC1 - Registration new customer
 | Actors Involved        | Shop assistant, cashier ,customer |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  Precondition     | The customer requests a loyalty card |  
 |  Post condition     | The customer has an account, owns an active loyalty card |
-|  Nominal Scenario     | The customer requests to the cashier to have a card, the cashier makes her fill and sign a document which is given to an avaiable shop assistant. The shop assistant creates a new user into the system and activates a card. The card is hand to the customer|
+|  Nominal Scenario     | The customer requests to the cashier to have a card, the cashier makes her fill and sign a document which is given to an avaiable shop assistant. The shop assistant creates a new user into the system and activates a card. The card is delivered to the customer|
 |  Variants     | The manager can do the shop assistant job if needed |
 
 ##### Scenario 1.1 
@@ -194,7 +189,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 \<only relevant scenarios should be described>
 
 | Scenario 1.1 | |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  Precondition     | Customer not already registered or registered but the card has expired |
 |  Post condition     | Customer registered, owns an activated card |
 | Step#        | Description  |
@@ -210,7 +205,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 ##### Scenario 1.2
 
 | Scenario 1.2 | |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  Precondition     | Customer already registered and card is still valid |
 |  Post condition     | Customer registered, owns an activated card |
 | Step#        | Description  |
@@ -223,7 +218,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 ##### Scenario 1.3 
 | Scenario 1.3 | |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  Precondition     | Customer already registered but she lost her card |
 |  Post condition     | Customer owns a new activated card, old card is disabled |
 | Step#        | Description  |
@@ -235,15 +230,15 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  6     | New card handed to the customer |
 
 ### Use case 2, UC2 - Customer concludes the shopping 
-| Actors Involved        | Cashier ,customer, product |
-| ------------- |:-------------:| 
+| Actors Involved        | Cashier, customer, product |
+| ------------- | ------------- | 
 |  Precondition     | All products scanned by the cashier, customer pays, loyalty card scanned before payment  |  
 |  Post condition     | Points are added to customer account, products quantity are updated |
 |  Nominal Scenario     | The cashier scans all items and the loyalty card, the customer pays the due amount. The points are added to customer account and the bought items are removed from the inventory |
 
 ##### Scenario 2.1
 | Scenario 2.1 | |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  Precondition     | Card is valid |
 |  Post condition     | Points are added to the account  |
 | Step#        | Description  |
@@ -255,7 +250,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 ##### Scenario 2.2
 | Scenario 2.2 | |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  Precondition     | Card is expired |
 |  Post condition     | No points are added to the account  |
 | Step#        | Description  |
@@ -267,34 +262,53 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 ### Use case 3, UC3 - Verification of deadlines by the shop assistant
 | Actors Involved        | Shop assistant, product |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
+|  Precondition     | All the products in the shop have a valid bar code  |  
+|  Post condition     | Discounts are applied to expiring products prices and expired products are discarded |
+|  Nominal Scenario     | The application notifies the shop assistant about expiring and expired products in the shop. New prices are applied to expiring products. The shop assistant discards expired products |
+
+##### Scenario 3.1
+| Scenario 3.1 | |
+| ------------- | ------------- | 
 | Precondition	| Shop assistant S exists and has valid account |
 |				| Product P exists and is close to its expiration date   |
-| Post condition| The application is notified|
+| Post condition| The application is notified |
 | Step#        | Description  |
-|1		| Shop assistant scans the bar code of a product |
-|2		| The expiry date is checked	|
-##### Scenario 3.1
-| Scenario 3.1 | Price is wrong |
-| ------------- |:-------------:| 
+| 1		| Shop assistant scans a product bar code |
+| 2		| Product expiry date is checked	|
+
+##### Scenario 3.2
+| Scenario 3.2 | |
+| ------------- | ------------- | 
 |  Precondition     | Shop assistant S exists and has valid account |
 |       			| Product P exists and is close to its expiration date  |
-| Post condition 	|  A discount is applied	|
+| Post condition 	| A discount is applied	|
 | Step#        | Description  |
 |  1		| Shop assistant scans the bar code of a product |
 |  2		| The expiry date is checked	|
-|  3        | Product's price is updated |
+|  3        | Product price is updated |
+
+##### Scenario 3.3
+| Scenario 3.3 | |
+| ------------- | ------------- | 
+|  Precondition     | Shop assistant S exists and has valid account |
+|       			| Product P exists and it's expired  |
+| Post condition 	| The expired products are discarded	|
+| Step#        | Description  |
+|  1		| Shop assistant scans the bar code of a product |
+|  2		| The expiry date is checked	|
+|  3        | Expired product is discarded |
 
 ### Use case 4, UC4 - Data check by manager
 | Actors Involved        | Manager, product, costumer |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  Precondition     | Manager logs in the application and checks data  |  
 |  Post condition     | Data are modified |
 |  Nominal Scenario     | Manager checks the data to monitor the sales |
 
 ##### Scenario 4.1
 | Scenario 4.1 | |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  Precondition     | Manager checks the customer points count |
 |  Post condition     | Customer obtains a discount |
 | Step#        | Description  |
@@ -305,7 +319,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 ##### Scenario 4.2
 | Scenario 4.2 | |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  Precondition     | Manager checks the less purchased products of the week |
 |  Post condition     | Product price is updated  |
 | Step#        | Description  |
@@ -315,7 +329,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 ##### Scenario 4.3
 | Scenario 4.3 | |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  Precondition     | On Friday manager controls the sales of the week |
 |  Post condition     | A list of products to be bought is made  |
 | Step#        | Description  |
@@ -325,14 +339,14 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 ### Use case 5, UC5 - Warehouse worker updates products quantity
 | Actors Involved        | Warehouse worker, Product |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  Precondition     | Warehouse worker controls the products in the warehouse  |  
 |  Post condition     | Products quantity is updated in the application inventory |
 |  Nominal Scenario     | Warehouse worker updates the products quantity in the application if he notices that it’s wrong or when the supplier truck arrives |
 
 ##### Scenario 5.1
 | Scenario 5.1 | |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  Precondition     | The quantity of products actually presents in the warehouse and the one in the inventory are not the same |
 |  Post condition     | Products quantity in the inventory is corrected |
 | Step#        | Description  |
@@ -341,7 +355,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 ##### Scenario 5.2
 | Scenario 5.2 | |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  Precondition     | Supplier truck arrives with the products |
 |  Post condition     | Products quantity in the inventory is updated |
 | Step#        | Description  |
@@ -351,7 +365,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 ### Use case 6, UC6 - Wrong password
 | Actors Involved        | Warehouse worker, Shop assistant, Cashier, Warehouse worker, Customer |
-| ------------- |:-------------:| 
+| ------------- | ------------- | 
 |  Precondition     | Wrong credential for the log in  |  
 |  Post condition     | Password is changed |
 |  Nominal Scenario     | If the user forgot the password to enter his account he will receive an email to change it |
