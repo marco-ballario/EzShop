@@ -274,6 +274,77 @@ rectangle System{
 |  2		| The expiry date is checked	|
 |  3        | Product's price is updated |
 
+### Use case 4, UC4 - Data check by manager
+| Actors Involved        | Manager, product, costumer |
+| ------------- |:-------------:| 
+|  Precondition     | Manager logs in the application and checks data  |  
+|  Post condition     | Data are modified |
+|  Nominal Scenario     | Manager checks the data to monitor the sales |
+
+##### Scenario 4.1
+| Scenario 4.1 | |
+| ------------- |:-------------:| 
+|  Precondition     | Manager checks the customer points count |
+|  Post condition     | Customer obtains a discount |
+| Step#        | Description  |
+|  1     | Manager views customers   |  
+|  2     | Manager checks all customers whose points are higher than a prefixed threshold |
+|  3     | Manager gives a discount to use in the shop to those customers |
+|  4     | Customer points are resetted |
+
+##### Scenario 4.2
+| Scenario 4.2 | |
+| ------------- |:-------------:| 
+|  Precondition     | Manager checks the less purchased products of the week |
+|  Post condition     | Product price is updated  |
+| Step#        | Description  |
+|  1     | Manager checks the inventory |  
+|  2     | Manager checks the less purchased product |
+|  3     | Manager applies a discount to that product |
+
+##### Scenario 4.3
+| Scenario 4.3 | |
+| ------------- |:-------------:| 
+|  Precondition     | On Friday manager controls the sales of the week |
+|  Post condition     | A list of products to be bought is made  |
+| Step#        | Description  |
+|  1     | Manager checks the inventory |  
+|  2     | Manager checks the products with the quantity lower than a threshold |
+|  3     | Manager contacts the supplier to have more quantity of those products |
+
+### Use case 5, UC5 - Warehouse worker updates products quantity
+| Actors Involved        | Warehouse worker, Product |
+| ------------- |:-------------:| 
+|  Precondition     | Warehouse worker controls the products in the warehouse  |  
+|  Post condition     | Products quantity is updated in the application inventory |
+|  Nominal Scenario     | Warehouse worker updates the products quantity in the application if he notices that it’s wrong or when the supplier truck arrives |
+
+##### Scenario 5.1
+| Scenario 5.1 | |
+| ------------- |:-------------:| 
+|  Precondition     | The quantity of products actually presents in the warehouse and the one in the inventory are not the same |
+|  Post condition     | Products quantity in the inventory is corrected |
+| Step#        | Description  |
+|  1     | Warehouse worker notices that the quantity of a product in the inventory is different from the one available in the warehouse   |  
+|  2     | Warehouse worker modifies the quantity of that product in the application |
+
+##### Scenario 5.2
+| Scenario 5.2 | |
+| ------------- |:-------------:| 
+|  Precondition     | Supplier truck arrives with the products |
+|  Post condition     | Products quantity in the inventory is updated |
+| Step#        | Description  |
+|  1     | Products are unloaded from the truck  |  
+|  2     | Warehouse worker checks the quantity |
+|  3     | Warehouse worker updates the quantity of the products in the application inventory |
+
+### Use case 6, UC6 - Wrong password
+| Actors Involved        | Warehouse worker, Shop assistant, Cashier, Warehouse worker, Customer |
+| ------------- |:-------------:| 
+|  Precondition     | Wrong credential for the log in  |  
+|  Post condition     | Password is changed |
+|  Nominal Scenario     | If the user forgot the password to enter his account he will receive an email to change it |
+
 # Glossary
 
 \<use UML class diagram to define important terms, or concepts in the domain of the system, and their relationships> 
