@@ -254,7 +254,7 @@ rectangle System{
 |  4     | Payment is performed (both cash and credit card are fine) |
 |  5     | Products quantities are updated |
 
-### Use case x, UCx
+### Use case 3, UC3 - Verification of deadlines by the shop assistant
 ..
 
 # Glossary
