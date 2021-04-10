@@ -257,7 +257,8 @@ rectangle System{
 ### Use case 3, UC3 - Verification of deadlines by the shop assistant
 | Actors Involved        | Shop assistant |
 | ------------- |:-------------:| 
-
+| Precondition	| Shop assistant S exists and has valid account |
+|				| Product P exists and has an expiration date   |
 # Glossary
 
 \<use UML class diagram to define important terms, or concepts in the domain of the system, and their relationships> 
