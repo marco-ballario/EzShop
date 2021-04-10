@@ -255,10 +255,25 @@ rectangle System{
 |  5     | Products quantities are updated |
 
 ### Use case 3, UC3 - Verification of deadlines by the shop assistant
-| Actors Involved        | Shop assistant |
+| Actors Involved        | Shop assistant, product |
 | ------------- |:-------------:| 
 | Precondition	| Shop assistant S exists and has valid account |
-|				| Product P exists and has an expiration date   |
+|				| Product P exists and is close to its expiration date   |
+| Post condition| The application is notified|
+| Step#        | Description  |
+|1		| Shop assistant scans the bar code of a product |
+|2		| The expiry date is checked	|
+##### Scenario 3.1
+| Scenario 3.1 | Price is wrong |
+| ------------- |:-------------:| 
+|  Precondition     | Shop assistant S exists and has valid account |
+|       			| Product P exists and is close to its expiration date  |
+| Post condition 	|  A discount is applied	|
+| Step#        | Description  |
+|  1		| Shop assistant scans the bar code of a product |
+|  2		| The expiry date is checked	|
+|  3        | Product's price is updated |
+
 # Glossary
 
 \<use UML class diagram to define important terms, or concepts in the domain of the system, and their relationships> 
