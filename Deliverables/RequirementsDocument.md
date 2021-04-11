@@ -91,11 +91,6 @@ rectangle System{
 |Customer | Mobile|GUI|
 
 # Stories and personas
-\<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
-
-\<Persona is-an-instance-of actor>
-
-\<stories will be formalized later as scenarios in use cases>
 
 Anna is 55 and she’s the manager of the shop. She is manager of the market like her dad before her, she grew up there and was accustomed with an older style of managing the shop. The new application changed radically her work, giving her more time to spend with her children and family. The system is able to manage a lot of data faster and better than she and her team.
 
@@ -112,9 +107,6 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 ## Functional Requirements
 
-\<In the form DO SOMETHING, or VERB NOUN, describe high level capabilities of the system>
-
-\<they match to high level use cases>
 
 | ID        | Description  |
 | ------------- | ------------- | 
@@ -167,9 +159,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 # Use case diagram and use cases
 
 ## Use case diagram
-\<define here UML Use case diagram UCD summarizing all use cases, and their relationships>
 
-\<next describe here each use case in the UCD>
 ### Use case 1, UC1 - Registration new customer
 | Actors Involved        | Shop assistant, cashier ,customer |
 | ------------- | ------------- | 
@@ -179,14 +169,6 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  Variants     | The manager can do the shop assistant job if needed |
 
 ##### Scenario 1.1 
-
-\<describe here scenarios instances of UC1>
-
-\<a scenario is a sequence of steps that corresponds to a particular execution of one use case>
-
-\<a scenario is a more formal description of a story>
-
-\<only relevant scenarios should be described>
 
 | Scenario 1.1 | |
 | ------------- | ------------- | 
@@ -337,10 +319,22 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  2     | Manager checks the products with the quantity lower than a threshold |
 |  3     | Manager contacts the supplier to have more quantity of those products |
 
+##### Scenario 4.4
+| Scenario 4.4 | |
+| ------------- | ------------- | 
+|  Precondition     | Manager wants to see the balance of the shop |
+|  Post condition     | The ledger is checked and possibly printed |
+| Step#        | Description  |
+|  1     | Manager does the login |  
+|  2     | Manager enters in the ledger page |
+|  3     | Manager selects a specific peroiod of time |
+|  4     | Manager possibly prints the ledger for the selected period of time |
+
+
 ### Use case 5, UC5 - Warehouse worker updates products quantity
 | Actors Involved        | Warehouse worker, Product |
 | ------------- | ------------- | 
-|  Precondition     | Warehouse worker controls the products in the warehouse  |  
+|  Precondition     | Warehouse worker controls the products in the warehouse or supplier truck  |  
 |  Post condition     | Products quantity is updated in the application inventory |
 |  Nominal Scenario     | Warehouse worker updates the products quantity in the application if he notices that it’s wrong or when the supplier truck arrives |
 
