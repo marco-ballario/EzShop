@@ -292,17 +292,6 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 ##### Scenario 4.1
 | Scenario 4.1 | |
 | ------------- | ------------- | 
-|  Precondition     | Manager checks the customer points count |
-|  Post condition     | Customer obtains a discount |
-| Step#        | Description  |
-|  1     | Manager views customers   |  
-|  2     | Manager checks all customers whose points are higher than a prefixed threshold |
-|  3     | Manager gives a discount to use in the shop to those customers |
-|  4     | Customer points are resetted |
-
-##### Scenario 4.2
-| Scenario 4.2 | |
-| ------------- | ------------- | 
 |  Precondition     | Manager checks the less purchased products of the week |
 |  Post condition     | Product price is updated  |
 | Step#        | Description  |
@@ -310,8 +299,8 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  2     | Manager checks the less purchased product |
 |  3     | Manager applies a discount to that product |
 
-##### Scenario 4.3
-| Scenario 4.3 | |
+##### Scenario 4.2
+| Scenario 4.2 | |
 | ------------- | ------------- | 
 |  Precondition     | On Friday manager controls the sales of the week |
 |  Post condition     | A list of products to be bought is made  |
@@ -320,8 +309,8 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  2     | Manager checks the products with the quantity lower than a threshold |
 |  3     | Manager contacts the supplier to have more quantity of those products |
 
-##### Scenario 4.4
-| Scenario 4.4 | |
+##### Scenario 4.3
+| Scenario 4.3 | |
 | ------------- | ------------- | 
 |  Precondition     | Manager wants to see the balance of the shop |
 |  Post condition     | The ledger is checked and possibly printed |
