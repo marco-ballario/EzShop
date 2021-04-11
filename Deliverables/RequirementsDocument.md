@@ -130,6 +130,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 | FR41  | Show the product type and the amount of sold items in a period of time  |
 | FR42  | Summary of expenses and incomings in a period of time |
 | FR43  | Show workers informations |
+| FR5	| Manage rights. Authorize access to functions to specific actors according to access rights |
 
 ## Non Functional Requirements
 
