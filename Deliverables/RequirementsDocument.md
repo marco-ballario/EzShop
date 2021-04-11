@@ -378,8 +378,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 # Deployment Diagram 
 
-```plantUML
-@startuml
+```plantuml
 node Manager_PC
 node Warehouse_employee_PC
 node Shop_PC
@@ -399,6 +398,5 @@ Manager_PC -- Browser1
 Shop_PC -- Browser3
 Warehouse_employee_PC -- Browser2
 Shop_Central_Server -- Database
-@enduml
 ```
 
