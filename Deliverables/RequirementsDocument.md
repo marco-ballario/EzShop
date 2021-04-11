@@ -88,7 +88,7 @@ rectangle System{
 | 	Shop assistant	| Tablet	|GUI|
 |	Warehouse worker| Screen, keyboard |GUI	|
 |	Manager| Screen, keyboard |GUI	|
-|Customer | Mobile|GUI|
+
 
 # Stories and personas
 
@@ -357,7 +357,68 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 # Glossary
 
 \<use UML class diagram to define important terms, or concepts in the domain of the system, and their relationships> 
+```plantuml
+@startuml EzShop
+skinparam style strictuml
+title EzShop Class diagram
 
+class Catalogue {}
+class Inventory {}
+class ProductDescriptor{
+    name
+    id
+    price 
+    quantity
+}
+class Product {
+    type
+    lotNumber
+    expirationDate
+}
+class SubscriptionCard {
+    id
+    credit
+}
+class ShopWorker {}
+class Customer {
+    name
+    surname
+    address
+    point
+}
+class Cashier {}
+class ShopAssistant {}
+class Manager {}
+class WarehouseWorker {}
+class SaleTransaction {
+    amount
+    date
+    id
+    date
+    time
+}
+
+note left of Inventary: Set of physical products sold by the shop 
+note bottom of Product: Physical item sold by the shop 
+note top of ProductDescriptor: Descriptor of the real product
+
+Catalogue -- Shop
+Inventory -- Shop
+ProductDescriptor "*" -- Catalogue
+Product "*" -- Inventory
+Product "*" -- ProductDescriptor: described by
+Customer -- "0..*" CreditCard
+Cashier --|> ShopWorker
+ShopAssistant --|> ShopWorker
+Manager --|> ShopWorker
+WarehouseWorker --|> ShopWorker
+WarehouseWorker -- Inventary
+Inventary -- "*" Product
+SaleTransaction -- Cashier
+SaleTransaction -- "1..*" Product
+Customer -- SubscriptionCard
+@enduml
+```
 \<concepts are used consistently all over the document, ex in use cases, requirements etc>
 
 # System Design
