@@ -358,12 +358,14 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 \<use UML class diagram to define important terms, or concepts in the domain of the system, and their relationships> 
 ```plantuml
-@startuml EzShop
+@startuml EZShop
 skinparam style strictuml
 title EzShop Class diagram
 
 class Catalogue {}
 class Inventory {}
+
+
 class ProductDescriptor{
     name
     id
@@ -375,11 +377,13 @@ class Product {
     lotNumber
     expirationDate
 }
-class SubscriptionCard {
+class LoyaltyCard {
     id
     credit
 }
-class ShopWorker {}
+class ShopWorker {
+    id
+}
 class Customer {
     name
     surname
@@ -397,11 +401,23 @@ class SaleTransaction {
     date
     time
 }
+class Shop{
+    name
+    id
+}
 
-note left of Inventary: Set of physical products sold by the shop 
-note bottom of Product: Physical item sold by the shop 
+note top of Inventory: Set of physical products sold\nby the shop 
+note bottom of Product: Physical item sold\nby the shop 
 note top of ProductDescriptor: Descriptor of the real product
+note left of Customer: Person that owns a loyalty card of the shop 
+note top of SaleTransaction: Purchase of items by a customer.\nIt implies that the products are removed\nfrom the shop inventory
+note right of Cashier: Worker that scans the product and makes the customer pay
+note top of ShopAssistant: Worker helping customers during the shopping
+note top of Manager: Person that manage the shop\nand take decisions
+note bottom of WarehouseWorker: Worker managing the inventory of the shop
+note bottom of LoyaltyCard: Card assigned to each registered customer.\nIt allow to store point in order\nto get prizes and discounts
 
+WarehouseWorker -- Inventory
 Catalogue -- Shop
 Inventory -- Shop
 ProductDescriptor "*" -- Catalogue
@@ -412,11 +428,12 @@ Cashier --|> ShopWorker
 ShopAssistant --|> ShopWorker
 Manager --|> ShopWorker
 WarehouseWorker --|> ShopWorker
-WarehouseWorker -- Inventary
-Inventary -- "*" Product
 SaleTransaction -- Cashier
 SaleTransaction -- "1..*" Product
-Customer -- SubscriptionCard
+Customer -- LoyaltyCard
+Shop -- "*" Customer
+Shop -- "*" ShopWorker
+Customer -- "1..*"SaleTransaction
 @enduml
 ```
 \<concepts are used consistently all over the document, ex in use cases, requirements etc>
