@@ -84,7 +84,7 @@ rectangle System{
 | ------------- | ------------- | ----- |
 |   Cashier    | Screen, keyboard |GUI|
 |   Product	   | Laser beam		  |Bar code |
-|	Credit card system | Internet connection |Web services|
+|	Credit card system | Internet connection |Web services + API|
 | 	Shop assistant	| Tablet	|GUI|
 |	Warehouse worker| Screen, keyboard |GUI	|
 |	Manager| Screen, keyboard |GUI	|
