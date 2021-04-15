@@ -163,6 +163,8 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 ## Use case diagram
 
+![Use case diagram](use-case-diagram.png)
+
 ### Use case 1, UC1 - Registration new customer
 | Actors Involved        | Shop assistant, cashier ,customer |
 | ------------- | ------------- | 
