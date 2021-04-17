@@ -447,6 +447,7 @@ node Shop_Central_Server
 artifact DesktopApp1
 artifact DesktopApp2
 artifact AndroidApp
+artifact DesktopApp4
 
 
 Shop_Central_Server -- Manager_PC
