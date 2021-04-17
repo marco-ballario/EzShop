@@ -456,7 +456,7 @@ node Shop_Central_Server
 
 Shop_Central_Server -- Manager_PC
 Shop_Central_Server -- Warehouse_employee_PC
-Shop_Central_Server -- Shop_PC
+Shop_Central_Server -- Shop_assistant_tablet
 Manager_PC -- Browser1
 Shop_assistant_tablet -- Browser3
 Warehouse_employee_PC -- Browser2
