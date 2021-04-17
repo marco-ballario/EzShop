@@ -156,8 +156,8 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 | NFR18 | Portability | Effort to move the application from an old machine to a new one with the same OS <= 2 man-hours | - |
 | NFR19 | Portability | Effort to move the application from an old machine to a new one with a different OS <= 3 man-hours | - |
 | NFR20 | Portability | Effort to change the DBMS <= 3 man-hours	| - |
-| NFR21 | Privacy | Ensure secure storage of customer data	| - |
-| NFR22 | Security | All the user of the system must be authenticated | - |
+| NFR21 | Privacy | Number of customer data not encrypted = 0 bytes	| - |
+| NFR22 | Security | Number of malicious accesses per year = 0 | - |
 
 # Use case diagram and use cases
 
@@ -165,7 +165,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 ![Use case diagram](./Images/use-case-diagram.png)
 
-### Use case 1, UC1 - Registration new customer
+### Use case 1, UC1 - Register new customer
 | Actors Involved        | Shop assistant, cashier ,customer |
 | ------------- | ------------- | 
 |  Precondition     | The customer requests a loyalty card |  
@@ -216,7 +216,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  5     | Customer account is updated with the new card number|
 |  6     | New card handed to the customer |
 
-### Use case 2, UC2 - Customer concludes the shopping 
+### Use case 2, UC2 - Pay products
 | Actors Involved        | Cashier, customer, product |
 | ------------- | ------------- | 
 |  Precondition     | All products scanned by the cashier, customer pays, loyalty card scanned before payment  |  
@@ -247,7 +247,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  4     | Payment is performed (both cash and credit card are fine) |
 |  5     | Products quantities are updated |
 
-### Use case 3, UC3 - Verification of deadlines by the shop assistant
+### Use case 3, UC3 - Verify products deadline
 | Actors Involved        | Shop assistant, product |
 | ------------- | ------------- | 
 |  Precondition     | All the products in the shop have a valid bar code and a defined expiring date  |  
@@ -258,7 +258,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 | Scenario 3.1 | |
 | ------------- | ------------- | 
 | Precondition	| Shop assistant exists and has valid account |
-|				| Product has a valid barcode and is it expired  |
+|				| Product has a valid barcode and it's expired  |
 | Post condition| Expired products removed from inventory and from shelves |
 | Step#        | Description  |
 | 1		| Application removes the product from the inventory |
@@ -269,7 +269,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 | Scenario 3.2 | |
 | ------------- | ------------- | 
 | Precondition	| Shop assistant exists and has valid account |
-|				| Product has a valid barcode and is it closed to expiring date |
+|				| Product has a valid barcode and it's close to his expiring date |
 | Post condition| 20% discount applied to the product |
 | | Product move to the "expiring products" shelf of the shop |
 | Step#        | Description  |
@@ -278,7 +278,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 | 3		| Shop assistant moves the product to the correct shelf |
 
 
-### Use case 4, UC4 - Data check by manager
+### Use case 4, UC4 - Monitor data dashboard
 | Actors Involved        | Manager, product, costumer |
 | ------------- | ------------- | 
 |  Precondition     | Manager logs in the application and checks data  |  
@@ -317,7 +317,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  4     | Manager possibly prints the ledger for the selected period of time |
 
 
-### Use case 5, UC5 - Warehouse worker updates products quantity
+### Use case 5, UC5 - Update products quantity
 | Actors Involved        | Warehouse worker, Product |
 | ------------- | ------------- | 
 |  Precondition     | Warehouse worker controls the products in the warehouse or supplier truck  |  
@@ -343,7 +343,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  2     | Warehouse worker checks the quantity |
 |  3     | Warehouse worker updates the quantity of the products in the application inventory |
 
-### Use case 6, UC6 - Wrong password
+### Use case 6, UC6 - Reset password
 | Actors Involved        | Warehouse worker, Shop assistant, Cashier, Warehouse worker, Customer |
 | ------------- | ------------- | 
 |  Precondition     | Wrong credential for the log in  |  
@@ -352,7 +352,6 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 # Glossary
 
-\<use UML class diagram to define important terms, or concepts in the domain of the system, and their relationships> 
 ```plantuml
 @startuml EZShop
 skinparam style strictuml
@@ -361,45 +360,44 @@ title EzShop Class diagram
 class Catalogue {}
 class Inventory {}
 
-
 class ProductDescriptor{
-    name
-    id
-    price 
-    quantity
+    +name
+    +id
+    +price 
+    +quantity
 }
 class Product {
-    type
-    lotNumber
-    expirationDate
+    +type
+    +lotNumber
+    +expirationDate
 }
 class LoyaltyCard {
-    id
-    credit
+    +id
+    +credit
 }
 class ShopWorker {
-    id
+    +id
 }
 class Customer {
-    name
-    surname
-    address
-    point
+    +name
+    +surname
+    +address
+    +point
 }
 class Cashier {}
 class ShopAssistant {}
 class Manager {}
 class WarehouseWorker {}
 class SaleTransaction {
-    amount
-    date
-    id
-    date
-    time
+    +amount
+    +date
+    +id
+    +date
+    +time
 }
 class Shop{
-    name
-    id
+    +name
+    +id
 }
 
 note top of Inventory: Set of physical products sold\nby the shop 
@@ -432,38 +430,36 @@ Shop -- "*" ShopWorker
 Customer -- "1..*"SaleTransaction
 @enduml
 ```
-\<concepts are used consistently all over the document, ex in use cases, requirements etc>
 
 # System Design
-\<describe here system design>
+<mark>\<describe here system design></mark>
 
-\<must be consistent with Context diagram>
+<mark>\<must be consistent with Context diagram></mark>
 
 # Deployment Diagram 
 
 ```plantuml
 node Manager_PC
 node Warehouse_employee_PC
+database Database
 node Shop_assistant_tablet
 node Cashier_PC
+node Shop_Central_Server
 
 artifact Browser1
 artifact Browser2
 artifact Browser3
 artifact Browser4
 
-artifact Database
-node Shop_Central_Server
-
-
 Shop_Central_Server -- Manager_PC
 Shop_Central_Server -- Warehouse_employee_PC
+Shop_Central_Server -- Database
 Shop_Central_Server -- Shop_assistant_tablet
 Shop_Central_Server -- Cashier_PC
 Manager_PC -- Browser1
 Shop_assistant_tablet -- Browser3
 Warehouse_employee_PC -- Browser2
 Cashier_PC -- Browser4
-Shop_Central_Server -- Database
+
 ```
 
