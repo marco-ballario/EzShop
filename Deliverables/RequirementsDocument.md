@@ -444,20 +444,20 @@ node Shop_assistant_tablet
 node Cashier_PC
 node Shop_Central_Server
 
-artifact Browser1
-artifact Browser2
-artifact Browser3
-artifact Browser4
+artifact DesktopApp1
+artifact DesktopApp2
+artifact AndroidApp
+artifact DesktopApp4
 
 Shop_Central_Server -- Manager_PC
 Shop_Central_Server -- Warehouse_employee_PC
 Shop_Central_Server -- Database
 Shop_Central_Server -- Shop_assistant_tablet
 Shop_Central_Server -- Cashier_PC
-Manager_PC -- Browser1
-Shop_assistant_tablet -- Browser3
-Warehouse_employee_PC -- Browser2
-Cashier_PC -- Browser4
+Manager_PC -- DesktopApp1
+Shop_assistant_tablet -- AndroidApp
+Warehouse_employee_PC -- DesktopApp2
+Cashier_PC -- DesktopApp3
 
 ```
 
