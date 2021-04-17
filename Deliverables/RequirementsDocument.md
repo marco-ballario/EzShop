@@ -39,8 +39,8 @@ EZShop is a software application to:
 
 | Stakeholder name  | Description | 
 | ----------------- | ----------- |
-|	Customer     		| A person that goes to the shop to buy items | 
-|   Cashier     		| Shop employees in charge of using the cash register | 
+|	Customer     		| A person that goes to the shop to buy items and own a loyalty card | 
+|   Cashier     		| Shop employee in charge of using the cash register | 
 |   Warehouse employee  | Shop employee that manage the warehouse and the products stored in it  |
 |   Shop assistant     	| A person in charge of helping customers during the purchase |
 |   Manager     		| The owner of the shop |
@@ -250,41 +250,33 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 ### Use case 3, UC3 - Verification of deadlines by the shop assistant
 | Actors Involved        | Shop assistant, product |
 | ------------- | ------------- | 
-|  Precondition     | All the products in the shop have a valid bar code  |  
-|  Post condition     | Discounts are applied to expiring products prices and expired products are discarded |
-|  Nominal Scenario     | The application notifies the shop assistant about expiring and expired products in the shop. New prices are applied to expiring products. The shop assistant discards expired products |
+|  Precondition     | All the products in the shop have a valid bar code and a defined expiring date  |  
+|  Post condition     | 20% discounts are applied to expiring products prices and expired products are discarded |
+|  Nominal Scenario     | The application notifies the shop assistant expired products in the shop. New prices are applied to expiring products. The shop assistant discards expired products |
 
 ##### Scenario 3.1
 | Scenario 3.1 | |
 | ------------- | ------------- | 
-| Precondition	| Shop assistant S exists and has valid account |
-|				| Product P exists and is close to its expiration date   |
-| Post condition| The application is notified |
+| Precondition	| Shop assistant exists and has valid account |
+|				| Product has a valid barcode and is it expired  |
+| Post condition| Expired products removed from inventory and from shelves |
 | Step#        | Description  |
-| 1		| Shop assistant scans a product bar code |
-| 2		| Product expiry date is checked	|
+| 1		| Application removes the product from the inventory |
+| 2		| Application notifies the shop assistant about the expired product |
+| 3		| Shop assistant removes the product |
 
 ##### Scenario 3.2
 | Scenario 3.2 | |
 | ------------- | ------------- | 
-|  Precondition     | Shop assistant S exists and has valid account |
-|       			| Product P exists and is close to its expiration date  |
-| Post condition 	| A discount is applied	|
+| Precondition	| Shop assistant exists and has valid account |
+|				| Product has a valid barcode and is it closed to expiring date |
+| Post condition| 20% discount applied to the product |
+| | Product move to the "expiring products" shelf of the shop |
 | Step#        | Description  |
-|  1		| Shop assistant scans the bar code of a product |
-|  2		| The expiry date is checked	|
-|  3        | Product price is updated |
+| 1		| Application changes the price for the product |
+| 2		| Application notifies the shop assistant about the expiring product |
+| 3		| Shop assistant moves the product to the correct shelf |
 
-##### Scenario 3.3
-| Scenario 3.3 | |
-| ------------- | ------------- | 
-|  Precondition     | Shop assistant S exists and has valid account |
-|       			| Product P exists and it's expired  |
-| Post condition 	| The expired products are discarded	|
-| Step#        | Description  |
-|  1		| Shop assistant scans the bar code of a product |
-|  2		| The expiry date is checked	|
-|  3        | Expired product is discarded |
 
 ### Use case 4, UC4 - Data check by manager
 | Actors Involved        | Manager, product, costumer |
@@ -452,7 +444,7 @@ Customer -- "1..*"SaleTransaction
 ```plantuml
 node Manager_PC
 node Warehouse_employee_PC
-node Shop_PC
+node Shop_assistant_tablet
 
 artifact Browser1
 artifact Browser2
@@ -466,7 +458,7 @@ Shop_Central_Server -- Manager_PC
 Shop_Central_Server -- Warehouse_employee_PC
 Shop_Central_Server -- Shop_PC
 Manager_PC -- Browser1
-Shop_PC -- Browser3
+Shop_assistant_tablet -- Browser3
 Warehouse_employee_PC -- Browser2
 Shop_Central_Server -- Database
 ```
