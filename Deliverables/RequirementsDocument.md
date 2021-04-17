@@ -156,8 +156,8 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 | NFR18 | Portability | Effort to move the application from an old machine to a new one with the same OS <= 2 man-hours | - |
 | NFR19 | Portability | Effort to move the application from an old machine to a new one with a different OS <= 3 man-hours | - |
 | NFR20 | Portability | Effort to change the DBMS <= 3 man-hours	| - |
-| NFR21 | Privacy | Number of customer data not encrypted = 0 bytes	| - |
-| NFR22 | Security | Number of malicious accesses per year = 0 | - |
+| NFR21 | Privacy | Number of customer data not encrypted = 0 bytes	| FR3 |
+| NFR22 | Security | Number of malicious accesses per year = 0 | FR5 |
 
 # Use case diagram and use cases
 
