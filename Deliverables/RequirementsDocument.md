@@ -447,7 +447,7 @@ node Shop_Central_Server
 artifact DesktopApp1
 artifact DesktopApp2
 artifact AndroidApp
-artifact DesktopApp4
+
 
 Shop_Central_Server -- Manager_PC
 Shop_Central_Server -- Warehouse_employee_PC
@@ -457,7 +457,7 @@ Shop_Central_Server -- Cashier_PC
 Manager_PC -- DesktopApp1
 Shop_assistant_tablet -- AndroidApp
 Warehouse_employee_PC -- DesktopApp2
-Cashier_PC -- DesktopApp3
+Cashier_PC -- DesktopApp4
 
 ```
 
