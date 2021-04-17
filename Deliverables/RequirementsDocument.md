@@ -62,13 +62,11 @@ actor "Credit card system" as CCS
 actor "Manager" as M
 actor "Shop assistant" as SA
 actor "Warehouse employee" as WE
-actor "Customer" as CU
 rectangle System{
 	(Application) as SW
 	C -- SW
 	P -- SW
 	CCS -- SW
-	CU -- SW
 	SW -- WE
 	SW -- M
 	SW -- SA
