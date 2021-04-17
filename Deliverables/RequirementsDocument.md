@@ -445,10 +445,12 @@ Customer -- "1..*"SaleTransaction
 node Manager_PC
 node Warehouse_employee_PC
 node Shop_assistant_tablet
+node Cashier_PC
 
 artifact Browser1
 artifact Browser2
 artifact Browser3
+artifact Browser4
 
 artifact Database
 node Shop_Central_Server
@@ -457,9 +459,11 @@ node Shop_Central_Server
 Shop_Central_Server -- Manager_PC
 Shop_Central_Server -- Warehouse_employee_PC
 Shop_Central_Server -- Shop_assistant_tablet
+Shop_Central_Server -- Cashier_PC
 Manager_PC -- Browser1
 Shop_assistant_tablet -- Browser3
 Warehouse_employee_PC -- Browser2
+Cashier_PC -- Browser4
 Shop_Central_Server -- Database
 ```
 
