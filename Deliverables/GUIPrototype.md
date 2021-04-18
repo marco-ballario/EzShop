@@ -1,10 +1,32 @@
 # Graphical User Interface Prototype  
 
-Authors:
+Authors: Marco Ballario, Pietro Macori, Cosimo Michelagnoli, Lucia Vencato
 
-Date:
+Date: 19/04/2021
 
-Version:
+Version: 1.0
 
-\<Report here the GUI that you propose. You are free to organize it as you prefer. A suggested presentation matches the Use cases and scenarios defined in the Requirement document. The GUI can be shown as a sequence of graphical files (jpg, png)  >
+![Login](./Images/Log in.png)
+
+![Failed login](./Images/Failed login.png)
+
+![Manager menu](./Images/Manager - Menu (5 buttons).png)
+
+![Manager Balace](./Images/Manager - Balance.png)
+
+![Manager Sales](./Images/Shop Assistant menu.png)
+
+![Manager Notification](./Images/Manager Notification.png)
+
+![Manager Product List](./Images/manager - Products List.png)
+
+![Shop Assistant Menu](./Images/./Images/Manager Menu Copy.png)
+
+![Shop Assistant Notification](./Images/Shop assistant notification.png)
+
+![Shop Assitant Registration](./Images/New customer Registration.png)
+
+![Warehouse](./Images/Warehouse worker - Inventory.png)
+
+![Success](./Images/Success.png)
 
