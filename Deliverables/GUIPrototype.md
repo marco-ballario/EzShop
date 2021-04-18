@@ -10,7 +10,7 @@ Version: 1.0
 
 ![Failed login](./Images/Failed login.png)
 
-![Manager menu](./Images/Manager - Menu (5 buttons).png)
+![Manager menu](./Images/Manager - Menu.png)
 
 ![Manager Balace](./Images/Manager - Balance.png)
 
@@ -18,15 +18,15 @@ Version: 1.0
 
 ![Manager Notification](./Images/Manager Notification.png)
 
-![Manager Product List](./Images/manager - Products List.png)
+![Manager Product List](./Images/Manager - Products List.png)
 
-![Shop Assistant Menu](./Images/./Images/Manager Menu Copy.png)
+![Shop Assistant Menu](./Images/./Images/Manager Menu copy.png)
 
 ![Shop Assistant Notification](./Images/Shop assistant notification.png)
 
 ![Shop Assitant Registration](./Images/New customer Registration.png)
 
-![Warehouse](./Images/Warehouse worker - Inventory.png)
+![Warehouse](./Images/Warehouse worker- Inventory.png)
 
 ![Success](./Images/Success.png)
 
