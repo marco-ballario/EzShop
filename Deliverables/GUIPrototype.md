@@ -20,13 +20,17 @@ Version: 1.0
 
 ![Manager Product List](./Images/Manager - Products List.png)
 
-![Shop Assistant Menu](./Images/./Images/Manager Menu copy.png)
+![Shop Assistant Menu](./Images/Manager Menu copy.png)
 
 ![Shop Assistant Notification](./Images/Shop assistant notification.png)
+
+![Shop Assitant Confirm](./Images/card success.png)
 
 ![Shop Assitant Registration](./Images/New customer Registration.png)
 
 ![Warehouse](./Images/Warehouse worker- Inventory.png)
+
+![Cashier](./Images/Cashier Sale.png)
 
 ![Success](./Images/Success.png)
 
