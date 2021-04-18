@@ -2,35 +2,38 @@
 
 Authors: Marco Ballario, Pietro Macori, Cosimo Michelagnoli, Lucia Vencato
 
-Date: 19/04/2021
+Date: 21/04/2021
 
 Version: 1.0
 
-![Login](./Images/Log in.png)
+<div align="center">
 
-![Failed login](./Images/Failed login.png)
+<div><img src="./Images/Log in.png" alt="Login" width="60%" height="auto"/></div>
 
-![Manager menu](./Images/Manager - Menu.png)
+<div><img src="./Images/Failed login.png" alt="Failed login" width="60%" height="auto"/></div>
 
-![Manager Balace](./Images/Manager - Balance.png)
+<div><img src="./Images/Manager - Menu.png" alt="Manager menu" width="60%" height="auto"/></div>
 
-![Manager Sales](./Images/Shop Assistant menu.png)
+<div><img src="./Images/Manager - Balance.png" alt="Manager Balace" width="60%" height="auto"/></div>
 
-![Manager Notification](./Images/Manager Notification.png)
+<div><img src="./Images/Shop Assistant menu.png" alt="Manager Sales" width="60%" height="auto"/></div>
 
-![Manager Product List](./Images/Manager - Products List.png)
+<div><img src="./Images/Manager Notification.png" alt="Manager Notification" width="60%" height="auto"/></div>
 
-![Shop Assistant Menu](./Images/Manager Menu copy.png)
+<div><img src="./Images/Manager - Products List.png" alt="Manager Product List" width="60%" height="auto"/></div>
 
-![Shop Assistant Notification](./Images/Shop assistant notification.png)
+<div><img src="./Images/Manager Menu copy.png" alt="Shop Assistant Menu" width="60%" height="auto"/></div>
 
-![Shop Assitant Confirm](./Images/card success.png)
+<div><img src="./Images/Shop assistant notification.png" alt="Shop Assistant Notification" width="60%" height="auto"/></div>
 
-![Shop Assitant Registration](./Images/New customer Registration.png)
+<div><img src="./Images/card success.png" alt="Shop Assitant Confirm" width="60%" height="auto"/></div>
 
-![Warehouse](./Images/Warehouse worker- Inventory.png)
+<div><img src="./Images/New customer Registration.png" alt="Shop Assitant Registration" width="60%" height="auto"/></div>
 
-![Cashier](./Images/Cashier Sale.png)
+<div><img src="./Images/Warehouse worker- Inventory.png" alt="Warehouse" width="60%" height="auto"/></div>
 
-![Success](./Images/Success.png)
+<div><img src="./Images/Cashier Sale.png" alt="Cashier" width="60%" height="auto"/></div>
 
+<div><img src="./Images/Success.png" alt="Success" width="60%" height="auto"/></div>
+
+</div>
