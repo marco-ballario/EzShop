@@ -10,7 +10,7 @@ Version: 1.0
 
 ![Failed login](./Images/Failed login.png)
 
-![Manager menu](./Images/Manager - Menu (5 buttons).png)
+![Manager menu](./Images/Manager - Menu.png)
 
 ![Manager Balace](./Images/Manager - Balance.png)
 
