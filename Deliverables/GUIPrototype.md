@@ -34,7 +34,7 @@ Version: 1.0
 
 <div><img src="./Images/Add product.png" alt="Warehouse" width="60%" height="auto"/></div>
 
-<div><img src="./Images/Cashier Sale.png" alt="Cashier" width="60%" height="auto"/></div>
+<div><img src="./Images/Cashier_Sale.png" alt="Cashier" width="60%" height="auto"/></div>
 
 <div><img src="./Images/Success.png" alt="Success" width="60%" height="auto"/></div>
 
