@@ -16,6 +16,8 @@ Version: 1.0
 
 <div><img src="./Images/Manager - Balance.png" alt="Manager Balace" width="60%" height="auto"/></div>
 
+<div><img src="./Images/Manager - Customer.png" alt="Manager Customer" width="60%" height="auto"/></div>
+
 <div><img src="./Images/Shop Assistant menu.png" alt="Manager Sales" width="60%" height="auto"/></div>
 
 <div><img src="./Images/Manager Notification.png" alt="Manager Notification" width="60%" height="auto"/></div>
