@@ -32,7 +32,7 @@ Version: 1.0
 
 <div><img src="./Images/Warehouse worker- Inventory.png" alt="Warehouse" width="60%" height="auto"/></div>
 
-<div><img src="./Images/Add Product.png" alt="Warehouse" width="60%" height="auto"/></div>
+<div><img src="./Images/Add product.png" alt="Warehouse" width="60%" height="auto"/></div>
 
 <div><img src="./Images/Cashier Sale.png" alt="Cashier" width="60%" height="auto"/></div>
 
