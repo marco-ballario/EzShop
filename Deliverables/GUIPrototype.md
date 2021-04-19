@@ -16,7 +16,7 @@ Version: 1.0
 
 <div><img src="./Images/Manager - Balance.png" alt="Manager Balace" width="60%" height="auto"/></div>
 
-<div><img src="./Images/Manager - Customer.png" alt="Manager Customer" width="60%" height="auto"/></div>
+<div><img src="./Images/Manager_-_Customer.png" alt="Manager Customer" width="60%" height="auto"/></div>
 
 <div><img src="./Images/Shop Assistant menu.png" alt="Manager Sales" width="60%" height="auto"/></div>
 
@@ -27,6 +27,8 @@ Version: 1.0
 <div><img src="./Images/Manager Menu copy.png" alt="Shop Assistant Menu" width="60%" height="auto"/></div>
 
 <div><img src="./Images/Shop assistant notification.png" alt="Shop Assistant Notification" width="60%" height="auto"/></div>
+
+<div><img src="./Images/Shop Assistant - Customer.png" alt="Shop Assistant Customer" width="60%" height="auto"/></div>
 
 <div><img src="./Images/card success.png" alt="Shop Assitant Confirm" width="60%" height="auto"/></div>
 
