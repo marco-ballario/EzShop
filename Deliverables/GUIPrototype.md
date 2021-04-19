@@ -28,7 +28,7 @@ Version: 1.0
 
 <div><img src="./Images/Shop assistant notification.png" alt="Shop Assistant Notification" width="60%" height="auto"/></div>
 
-<div><img src="./Images/Shop Assistant - Customer.png" alt="Shop Assistant Customer" width="60%" height="auto"/></div>
+<div><img src="./Images/Shop_Assistant_-_Customer.png" alt="Shop Assistant Customer" width="60%" height="auto"/></div>
 
 <div><img src="./Images/card success.png" alt="Shop Assitant Confirm" width="60%" height="auto"/></div>
 
