@@ -30,13 +30,13 @@ Version: 1.0
 
 <div><img src="./Images/Shop_Assistant_-_Customer.png" alt="Shop Assistant Customer" width="60%" height="auto"/></div>
 
-<div><img src="./Images/card success.png" alt="Shop Assitant Confirm" width="60%" height="auto"/></div>
-
 <div><img src="./Images/New customer Registration.png" alt="Shop Assitant Registration" width="60%" height="auto"/></div>
+
+<div><img src="./Images/card success.png" alt="Shop Assitant Confirm" width="60%" height="auto"/></div>
 
 <div><img src="./Images/Warehouse worker- Inventory.png" alt="Warehouse" width="60%" height="auto"/></div>
 
-<div><img src="./Images/Add product.png" alt="Warehouse" width="60%" height="auto"/></div>
+<div><img src="./Images/Add_product.png" alt="Warehouse" width="60%" height="auto"/></div>
 
 <div><img src="./Images/Cashier_Sale.png" alt="Cashier" width="60%" height="auto"/></div>
 
