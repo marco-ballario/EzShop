@@ -110,23 +110,24 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 | ------------- | ------------- | 
 |  FR1     | Manage sales |
 |  FR11     | Create a transaction |
-|  FR12     | Modify a transaction |
-|  FR13     | Delete a transaction |
-|  FR14     | Insert a product in a transaction |
-|  FR15     | Add points to customer card |
+|  FR12     | Insert a product in a transaction |
+|  FR13     | Remove a product in a transaction |
+|  FR14     | Abort a transaction |
 |  FR2     | Manage inventory  |
 | FR21  | Add product | 
 | FR22  | Remove product | 
 | FR23  | Modify quantity |
-| FR24  | Add delivery informations (date, time, supplier, products) | 
+| FR24  | Search product |
 | FR3  | Manage customers |
 | FR31  | Add customer |
 | FR32  | Delete customer |
 | FR32  | Modify customer informations |
-| FR33  | Summary of customer informations (points, prizes, ...) |
+| FR33  | Summary of customer informations (points, ...) |
+| FR34  | Search a customer |
 | FR4  | Support accounting |
 | FR41  | Show the product type and the amount of sold items in a period of time  |
 | FR42  | Summary of expenses and incomings in a period of time |
+| FR43  | Display graph on balance |
 | FR5	| Manage rights. Authorize access to functions to specific actors according to access rights |
 
 ## Non Functional Requirements
