@@ -74,9 +74,6 @@ rectangle System{
 ```
 
 ## Interfaces
-\<describe here each interface in the context diagram>
-
-\<GUIs will be described graphically in a separate document>
 
 | Actor | Physical Interface | Logical Interface  |
 | ------------- | ------------- | ----- |
@@ -108,12 +105,12 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 | ID        | Description  |
 | ------------- | ------------- | 
-|  FR1     | Manage sales |
-|  FR11     | Create a transaction |
-|  FR12     | Insert a product in a transaction |
-|  FR13     | Remove a product in a transaction |
-|  FR14     | Abort a transaction |
-|  FR2     | Manage inventory  |
+|  FR1    | Manage sales |
+|  FR11   | Create a transaction |
+|  FR12   | Insert a product in a transaction |
+|  FR13   | Remove a product in a transaction |
+|  FR14   | Abort a transaction |
+|  FR2   | Manage inventory  |
 | FR21  | Add product | 
 | FR22  | Remove product | 
 | FR23  | Modify quantity |
@@ -276,8 +273,8 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 | 3		| Shop assistant moves the product to the correct shelf |
 
 
-### Use case 4, UC4 - Monitor data dashboard
-| Actors Involved        | Manager, product, costumer |
+### Use case 4, UC4 - Monitor product info dashboard
+| Actors Involved        | Manager |
 | ------------- | ------------- | 
 |  Precondition     | Manager logs in the application and checks data  |  
 |  Post condition     | Data are modified |
@@ -303,27 +300,35 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  2     | Manager checks the products with the quantity lower than a threshold |
 |  3     | Manager contacts the supplier to have more quantity of those products |
 
-##### Scenario 4.3
-| Scenario 4.3 | |
+### Use case 5, UC5 - Monitor balance of the shop
+| Actors Involved        | Manager |
 | ------------- | ------------- | 
-|  Precondition     | Manager wants to see the balance of the shop |
+|  Precondition     | Manager logs in the application and analyses the balance for a selected period of time  |  
+|  Post condition     | Balance is possibly printer |
+|  Nominal Scenario     | Manager checks the balance to analyse the status of the shop |
+
+##### Scenario 5.1
+| Scenario 5.1 | |
+| ------------- | ------------- | 
+|  Precondition     | Manager wants to check the balance of the shop |
 |  Post condition     | The ledger is checked and possibly printed |
 | Step#        | Description  |
-|  1     | Manager does the login |  
-|  2     | Manager enters in the ledger page |
-|  3     | Manager selects a specific peroiod of time |
-|  4     | Manager possibly prints the ledger for the selected period of time |
+|  1   | Manager does the login |  
+|  2   | Manager enters in the balance page |
+|  3   | Manager selects a specific peroiod of time |
+|  4   | Graphs about the trend of the shop are showed by the application |
+|  5   | Manager possibly prints the balance for the selected period of time |
 
 
-### Use case 5, UC5 - Update products quantity
+### Use case 6, UC6 - Update products quantity
 | Actors Involved        | Warehouse worker, Product |
 | ------------- | ------------- | 
 |  Precondition     | Warehouse worker controls the products in the warehouse or supplier truck  |  
 |  Post condition     | Products quantity is updated in the application inventory |
 |  Nominal Scenario     | Warehouse worker updates the products quantity in the application if he notices that it’s wrong or when the supplier truck arrives |
 
-##### Scenario 5.1
-| Scenario 5.1 | |
+##### Scenario 6.1
+| Scenario 6.1 | |
 | ------------- | ------------- | 
 |  Precondition     | The quantity of products actually presents in the warehouse and the one in the inventory are not the same |
 |  Post condition     | Products quantity in the inventory is corrected |
@@ -331,8 +336,8 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  1     | Warehouse worker notices that the quantity of a product in the inventory is different from the one available in the warehouse   |  
 |  2     | Warehouse worker modifies the quantity of that product in the application |
 
-##### Scenario 5.2
-| Scenario 5.2 | |
+##### Scenario 6.2
+| Scenario 6.2 | |
 | ------------- | ------------- | 
 |  Precondition     | Supplier truck arrives with the products |
 |  Post condition     | Products quantity in the inventory is updated |
@@ -341,12 +346,34 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  2     | Warehouse worker checks the quantity |
 |  3     | Warehouse worker updates the quantity of the products in the application inventory |
 
-### Use case 6, UC6 - Reset password
-| Actors Involved        | Warehouse worker, Shop assistant, Cashier, Warehouse worker, Customer |
+### Use case 7, UC7 - Login
+| Actors Involved        | Warehouse worker, Shop assistant, Cashier, Warehouse worker |
 | ------------- | ------------- | 
-|  Precondition     | Wrong credential for the log in  |  
-|  Post condition     | Password is changed |
-|  Nominal Scenario     | If the user forgot the password to enter his account he will receive an email to change it |
+|  Precondition     | User is logged out  |  
+|  Post condition     | User is logged in |
+|  Nominal Scenario     | User wants to enter in the application and inserts id code and password |
+
+##### Scenario 7.1
+| Scenario 7.1 | |
+| ------------- | ------------- | 
+|  Precondition     | User is currently logged out and enter a correct password |
+|  Post condition     | User correctly logged in and redirected to the application |
+| Step#        | Description  |
+|  1     | User enter id code|
+|  2     | User enter correct password|  
+|  2     | Application shows the starting page (changes depending on the user role) |
+
+
+##### Scenario 7.2
+| Scenario 7.2 | |
+| ------------- | ------------- | 
+|  Precondition     | User is currently logged out and enter a wrong password |
+|  Post condition     | Application displays an error page |
+|     | User logged out |
+| Step#        | Description  |
+|  1     | User enter id code |
+|  2     | User enter wrong password|  
+|  2     | Application shows an error page |
 
 # Glossary
 
@@ -430,9 +457,8 @@ Customer -- "1..*"SaleTransaction
 ```
 
 # System Design
-<mark>\<describe here system design></mark>
 
-<mark>\<must be consistent with Context diagram></mark>
+Not really meaningful in this case. Only software components are needed.
 
 # Deployment Diagram 
 
