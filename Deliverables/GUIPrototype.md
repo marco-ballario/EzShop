@@ -75,7 +75,7 @@ Version: 1.0
 <div align="left"><img src="./Images/Add_product.png" alt="Warehouse Worker Add Product" width="60%" height="auto"/></div>
 
 ## Screenshot 16: Cashier Sale
-<div align="left"><img src="./Images/Cashier_Sale.png" alt="Cashier Sale" width="60%" height="auto"/></div>
+<div align="left"><img src="./Images/CashierSale.png" alt="Cashier Sale" width="60%" height="auto"/></div>
 
 ## Screenshot 17: Operation Completed Successfully
 <div align="left"><img src="./Images/Success.png" alt="Operation Completed Successfully" width="60%" height="auto"/></div>
