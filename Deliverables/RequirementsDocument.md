@@ -110,6 +110,9 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  FR12   | Insert a product in a transaction |
 |  FR13   | Remove a product in a transaction |
 |  FR14   | Abort a transaction |
+|  FR15   | Add points to customer |
+|  FR16   | Remove points from customer |
+|  FR17   | Apply a discount |
 |  FR2   | Manage inventory  |
 | FR21  | Add product | 
 | FR22  | Remove product | 
@@ -374,6 +377,36 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  1     | User enter id code |
 |  2     | User enter wrong password|  
 |  2     | Application shows an error page |
+
+### Use case 8, UC8 - Discount Required
+| Actors Involved        | Cashier |
+| ------------- | ------------- | 
+|  Precondition     | Customer has a loyalty card and requests for discount|  
+|  Post condition     | Discount applied  |
+|  Nominal Scenario     | Cashier pushes a button on the screen and a 5% discount is applied, 500 points are removed|
+
+##### Scenario 8.1
+| Scenario 8.1 | |
+| ------------- | ------------- | 
+|  Precondition     | Customer has at least 500 points |
+|  Post condition     | 5% discount applied to transaction |
+|      | 500 point removed from customer  |
+| Step#        | Description  |
+|  1     | Customer asks for a discount |
+|  2     | Cashier press the discount button|  
+|  3     | 5% discount applied to transaction |
+|  4     | operations continues  |
+
+##### Scenario 8.2
+| Scenario 8.2 | |
+| ------------- | ------------- | 
+|  Precondition     | Customer has less than 500 points |
+|  Post condition     | no discount applied |
+|      | 500 point removed from customer  |
+| Step#        | Description  |
+|  1     | Customer asks for a discount |
+|  2     | Cashier try to press the DISABLED discount button|  
+|  3     | no discount applied |
 
 # Glossary
 
