@@ -54,7 +54,7 @@ Version: 1.0
 <div align="left"><img src="./Images/Manager - Products List.png" alt="Manager Product List" width="60%" height="auto"/></div>
 
 ## Screenshot 9: Shop Assistant Menu
-<div align="left"><img src="./Images/Shop_Assistant_Menu.png" alt="Shop Assistant Menu" width="60%" height="auto"/></div>
+<div align="left"><img src="./Images/Manager Menu copy.png" alt="Shop Assistant Menu" width="60%" height="auto"/></div>
 
 ## Screenshot 10: Shop Assistant Notifications
 <div align="left"><img src="./Images/Shop assistant notification.png" alt="Shop Assistant Notifications" width="60%" height="auto"/></div>
