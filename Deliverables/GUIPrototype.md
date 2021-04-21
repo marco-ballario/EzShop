@@ -26,6 +26,11 @@ Version: 1.0
     - [Screenshot 15: Warehouse Worker Add Product](#screenshot-15-warehouse-worker-add-product)
     - [Screenshot 16: Cashier Sale](#screenshot-16-cashier-sale)
     - [Screenshot 17: Operation Completed Successfully](#screenshot-17-operation-completed-successfully)
+- [Storyboards](#storyboards)
+    - [Storyboard 1: Login](#storyboard-1-login)
+    - [Storyboard 2: Manager](#storyboard-2-manager)
+    - [Storyboard 3: Shop Assistant](#storyboard-3-shop-assistant)
+    - [Storyboard 4: Warehouse Worker](#storyboard-4-warehouse-worker)
 
 # Screenshots
 
@@ -79,3 +84,18 @@ Version: 1.0
 
 ## Screenshot 17: Operation Completed Successfully
 <div align="left"><img src="./Images/Success.png" alt="Operation Completed Successfully" width="60%" height="auto"/></div>
+
+
+# Storyboards
+
+## Storyboard 1: Login
+<div align="left"><img src="./Images/storyboard1.png" alt="storyboard1" width="50%" height="auto"/></div>
+
+## Storyboard 2: Manager
+<div align="left"><img src="./Images/storyboard2.png" alt="storyboard2" width="50%" height="auto"/></div>
+
+## Storyboard 3: Shop Assistant
+<div align="left"><img src="./Images/storyboard3.png" alt="storyboard3" width="100%" height="auto"/></div>
+
+## Storyboard 4: Warehouse Worker
+<div align="left"><img src="./Images/storyboard4.png" alt="storyboard4" width="60%" height="auto"/></div>
