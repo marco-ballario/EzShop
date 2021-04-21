@@ -408,6 +408,25 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  2     | Cashier try to press the DISABLED discount button|  
 |  3     | No discount applied |
 
+
+### Use case 9, UC9 - Cashier starts the shift
+| Actors Involved        | Cashier |
+| ------------- | ------------- | 
+|  Precondition     | Prevoius cashier logged out from the computer|  
+|  Post condition     | Current cashier logs in and can start working  |
+|  Nominal Scenario     | Cashier does the login, the correct gui is diplayed and the cashier can start scanning the products|
+
+##### Scenario 9.1
+| Scenario 9.1 | |
+| ------------- | ------------- | 
+|  Precondition     | Computer turned on |
+|       | Prevoius cashier logged out from the computer |
+|  Post condition     | Cashier scans the products |
+| Step#        | Description  |
+|  1     | Cashier does the login |
+|  2     | The correct GUI is displayed (showing the current transaction, the scanned products and the total cost)|  
+|  3     | The cashier can serve the first customer, scanning the product and dealing with the payment  |
+
 # Glossary
 
 ```plantuml
