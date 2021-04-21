@@ -45,7 +45,6 @@ EZShop is a software application to:
 |   Shop assistant     	| A person in charge of helping customers during the purchase |
 |   Manager     		| The owner of the shop |
 |   IT administrator    | A single employee responsible for the correct functioning of the IT devices of the shop |
-|   Credit card system  | System responsible for credit cards payments |
 |   Cash register 		| System that stores daily money and can scan products |
 |   Product 			| A single item sold by the shop. It's scanned by the cashier |
 |   Loyalty card 		| Physical card owned by a single registered customer. It's used to collect customer data, accumulate points and get prizes and discounts |
@@ -58,7 +57,7 @@ EZShop is a software application to:
 left to right direction
 actor "Cashier" as C
 actor "Product" as P
-actor "Credit card system" as CCS
+actor "Cash Register" as CR
 actor "Manager" as M
 actor "Shop assistant" as SA
 actor "Warehouse employee" as WE
@@ -66,7 +65,7 @@ rectangle System{
 	(Application) as SW
 	C -- SW
 	P -- SW
-	CCS -- SW
+	CR -- SW
 	SW -- WE
 	SW -- M
 	SW -- SA
@@ -79,7 +78,7 @@ rectangle System{
 | ------------- | ------------- | ----- |
 |   Cashier    | Screen, keyboard |GUI|
 |   Product	   | Laser beam		  |Bar code |
-|	Credit card system | Internet connection |Web services + API|
+|	Cash Register | Lan connection | Cash Register API|
 | 	Shop assistant	| Tablet	|GUI|
 |	Warehouse worker| Screen, keyboard |GUI	|
 |	Manager| Screen, keyboard |GUI	|
@@ -118,6 +117,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 | FR22  | Remove product | 
 | FR23  | Modify quantity |
 | FR24  | Search product |
+| FR25  | Modify price of a product |
 | FR3  | Manage customers |
 | FR31  | Add customer |
 | FR32  | Delete customer |
