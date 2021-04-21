@@ -56,7 +56,7 @@ EZShop is a software application to:
 left to right direction
 actor "Cashier" as C
 actor "Product" as P
-actor "Cash Register" as CR
+actor "Cash register" as CR
 actor "Manager" as M
 actor "Shop assistant" as SA
 actor "Warehouse employee" as WE
