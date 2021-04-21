@@ -454,12 +454,20 @@ class LoyaltyCard {
 }
 class ShopWorker {
     +id
+    +name
+    +surname
+    +address
 }
 class Customer {
     +name
     +surname
     +address
     +point
+}
+class CashRegister {
+    +model
+    +brand
+    +id
 }
 class Cashier {}
 class ShopAssistant {}
@@ -486,6 +494,7 @@ note right of Cashier: Worker that scans the product and makes the customer pay
 note top of ShopAssistant: Worker helping customers during the shopping
 note top of Manager: Person that manage the shop\nand take decisions
 note bottom of WarehouseWorker: Worker managing the inventory of the shop
+note bottom of CashRegister: Physical device that register product scanned and interact with the payment methods
 note bottom of LoyaltyCard: Card assigned to each registered customer.\nIt allow to store point in order\nto get prizes and discounts
 
 WarehouseWorker -- Inventory
@@ -505,6 +514,9 @@ Customer -- LoyaltyCard
 Shop -- "*" Customer
 Shop -- "*" ShopWorker
 Customer -- "1..*"SaleTransaction
+CashRegister -- "*" SaleTransaction
+CashRegister -- "*" Cashier
+
 @enduml
 ```
 
