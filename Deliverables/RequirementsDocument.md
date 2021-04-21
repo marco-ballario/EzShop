@@ -401,12 +401,12 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 | Scenario 8.2 | |
 | ------------- | ------------- | 
 |  Precondition     | Customer has less than 500 points |
-|  Post condition     | no discount applied |
-|      | 500 point removed from customer  |
+|  Post condition     | No discount applied |
+|        | No point removed |
 | Step#        | Description  |
 |  1     | Customer asks for a discount |
 |  2     | Cashier try to press the DISABLED discount button|  
-|  3     | no discount applied |
+|  3     | No discount applied |
 
 # Glossary
 
