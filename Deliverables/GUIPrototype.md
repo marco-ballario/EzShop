@@ -98,4 +98,4 @@ Version: 1.0
 <div align="left"><img src="./Images/storyboard3.png" alt="storyboard3" width="100%" height="auto"/></div>
 
 ## Storyboard 4: Warehouse Worker
-<div align="left"><img src="./Images/storyboard4v2.png" alt="storyboard4" width="80%" height="auto"/></div>
+<div align="left"><img src="./Images/storyboard4v3.png" alt="storyboard4" width="100%" height="auto"/></div>
