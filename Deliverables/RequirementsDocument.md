@@ -87,15 +87,15 @@ rectangle System{
 
 # Stories and personas
 
-Anna is 55 and she’s the manager of the shop. She is manager of the market like her dad before her, she grew up there and was accustomed with an older style of managing the shop. The new application changed radically her work, giving her more time to spend with her children and family. The system is able to manage a lot of data faster and better than she and her team.
+Anna is 55 and she’s the manager of the shop. She is manager of the market like her dad before her, she grew up there and was accustomed with an older style of managing the shop. The new application changed radically her work, giving her more time to spend with her children and family. The system is able to manage a lot of data faster and better than her and her team.
 
-Gianni  is 58 and he’s the warehouse chief. When he was younger, remembering every single item and its quantity in the warehouse was easy. His main problem was keeping the office neat and tidy with all those forms and paper going around to keep track of the goods. The new application is able to reduce time spent writing down numbers and looking for papers, increasing efficiency all around.
+Gianni  is 58 and he’s the warehouse chief. When he was younger, remember every single item and its quantity in the warehouse was easy. His main problem was keeping the office neat and tidy with all those forms and paper going around to keep track of the goods. The new application is able to reduce time spent writing down numbers and looking for papers, increasing efficiency all around.
 
-Mario is 34 and he’s a shop assistant. With the pandemic creating new difficulties, Mario was too busy helping clients for keeping track of goods to restock through the aisles. The new application can easily keep track of the goods that are bought in order for Mario to be less stressed with following missing goods.
+Mario is 34 and he’s a shop assistant. With the pandemic creating new difficulties, Mario was too busy helping clients for keeping track of goods to restock through the aisles. The new application can easily keep track of the goods that are bought in order for Mario to be less stressed with following missing goods. Moreover now he can easily find and replace expired items without the need to check a paper based register.
 
-Paola is 23 and she’s a shop assistant for rounding up some money during her engineering studies. The introduction of the new application was something she talked about with Anna some weeks before, and now she proudly uses it, with the all around performance of the market growing day by day.
+Paola is 23 and she’s a cashier in order to pick up some money during her engineering studies. The introduction of the new application was something she talked about with Anna some weeks before, and now she proudly uses it, with the all around performance of the market growing day by day.
 
-Mariella is 66 and she’s retired. Her friends always tell her that big super market have more advantages for the customer rather than small local market. She was attached to Anna and the personnel working there. Now knowing that she has a customer card with discounts and points collection was enough to convince others to going back shopping there and she can enjoy same benefit of bigger companies in the place she trust.
+Mariella is 66 and she’s retired. Her friends always tell her that big super market have more advantages for the customer rather than small local market. She was attached to Anna and the personnel working there. Now, knowing that she has a customer card with discounts and points collection was enough to convince her to go back to her trusted little shop.
 
 
 # Functional and non functional requirements
@@ -161,7 +161,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 ## Use case diagram
 
-![Use case diagram](./Images/use-case-diagram.png)
+![Use case diagram](./Images/UseCaseDiagram.png)
 
 ### Use case 1, UC1 - Register new customer
 | Actors Involved        | Shop assistant, cashier ,customer |
@@ -276,7 +276,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 | 3		| Shop assistant moves the product to the correct shelf |
 
 
-### Use case 4, UC4 - Monitor product info dashboard
+### Use case 4, UC4 - Monitor products
 | Actors Involved        | Manager |
 | ------------- | ------------- | 
 |  Precondition     | Manager logs in the application and checks data  |  
@@ -303,7 +303,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  2     | Manager checks the products with the quantity lower than a threshold |
 |  3     | Manager contacts the supplier to have more quantity of those products |
 
-### Use case 5, UC5 - Monitor balance of the shop
+### Use case 5, UC5 - Monitor shop balance
 | Actors Involved        | Manager |
 | ------------- | ------------- | 
 |  Precondition     | Manager logs in the application and analyses the balance for a selected period of time  |  
@@ -378,7 +378,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  2     | User enter wrong password|  
 |  2     | Application shows an error page |
 
-### Use case 8, UC8 - Discount Required
+### Use case 8, UC8 - Apply discount
 | Actors Involved        | Cashier |
 | ------------- | ------------- | 
 |  Precondition     | Customer has a loyalty card and requests for discount|  
@@ -409,7 +409,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 |  3     | No discount applied |
 
 
-### Use case 9, UC9 - Cashier starts the shift
+### Use case 9, UC9 - Start shift
 | Actors Involved        | Cashier |
 | ------------- | ------------- | 
 |  Precondition     | Prevoius cashier logged out from the computer|  
