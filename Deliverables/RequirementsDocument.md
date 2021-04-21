@@ -493,8 +493,8 @@ note top of SaleTransaction: Purchase of items by a customer.\nIt implies that t
 note right of Cashier: Worker that scans the product and makes the customer pay
 note top of ShopAssistant: Worker helping customers during the shopping
 note top of Manager: Person that manage the shop\nand take decisions
-note bottom of WarehouseWorker: Worker managing the inventory of the shop
-note bottom of CashRegister: Physical device that register product scanned and interact with the payment methods
+note right of WarehouseWorker: Worker managing the inventory of the shop
+note top of CashRegister: Physical device that register product scanned and interact with the payment methods
 note bottom of LoyaltyCard: Card assigned to each registered customer.\nIt allow to store point in order\nto get prizes and discounts
 
 WarehouseWorker -- Inventory
