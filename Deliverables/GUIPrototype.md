@@ -92,10 +92,10 @@ Version: 1.0
 <div align="left"><img src="./Images/storyboard1.png" alt="storyboard1" width="50%" height="auto"/></div>
 
 ## Storyboard 2: Manager
-<div align="left"><img src="./Images/storyboard2.png" alt="storyboard2" width="50%" height="auto"/></div>
+<div align="left"><img src="./Images/storyboard2v2.png" alt="storyboard2" width="100%" height="auto"/></div>
 
 ## Storyboard 3: Shop Assistant
 <div align="left"><img src="./Images/storyboard3.png" alt="storyboard3" width="100%" height="auto"/></div>
 
 ## Storyboard 4: Warehouse Worker
-<div align="left"><img src="./Images/storyboard4.png" alt="storyboard4" width="60%" height="auto"/></div>
+<div align="left"><img src="./Images/storyboard4v2.png" alt="storyboard4" width="80%" height="auto"/></div>
