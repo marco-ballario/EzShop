@@ -1,6 +1,6 @@
 # Requirements Document 
 
-Authors: Cosimo Michelagnoli, Lucia Vencato, Marco Ballario, Pietro Macori
+Authors: Marco Ballario, Pietro Macori, Cosimo Michelagnoli, Lucia Vencato
 
 Date: 21/04/2021
 
@@ -13,7 +13,6 @@ Version: 1.0
 - [Context Diagram and interfaces](#context-diagram-and-interfaces)
 	+ [Context Diagram](#context-diagram)
 	+ [Interfaces](#interfaces) 
-	
 - [Stories and personas](#stories-and-personas)
 - [Functional and non functional requirements](#functional-and-non-functional-requirements)
 	+ [Functional Requirements](#functional-requirements)
@@ -161,7 +160,7 @@ Mariella is 66 and she’s retired. Her friends always tell her that big super m
 
 ## Use case diagram
 
-![Use case diagram](./Images/UseCaseDiagram.png)
+![Use case diagram](./Images/UseCaseDiagramV2.png)
 
 ### Use case 1, UC1 - Register new customer
 | Actors Involved        | Shop assistant, cashier ,customer |
