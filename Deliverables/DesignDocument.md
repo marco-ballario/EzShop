@@ -90,6 +90,7 @@ class EZshop implements EZShopInterface{
     -product_list: ArrayList<ProductType>
     -order_list: ArrayList<Order>
     -customer_list: ArrayList<Customer>
+    -saleTransaction_list: ArrayList<SaleTransaction>
 }
 class User{
     -id: int
@@ -142,9 +143,7 @@ class SaleTransaction{
     -cost: Float 
     -paymentType: String
     -discount: String
-    -ticketlist: ArrayList<Ticket>
 }
-class Ticket{}
 
 EZshop -- User
 EZshop -- ProductType
@@ -155,7 +154,6 @@ SaleTransaction --"*" ProductType
 Position "0..1"-- ProductType
 Product "*"-- ProductType :describes
 SaleTransaction "*" --"0..1" LoyalityCard
-Ticket "*" -- SaleTransaction
 ```
 
 # Verification traceability matrix
