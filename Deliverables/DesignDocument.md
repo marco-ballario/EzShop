@@ -329,5 +329,26 @@ SaleTransaction "*" --"0..1" LoyalityCard
 
 
 # Verification sequence diagrams 
-\<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
+```plantuml
+title Scenario 3.3
+EZShop -> EZShop: getOrder()
+EZShop -> EZShop: getAccountBook()
+EZShop -> AccountBook: createBalanceOperation()
+AccountBook -> EZShop: BalanceOperation
+EZShop -> Order: setPayment()
+Order --> EZShop
+```
 
+```plantuml
+title Scenario 3.4
+EZShop -> EZShop: getOrder()
+EZShop -> Order: getProductType()
+Order --> EZShop: productType
+EZShop -> ProductType: setPosition()
+EZShop -> EZShop: recordOrderArrival()
+EZShop -> Order: updateProductQuantity()
+Order -> ProductType: increaseQnt()
+ProductType --> Order: result
+Order --> EZShop: result
+EZShop -> Order: setState()
+```
