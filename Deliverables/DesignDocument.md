@@ -25,6 +25,25 @@ The design must satisfy the Official Requirements document, notably functional a
 <report package diagram>
 
 
+```plantuml
+@startuml
+package "it.polito.ezshop" {
+  left to right direction
+  package gui
+  package data
+
+  package controller
+  package exceptions
+}
+
+data .r.> exceptions
+controller ..> data
+gui .l.> data
+data .l.> gui
+gui ..> controller
+controller ..>gui
+@enduml
+```
 
 
 
