@@ -70,15 +70,14 @@ interface EZShopInterface{
     + applyDiscountRateToSale(Integer transactionId, double discountRate): boolean
     + computePointsForSale(Integer transactionId): int
     + closeSaleTransaction(Integer transactionId): boolean
-    + deleteSaleTicket(Integer ticketNumber): boolean
-    + getSaleTicket(Integer transactionId): Ticket
-    + getTicketByNumber(Integer ticketNumber): Ticket
-    + startReturnTransaction(Integer ticketNumber): Integer
+    + deleteSaleTransaction(Integer transactionId): boolean
+    + getSaleTransaction((Integer transactionId): SaleTransaction
+    + startReturnTransaction(Integer transactionID): Integer
     + returnProduct(Integer returnId, String productCode, int amount): boolean
     + endReturnTransaction(Integer returnId, boolean commit): boolean
     + deleteReturnTransaction(Integer returnId): boolean
-    + receiveCashPayment(Integer ticketNumber, double cash): double
-    + receiveCreditCardPayment(Integer ticketNumber, String creditCard): boolean
+    + receiveCashPayment(Integer transactionID, double cash): double
+    + receiveCreditCardPayment(Integer transactionID, String creditCard): boolean
     + returnCashPayment(Integer returnId): double
     + returnCreditCardPayment(Integer returnId, String creditCard): double
     + recordBalanceUpdate(double toBeAdded): boolean
