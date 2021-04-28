@@ -177,156 +177,21 @@ SaleTransaction "*" --"0..1" LoyalityCard
 
 # Verification traceability matrix
 
-
-<div stye="width: 100vw;">
-<table>
-<thead>
-  <tr>
-    <th></th>
-    <th>User</th>
-    <th>EZShop</th>
-    <th>ProductType</th>
-    <th>Position</th>
-    <th>Order</th>
-    <th>Customer</th>
-    <th>LoyaltyCard</th>
-    <th>SaleTransaction</th>
-    <th>ReturnTransaction</th>
-    <th>FinantialTransaction</th>
-    <th>AccountBook</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td>FR1</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>FR2</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>FR3</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>FR4</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>FR5</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>FR6</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-</tbody>
-</table>
-</div>
-
+| |User|EZShop|ProductType|Position|Order|Customer|LoyaltyCard|SaleTransaction|ReturnTransaction|BalanceOperation|AccountBook|
+|-|----|------|-----------|--------|-----|--------|-----------|---------------|-----------------|----------------|-----------|
+|FR1|X|X||||||||||
+|FR3||X|X|||||||||
+|FR4.1||X|X|||||||||
+|FR4.2||X|X|X||||||||
+|FR4.3||X||X||||||||
+|FR4.4||X||X||||||X|X|
+|FR4.5||X||X||||||X|X|
+|FR4.6||X|X|X||||||||
+|FR4.7||X||X||||||||
+|FR5.1-FR5.4||X|||X|||||||
+|FR5.5||X|||||X|||||
+|FR5.6||X||||X|X|||||
+|FR5.7||X|||||X|||||
 
 # Verification sequence diagrams 
 ```plantuml
