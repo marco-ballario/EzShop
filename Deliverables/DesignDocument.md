@@ -161,14 +161,161 @@ Ticket "*" -- SaleTransaction
 
 # Verification traceability matrix
 
-| |EZShop|User|ProductType|Position|Order|Customer|LoyaltyCard|SaleTransaction|ReturnTransaction|FinancialTransaction|AccountBook|
-|-|------|----|-----------|--------|-----|--------|-----------|---------------|-----------------|--------------------|-----------|
-|FR1|||||||||||
-|FR3|||||||||||
-|FR4|||||||||||
-||||||||||||
-||||||||||||
-||||||||||||
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-9wq8{border-color:inherit;text-align:center;vertical-align:middle}
+.tg .tg-nrix{text-align:center;vertical-align:middle}
+</style>
+<table class="tg" style="width:60%;">
+<thead>
+  <tr>
+    <th class="tg-9wq8"></th>
+    <th class="tg-9wq8">User</th>
+    <th class="tg-9wq8">EZShop</th>
+    <th class="tg-9wq8">ProductType</th>
+    <th class="tg-nrix">Position</th>
+    <th class="tg-nrix">Order</th>
+    <th class="tg-9wq8">Customer</th>
+    <th class="tg-nrix">LoyaltyCard</th>
+    <th class="tg-nrix">SaleTransaction</th>
+    <th class="tg-nrix">ReturnTransaction</th>
+    <th class="tg-nrix">FinantialTransaction</th>
+    <th class="tg-nrix">AccountBook</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-9wq8">FR1</td>
+    <td class="tg-9wq8"></td>
+    <td class="tg-9wq8"></td>
+    <td class="tg-9wq8"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-9wq8"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+  </tr>
+  <tr>
+    <td class="tg-9wq8">FR2</td>
+    <td class="tg-9wq8"></td>
+    <td class="tg-9wq8"></td>
+    <td class="tg-9wq8"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-9wq8"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+  </tr>
+  <tr>
+    <td class="tg-9wq8">FR3</td>
+    <td class="tg-9wq8"></td>
+    <td class="tg-9wq8"></td>
+    <td class="tg-9wq8"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-9wq8"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+  </tr>
+  <tr>
+    <td class="tg-nrix">FR4</td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+  </tr>
+  <tr>
+    <td class="tg-nrix">FR5</td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+  </tr>
+  <tr>
+    <td class="tg-nrix">FR6</td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+  </tr>
+  <tr>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+  </tr>
+  <tr>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+  </tr>
+  <tr>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+    <td class="tg-nrix"></td>
+  </tr>
+</tbody>
+</table>
 
 
 # Verification sequence diagrams 
