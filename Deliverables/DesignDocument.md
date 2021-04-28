@@ -330,7 +330,7 @@ SaleTransaction "*" --"0..1" LoyalityCard
 
 # Verification sequence diagrams 
 ```plantuml
-title Scenario 3.3
+title Scenario 3.2
 EZShop -> EZShop: getOrder()
 EZShop -> EZShop: getAccountBook()
 EZShop -> AccountBook: createBalanceOperation()
@@ -340,7 +340,7 @@ Order --> EZShop
 ```
 
 ```plantuml
-title Scenario 3.4
+title Scenario 3.3
 EZShop -> EZShop: getOrder()
 EZShop -> Order: getProductType()
 Order --> EZShop: productType
