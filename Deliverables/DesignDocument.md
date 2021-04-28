@@ -53,18 +53,35 @@ controller ..>gui
 <for each package, report class diagram>
 
 ```plantuml
-interface EZShopInterface{
-    + reset(): void
+@startuml
+class EZShop{
+    -userList: LinkedHashMap<Integer User>
+    -loggedUser: User
+    -productList: LinkedHashMap <Integer ProductType>
+    -orderList: HashMap<Integer Order>
+    -customerList: HashMap<Integer Customer>
+-cardList: HashMap<String Card>
+-TransactionList: HashMap<Integer SaleTransaction>
+-ReturnList: HashMap<Integer ReturnTransaction>
+-accounting: AccountBook
+-customerId: Integer
+-productId: Integer
+-orderId: Integer
+-saleId: Integer
+-returnId: Integer
+-userId: Integer
+
++ reset(): void
     + createUser(String username, String password, String role): Integer 
     + deleteUser(Integer id): boolean 
-	+ getAllUsers(): List<User>
-	+ getUser(Integer id): User 
++ getAllUsers(): List<User>
++ getUser(Integer id): User 
     + updateUserRights(Integer id, String role): boolean 
     + login(String username, String password): User 
     + logout(): boolean 
     + createProductType(String description, String productCode, double pricePerUnit, String note): Integer 
     + updateProduct(Integer id, String newDescription, String newCode, double newPrice, String newNote): boolean 
-	+ deleteProductType(Integer id): boolean 
++ deleteProductType(Integer id): boolean 
     + getAllProductTypes(): List<ProductType> 
     + getProductTypeByBarCode(String barCode): ProductType
     + getProductTypesByDescription(String description): List<ProductType>
@@ -103,76 +120,111 @@ interface EZShopInterface{
     + getCreditsAndDebits(LocalDate from, LocalDate to): List<BalanceOperation>
     + computeBalance(): double
 }
-
-class EZshop implements EZShopInterface{
-    -user_list: ArrayList<User>
-    -product_list: ArrayList<ProductType>
-    -order_list: ArrayList<Order>
-    -customer_list: ArrayList<Customer>
-    -saleTransaction_list: ArrayList<SaleTransaction>
-}
 class User{
-    -id: int
+    -userId: Integer
     -username: String
     -password: String
     -role: String
-    
-}
-class Cashier extends User{
-}
-
-class ShopManager extends User{
-}
-
-class Administrator extends User{
+    -logged: boolean  
 }
 
 class ProductType{
-	-id: integer
-	-description: String
-	-productCode: String
-	-pricePerUnit: double
-	-note: String
-	-barCode: String
-	-quantity: Integer
-}
-class Product{
-}
-class Position {
-    -aisleID: Integer
-    -rackID: Integer
-    -levelID: Integer
-}
- class Order{
-	-id: integer
-}
-class Customer{
-	-id: Integer
-	-newCustomerName: String
-	-newCustomerCard: LoyalityCard
-}
-class LoyalityCard{
-    -id: Integer
-    -points: Integer
-}
-class SaleTransaction{
-    -id: Integer
-    -date: LocalDate
-    -time: LocalDateTime
-    -cost: Float 
-    -paymentType: String
-    -discount: String
+-description: String
+-barCode: String
+-pricePerUnit: double
+-note: String
+-productId: Integer
+-quantity: int
+-position: Position
+-increaseQnt(in int quantity): boolean
+-decreaseQnt(in int quantity): boolean
 }
 
-EZshop -- User
-EZshop -- ProductType
-EZshop -- Order
-EZshop -- Customer
-Customer "0..1"-- LoyalityCard
-SaleTransaction --"*" ProductType
-Position "0..1"-- ProductType
-Product "*"-- ProductType :describes
-SaleTransaction "*" --"0..1" LoyalityCard
+class Order{
+-product: ProductType
+-quantity: int
+-pricePerUnit: double
+-orderId: Integer
+-state: String
+-payment: BalanceOperation
+}
+
+class Position{
+-aisleId: Sting
+-rackId: String
+-levelId: String
+}
+
+class LoyaltyCard{
+-code: String
+-customer: Customer
+-points: int
+-addPoints()
+-removePoints()
+}
+
+class Customer{
+-name: String
+-customerId: Integer
+-card: LoyaltyCard
+}
+
+class AccountBook{
+-balance: double
+-operationList: LinkedList<BalanceOperation>
+-createBalanceOperation(): BalanceOperation
+}
+
+class BalanceOperation{
+-type: String
+-amount: double
+-date: LocalDate
+}
+
+class SaleTransaction{
+-TransactionId: Integer
+-products: HashMap<ProductType Integer>
+-amount: double
+-state: String
+-payment: BalanceOperation
+-paid: boolean
+-returnTransactions: List<ReturnTransaction>
+-transactionPoints: Integer
+-applyDiscountSingle(in String productCode, in double discount): boolean
+-applyDiscountAll(in double discount): boolean
+-updateProductQuantity(in ProductType product, in Integer quantity): boolean
+-checkCreditCard(in String cardno, in double amount): boolean
+}
+
+class ReturnTransaction{
+-returnId: Integer
+-returnProducts: HashMap<ProductType Integer>
+-originalTransaction: SaleTransaction
+-committed: boolean
+-payment: BalanceOperation
+-amount: double
+-checkReturnProduct(in String productCode, in int amount): boolean
+-updateOriginalTransaction(in SaleTransaction sale, in ProductType product, in Integer amount): boolean
+checkCreditCard(in String cardno): boolean
+}
+
+EZShop -u-"*"User
+EZShop -u-"*"Customer
+EZShop -u-"*"LoyaltyCard
+Customer -l- LoyaltyCard
+EZShop -d-AccountBook
+AccountBook-d-"*"BalanceOperation
+EZShop -r- "*"ReturnTransaction 
+EZShop -r- "*"SaleTransaction 
+SaleTransaction -d- ReturnTransaction
+EZShop -d- "*"Order
+EZShop -l- "*"ProductType
+Order -u- ProductType
+ProductType -u- Position
+Order -r- BalanceOperation
+SaleTransaction-r- BalanceOperation
+ReturnTransaction-r- BalanceOperation
+@enduml
 ```
 
 # Verification traceability matrix
