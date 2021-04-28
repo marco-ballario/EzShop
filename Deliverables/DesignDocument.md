@@ -170,7 +170,7 @@ Ticket "*" -- SaleTransaction
 .tg .tg-9wq8{border-color:inherit;text-align:center;vertical-align:middle}
 .tg .tg-nrix{text-align:center;vertical-align:middle}
 </style>
-<table class="tg" style="width:60%;">
+<table class="tg" style="width:100%;">
 <thead>
   <tr>
     <th class="tg-9wq8"></th>
