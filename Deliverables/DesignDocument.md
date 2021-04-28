@@ -170,6 +170,7 @@ Ticket "*" -- SaleTransaction
 .tg .tg-9wq8{border-color:inherit;text-align:center;vertical-align:middle}
 .tg .tg-nrix{text-align:center;vertical-align:middle}
 </style>
+<div stye="width: 100vw;">
 <table class="tg" style="width:100%;">
 <thead>
   <tr>
@@ -316,6 +317,7 @@ Ticket "*" -- SaleTransaction
   </tr>
 </tbody>
 </table>
+</div>
 
 
 # Verification sequence diagrams 
