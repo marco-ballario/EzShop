@@ -161,16 +161,14 @@ Ticket "*" -- SaleTransaction
 
 # Verification traceability matrix
 
-\<for each functional requirement from the requirement document, list which classes concur to implement it>
-
-
-
-
-
-
-
-
-
+| |EZShop|User|ProductType|Position|Order|Customer|LoyaltyCard|SaleTransaction|ReturnTransaction|FinancialTransaction|AccountBook|
+|-|------|----|-----------|--------|-----|--------|-----------|---------------|-----------------|--------------------|-----------|
+|FR1|||||||||||
+|FR3|||||||||||
+|FR4|||||||||||
+||||||||||||
+||||||||||||
+||||||||||||
 
 
 # Verification sequence diagrams 
