@@ -35,11 +35,11 @@ package "it.polito.ezshop" {
   package exceptions
 }
 
-model .r.> exceptions
-data ..> model
-gui .l.> data
-model .l.> gui
-gui ..> data
+data .r.> exceptions
+model ..> data
+gui .l.> model
+gui .r.> data
+model ..> gui
 @enduml
 ```
 
