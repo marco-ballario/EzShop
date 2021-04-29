@@ -39,7 +39,7 @@ model .r.> exceptions
 data ..> model
 gui .l.> data
 model .l.> gui
-data ..> gui
+gui ..> data
 @enduml
 ```
 
