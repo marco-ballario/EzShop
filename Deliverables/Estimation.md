@@ -1,7 +1,7 @@
 # Project Estimation  
-Authors:
-Date:
-Version:
+Authors:  Marco Ballario, Pietro Macori, Cosimo Michelagnoli, Lucia Vencato
+Date: 27/04/2021
+Version: 1.0
 # Contents
 - [Estimate by product decomposition]
 - [Estimate by activity decomposition ]
