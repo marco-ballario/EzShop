@@ -312,9 +312,9 @@ productType -> productType : decreseQnt()
 productType --> ezShop : success
 ezShop -> ezShop : endSaleTransaction()
 ezShop -> ezShop : attachCardToCustomer()
-ezShop -> returnTransaction : receiveCreditCardPayment()
-returnTransaction -> returnTransaction : checkCreditCard()
-returnTransaction --> ezShop : success
+ezShop -> saleTransaction : receiveCreditCardPayment()
+saleTransaction -> saleTransaction : checkCreditCard()
+saleTransaction --> ezShop : success
 ezShop -> ezShop : computePointsForSale()
 ezShop -> ezShop : modifyPointsOnCard()
 ezShop -> accountBook : recordBalanceUpdate()
