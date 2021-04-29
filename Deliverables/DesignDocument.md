@@ -257,6 +257,29 @@ ReturnTransaction-r- BalanceOperation
 |FR8||X||||||||X|X|
 
 # Verification sequence diagrams 
+
+```plantuml
+title Scenario 1.3
+actor Cashier
+Cashier -> EZShop : getProductType()
+EZShop --> Cashier : ProductType
+Cashier -> EZShop : new pricePerUnit
+EZShop -> ProductType: setPricePerUnit()
+Cashier -> EZShop : saveChanges()
+ProductType --> EZShop : updated ProductType
+```
+
+```plantuml
+title Scenario 2.3
+actor Administrator
+Administrator-> EZShop : getUser()
+EZShop --> Administrator: User
+Administrator -> EZShop : new role
+EZShop -> User: setRole()
+Administrator-> EZShop : saveChanges()
+User--> EZShop : updated User
+```
+
 ```plantuml
 title Scenario 3.2
 EZShop -> EZShop: getOrder()
