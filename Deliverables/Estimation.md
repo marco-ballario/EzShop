@@ -56,7 +56,6 @@ Version:
 
 Total = 528
 
-<H2>Gantt diagram</H2>
 ###
 ```plantuml
 @startgantt
