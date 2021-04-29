@@ -281,6 +281,7 @@ Order --> EZShop: result
 EZShop -> Order: setState()
 ```
 ```plantuml
+@startuml
 title Scenario 6.4
 ezShop -> ezShop : startSaleTransaction()
 ezShop -> ezShop +: addProductToSale()
@@ -294,10 +295,10 @@ returnTransaction -> returnTransaction : checkCreditCard()
 return success
 ezShop -> ezShop : computePointsForSale()
 ezShop -> ezShop : modifyPointsOnCard()
-
 ezShop -> accountBook +: recordBalanceUpdate()
 accountBook -> accountBook : createBalanceOperation()
 return success
+@enduml
 ```
 
 ```plantuml
