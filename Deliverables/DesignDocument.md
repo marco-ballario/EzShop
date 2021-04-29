@@ -280,6 +280,25 @@ ProductType --> Order: result
 Order --> EZShop: result
 EZShop -> Order: setState()
 ```
+```plantuml
+title Scenario 6.4
+ezShop -> ezShop : startSaleTransaction()
+ezShop -> ezShop +: addProductToSale()
+ezShop -> productType : getProductTypeByBarCode()
+productType -> productType : decreseQnt()
+return success
+ezShop -> ezShop : endSaleTransaction()
+ezShop -> ezShop : attachCardToCustomer()
+ezShop -> returnTransaction +: receiveCreditCardPayment()
+returnTransaction -> returnTransaction : checkCreditCard()
+return success
+ezShop -> ezShop : computePointsForSale()
+ezShop -> ezShop : modifyPointsOnCard()
+
+ezShop -> accountBook +: recordBalanceUpdate()
+accountBook -> accountBook : createBalanceOperation()
+return success
+```
 
 ```plantuml
 Title: Scenario 8.1
