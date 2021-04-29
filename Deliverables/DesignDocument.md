@@ -280,3 +280,19 @@ ProductType --> Order: result
 Order --> EZShop: result
 EZShop -> Order: setState()
 ```
+
+```plantuml
+Title: Scenario 8.1
+EZShop -> ReturnTransaction : startReturnTransaction()
+EZShop -> ReturnTransaction : returnProduct() 
+EZShop -> ReturnTransaction : updateProductQuantity()
+ReturnTransaction -> ProductType : increaseQuantity()
+ReturnTransaction -> SaleTransaction : updateOriginalTransaction()
+EZShop -> ReturnTransaction : returnCreditCardPayment()
+ReturnTransaction -> ReturnTransaction : checkCreditCard()
+ReturnTransaction --> EZShop : success
+EZShop -> BalanceOperation : recordBalanceUpdate()
+BalanceOperation -> AccountBook : updateBalance()
+EZShop -> ReturnTransaction : endReturnTransaction()
+ReturnTransaction --> EZShop : success
+```
