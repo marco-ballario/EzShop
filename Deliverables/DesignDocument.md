@@ -260,10 +260,10 @@ ReturnTransaction-r- BalanceOperation
 
 ```plantuml
 title Scenario 1.3
-actor ShopManager
-ShopManager -> EZShop : getProductTypeByBarCode()
-EZShop --> ShopManager : ProductType
-ShopManager -> EZShop : new pricePerUnit
+actor "ShopManager or\nAdministrator" as act
+act -> EZShop : getProductTypeByBarCode()
+EZShop --> act : ProductType
+act -> EZShop : new pricePerUnit
 EZShop -> ProductType: updateProduct()
 ProductType --> EZShop : updated ProductType
 ```
@@ -301,6 +301,16 @@ ProductType --> Order: result
 Order --> EZShop: result
 EZShop -> Order: setState()
 ```
+
+```plantuml
+title Scenario 5.1
+actor "Cashier or\n ShopManager or\n Administrator" as act
+act -> EZShop : insert username
+act -> EZShop : insert password
+EZShop -> User : login()
+User --> EZShop : User
+```
+
 ```plantuml
 title Scenario 6.4
 ezShop -> ezShop : startSaleTransaction()
