@@ -260,12 +260,12 @@ ReturnTransaction-r- BalanceOperation
 
 ```plantuml
 title Scenario 1.3
-actor Cashier
-Cashier -> EZShop : getProductType()
-EZShop --> Cashier : ProductType
-Cashier -> EZShop : new pricePerUnit
-EZShop -> ProductType: setPricePerUnit()
-Cashier -> EZShop : saveChanges()
+actor ShopManager
+ShopManager -> EZShop : getProductTypeByBarCode()
+EZShop --> ShopManager : ProductType
+ShopManager -> EZShop : new pricePerUnit
+EZShop -> ProductType: updateProduct()
+ShopManager -> EZShop : saveChanges()
 ProductType --> EZShop : updated ProductType
 ```
 
@@ -275,7 +275,7 @@ actor Administrator
 Administrator-> EZShop : getUser()
 EZShop --> Administrator: User
 Administrator -> EZShop : new role
-EZShop -> User: setRole()
+EZShop -> User: updateUserRights()
 Administrator-> EZShop : saveChanges()
 User--> EZShop : updated User
 ```
