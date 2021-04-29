@@ -54,7 +54,7 @@ Version:
 | Database deployment | 10 |
 | Check of main functions | 4 |
 
-Total = 528
+Total = 528 person hours
 
 ###
 ```plantuml
