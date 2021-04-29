@@ -1,6 +1,6 @@
 # Project Estimation  
-Authors:  Marco Ballario, Pietro Macori, Cosimo Michelagnoli, Lucia Vencato
-Date: 27/04/2021
+Authors:  Marco Ballario, Pietro Macori, Cosimo Michelagnoli, Lucia Vencato<br>
+Date: 27/04/2021<br>
 Version: 1.0
 # Contents
 - [Estimate by product decomposition]
@@ -54,9 +54,10 @@ Version: 1.0
 | Database deployment | 10 |
 | Check of main functions | 4 |
 
-Total = 528 person hours
+Total = 528 person hours<br><br><br>
 
-###
+<h2>Gantt's diagram<h2>
+
 ```plantuml
 @startgantt
 -- Phases --
