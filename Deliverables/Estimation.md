@@ -57,4 +57,64 @@ Version:
 Total = 528
 
 ###
-Insert here Gantt chart with above activities
+```plantuml
+@startgantt
+-- Phases --
+[Requirements] lasts 14 days
+[Requirements] is colored in crimson
+[Design] lasts 11 days
+[Design] starts at [Requirements]'s end
+[Design] is colored in GoldenRod
+[Implementation] lasts 10 days
+[Implementation] starts at [Design]'s end
+[Implementation] is colored in ForestGreen
+[V&V] lasts 14 days
+[V&V] starts at [Implementation]'s end
+[V&V] is colored in aqua
+[Deployment] lasts 3 days
+[Deployment] starts at [V&V]'s end
+[Deployment] is colored in hotpink
+-- Activities --
+
+[Requirements doc] lasts 4 days
+[System design] starts at [Requirements doc]'s end
+[System design] lasts 6 days
+[HW selection] starts at [System design]'s end
+[HW selection] lasts 4 days
+[Architectural pattern] lasts 2 days
+[Architectural pattern] starts at [HW selection]'s end
+[Package diagram] lasts 1 days
+[Package diagram] starts at [Architectural pattern]'s end
+[Low level design] starts at [Package diagram]'s end
+[Design pattern] starts at [Package diagram]'s end
+[Low level design] lasts 8 days
+[Design pattern] lasts 2 days
+[GUI design] lasts 3 days
+[GUI design] starts at [Package diagram]'s end
+[Classes implementation] lasts 1 days
+[Classes implementation] starts at [Low level design]'s end
+[Attrib/methods implem] lasts 9 days
+[Attrib/methods implem] starts at [Classes implementation]'s end
+[GUI implem] lasts 5 days
+[GUI implem] starts at [Classes implementation]'s end
+
+[Test definitions] lasts 4 days
+[Test definitions] starts at [Attrib/methods implem]'s end
+[Check requirem] lasts 2 days
+[Check requirem] starts at [Attrib/methods implem]'s end
+[Check design] lasts 2 days
+[Check design] starts at [Check requirem]'s end
+[Check code] lasts 3 days
+[Check code] starts at [Check design]'s end
+
+[Tests & debug] lasts 7 days
+[Tests & debug] starts at [Check code]'s end
+
+[Deployment HW] lasts 1 days
+[Deployment HW] starts at [Tests & debug]'s end
+[DB deploy] lasts 2 days
+[DB deploy] starts at [Tests & debug]'s end
+[Check main functions] lasts 1 days
+[Check main functions] starts at [DB deploy]'s end
+@endgantt
+```
