@@ -30,22 +30,19 @@ The design must satisfy the Official Requirements document, notably functional a
 package "it.polito.ezshop" {
   left to right direction
   package gui
+  package model
   package data
-
-  package controller
   package exceptions
 }
 
-data .r.> exceptions
-controller ..> data
+model .r.> exceptions
+data ..> model
 gui .l.> data
-data .l.> gui
-gui ..> controller
-controller ..>gui
+model .l.> gui
+gui ..> data
+data ..> gui
 @enduml
 ```
-
-
 
 
 # Low level design
