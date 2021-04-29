@@ -20,7 +20,7 @@ Version:
 # Estimate by activity decomposition
 ### 
 |         Activity name    | Estimated effort (person hours)   |             
-|  ------------------------| ------------------------------- | 
+|  ------------------------| :-------------------------------: | 
 | <Strong>Requirements</Strong>| |
 | Read customer requests | 2 |
 | Identify user needs | 4 |
