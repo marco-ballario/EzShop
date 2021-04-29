@@ -21,8 +21,8 @@ The design must satisfy the Official Requirements document, notably functional a
 
 # High level design 
 
-<discuss architectural styles used, if any>
-<report package diagram>
+The architectural style used is the MVC since we need a model containing data and methods to manipulate them, a view which allows the user to interact with the application and a controller responible to handle events from the user interface. In our specific case we have the model inside the "model" package, the view inside the "gui" package and the interface inside the "data" package. Moreover there is an "exceptions" packaged used to contains all possible exception classes making the model more clean.
+Another possible solution would have been to exploit a 3 tier pattern. 
 
 
 ```plantuml
