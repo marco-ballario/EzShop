@@ -331,15 +331,21 @@ accountBook --> ezShop : success
 ```
 
 ```plantuml
-Title: Scenario 8.1
+Title: Scenario 8.1 and Scenario 10.1
 EZShop -> ReturnTransaction : startReturnTransaction()
 EZShop -> ReturnTransaction : returnProduct() 
 EZShop -> ReturnTransaction : updateProductQuantity()
 ReturnTransaction -> ProductType : increaseQuantity()
 ReturnTransaction -> SaleTransaction : updateOriginalTransaction()
 EZShop -> ReturnTransaction : returnCreditCardPayment()
+note left
+start scenario 10.1 
+manage return payment 
+by creditCard
+end note
 ReturnTransaction -> ReturnTransaction : checkCreditCard()
 ReturnTransaction --> EZShop : success
+note left: end scenario 10.1
 EZShop -> BalanceOperation : recordBalanceUpdate()
 BalanceOperation -> AccountBook : updateBalance()
 EZShop -> ReturnTransaction : endReturnTransaction()
