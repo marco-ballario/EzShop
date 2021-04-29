@@ -50,23 +50,8 @@ data ..> gui
 
 ```plantuml
 @startuml
-class EZShop{
-    -userList: LinkedHashMap<Integer User>
-    -loggedUser: User
-    -productList: LinkedHashMap <Integer ProductType>
-    -orderList: HashMap<Integer Order>
-    -customerList: HashMap<Integer Customer>
--cardList: HashMap<String Card>
--TransactionList: HashMap<Integer SaleTransaction>
--ReturnList: HashMap<Integer ReturnTransaction>
--accounting: AccountBook
--customerId: Integer
--productId: Integer
--orderId: Integer
--saleId: Integer
--returnId: Integer
--userId: Integer
-
+package data{
+interface EZShopInterface{
 + reset(): void
     + createUser(String username, String password, String role): Integer 
     + deleteUser(Integer id): boolean 
@@ -115,6 +100,26 @@ class EZShop{
     + recordBalanceUpdate(double toBeAdded): boolean
     + getCreditsAndDebits(LocalDate from, LocalDate to): List<BalanceOperation>
     + computeBalance(): double
+} 
+}
+package model{
+class EZShop implements EZShopInterface{
+    -userList: LinkedHashMap<Integer User>
+    -loggedUser: User
+    -productList: LinkedHashMap <Integer ProductType>
+    -orderList: HashMap<Integer Order>
+    -customerList: HashMap<Integer Customer>
+-cardList: HashMap<String Card>
+-TransactionList: HashMap<Integer SaleTransaction>
+-ReturnList: HashMap<Integer ReturnTransaction>
+-accounting: AccountBook
+-customerId: Integer
+-productId: Integer
+-orderId: Integer
+-saleId: Integer
+-returnId: Integer
+-userId: Integer
+
 }
 class User{
     -userId: Integer
@@ -220,6 +225,7 @@ ProductType -u- Position
 Order -r- BalanceOperation
 SaleTransaction-r- BalanceOperation
 ReturnTransaction-r- BalanceOperation
+}
 @enduml
 ```
 
