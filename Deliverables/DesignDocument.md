@@ -265,7 +265,6 @@ ShopManager -> EZShop : getProductTypeByBarCode()
 EZShop --> ShopManager : ProductType
 ShopManager -> EZShop : new pricePerUnit
 EZShop -> ProductType: updateProduct()
-ShopManager -> EZShop : saveChanges()
 ProductType --> EZShop : updated ProductType
 ```
 
@@ -276,7 +275,6 @@ Administrator-> EZShop : getUser()
 EZShop --> Administrator: User
 Administrator -> EZShop : new role
 EZShop -> User: updateUserRights()
-Administrator-> EZShop : saveChanges()
 User--> EZShop : updated User
 ```
 
