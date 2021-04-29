@@ -56,7 +56,7 @@ Version:
 
 Total = 528
 
-###
+###Gantt diagram
 ```plantuml
 @startgantt
 -- Phases --
