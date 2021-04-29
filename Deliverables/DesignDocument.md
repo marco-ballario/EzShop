@@ -119,6 +119,8 @@ class EZShop implements EZShopInterface{
 -saleId: Integer
 -returnId: Integer
 -userId: Integer
+-getLoyaltyCard(): LoyaltyCard
+-getOrder(): Order
 
 }
 class User{
