@@ -8,7 +8,7 @@ Version: 1.0
 - [Estimate by activity decomposition](#estimate-by-activity-decomposition)
     - [Gantt's diagram](#gantts-diagram)
 # Estimation approach
-<Consider the EZGas  project as described in YOUR requirement document, assume that you are going to develop the project INDEPENDENT of the deadlines of the course>
+We considered the EZShop  project as described in our requirement document and assuming that we are going to develop the project indipendent of the deadlines of the course.
 # Estimate by product decomposition
 ### 
 |             | Estimate                        |             
