@@ -323,12 +323,12 @@ title Scenario 3.3
 
 ```plantuml
 Title : Scenario 4.2
-EZShop -> LoyaltyCard : createCard()
-LoyaltyCard --> EZShop : success
-EZShop -> EZShop : getCard()
-EZShop -> EZShop : getCostumer()
-EZShop -> Customer : attachCardToCustomer()
-Customer --> EZShop : success
+":EZShop" -> ":LoyaltyCard" : createCard()
+":LoyaltyCard" --> ":EZShop" : success
+":EZShop" -> ":EZShop" : getCard()
+":EZShop" -> ":EZShop" : getCostumer()
+":EZShop" -> ":Customer" : attachCardToCustomer()
+":Customer" --> ":EZShop" : success
 ```
 
 ```plantuml
