@@ -343,6 +343,7 @@ note left
 start scenario 7.1 
 Manage payment by 
 valid credit card
+end note
 ":EZShop" -> ":SaleTransaction" : receiveCreditCardPayment()
 ":SaleTransaction" -> ":SaleTransaction" : checkCreditCard()
 ":SaleTransaction" --> ":EZShop" : success
