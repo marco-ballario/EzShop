@@ -284,7 +284,7 @@ act -> ":EZShop" : getProductTypeByBarCode()
 ":EZShop" --> act : ProductType
 act -> ":EZShop" : new pricePerUnit
 ":EZShop" -> ":ProductType": updateProduct()
-":ProductType" --> EZShop : updated ProductType
+":ProductType" --> ":EZShop" : updated ProductType
 ```
 
 ```plantuml
@@ -299,74 +299,74 @@ Administrator -> ":EZShop" : new role
 
 ```plantuml
 title Scenario 3.2
-EZShop -> EZShop: getOrder()
-EZShop -> EZShop: getAccountBook()
-EZShop -> AccountBook: createBalanceOperation()
-AccountBook -> EZShop: BalanceOperation
-EZShop -> Order: setPayment()
-Order --> EZShop
+":EZShop" -> ":EZShop": getOrder()
+":EZShop" -> ":EZShop": getAccountBook()
+":EZShop" -> ":AccountBook": createBalanceOperation()
+":AccountBook" -> ":EZShop": BalanceOperation
+":EZShop" -> ":Order": setPayment()
+":Order" --> ":EZShop"
 ```
 
 ```plantuml
 title Scenario 3.3
-EZShop -> EZShop: getOrder()
-EZShop -> Order: getProductType()
-Order --> EZShop: productType
-EZShop -> ProductType: setPosition()
-EZShop -> EZShop: recordOrderArrival()
-EZShop -> Order: updateProductQuantity()
-Order -> ProductType: increaseQnt()
-ProductType --> Order: result
-Order --> EZShop: result
-EZShop -> Order: setState()
+":EZShop" -> ":EZShop": getOrder()
+":EZShop" -> ":Order": getProductType()
+":Order" --> ":EZShop": productType
+":EZShop" -> ":ProductType": setPosition()
+":EZShop" -> ":EZShop": recordOrderArrival()
+":EZShop" -> ":Order": updateProductQuantity()
+":Order" -> ":ProductType": increaseQnt()
+":ProductType" --> ":Order": result
+":Order" --> ":EZShop": result
+":EZShop" -> ":Order": setState()
 ```
 
 ```plantuml
 title Scenario 5.1
 actor "Cashier or\n ShopManager or\n Administrator" as act
-act -> EZShop : insert username
-act -> EZShop : insert password
-EZShop -> User : login()
-User --> EZShop : User
+act -> ":EZShop" : insert username
+act -> ":EZShop" : insert password
+":EZShop" -> ":User" : login()
+":User" --> ":EZShop" : User
 ```
 
 ```plantuml
 title Scenario 6.4
-ezShop -> ezShop : startSaleTransaction()
-ezShop -> ezShop : addProductToSale()
-ezShop -> productType : getProductTypeByBarCode()
-productType -> productType : decreseQnt()
-productType --> ezShop : success
-ezShop -> ezShop : endSaleTransaction()
-ezShop -> ezShop : attachCardToCustomer()
-ezShop -> saleTransaction : receiveCreditCardPayment()
-saleTransaction -> saleTransaction : checkCreditCard()
-saleTransaction --> ezShop : success
-ezShop -> ezShop : computePointsForSale()
-ezShop -> ezShop : modifyPointsOnCard()
-ezShop -> accountBook : recordBalanceUpdate()
-accountBook -> accountBook : createBalanceOperation()
-accountBook --> ezShop : success
+":EZShop" -> ":EZShop" : startSaleTransaction()
+":EZShop" -> ":EZShop" : addProductToSale()
+":EZShop" -> ":ProductType" : getProductTypeByBarCode()
+":ProductType" -> ":ProductType" : decreseQnt()
+":ProductType" --> ":EZShop" : success
+":EZShop" -> ":EZShop" : endSaleTransaction()
+":EZShop" -> ":EZShop" : attachCardToCustomer()
+":EZShop" -> ":SaleTransaction" : receiveCreditCardPayment()
+":SaleTransaction" -> ":SaleTransaction" : checkCreditCard()
+":SaleTransaction" --> ":EZShop" : success
+":EZShop" -> ":EZShop" : computePointsForSale()
+":EZShop" -> ":EZShop" : modifyPointsOnCard()
+":EZShop" -> ":AccountBook" : recordBalanceUpdate()
+":AccountBook" -> ":AccountBook" : createBalanceOperation()
+":AccountBook" --> ":EZShop" : success
 ```
 
 ```plantuml
 Title: Scenario 8.1 and Scenario 10.1
-EZShop -> ReturnTransaction : startReturnTransaction()
-EZShop -> ReturnTransaction : returnProduct() 
-EZShop -> ReturnTransaction : updateProductQuantity()
-ReturnTransaction -> ProductType : increaseQuantity()
-ReturnTransaction -> SaleTransaction : updateOriginalTransaction()
-EZShop -> ReturnTransaction : returnCreditCardPayment()
+":EZShop" -> ":ReturnTransaction" : startReturnTransaction()
+":EZShop" -> ":ReturnTransaction" : returnProduct() 
+":EZShop" -> ":ReturnTransaction" : updateProductQuantity()
+":ReturnTransaction" -> ":ProductType" : increaseQuantity()
+":ReturnTransaction" -> ":SaleTransaction" : updateOriginalTransaction()
+":EZShop" -> ":ReturnTransaction" : returnCreditCardPayment()
 note left
 start scenario 10.1 
 manage return payment 
 by creditCard
 end note
-ReturnTransaction -> ReturnTransaction : checkCreditCard()
-ReturnTransaction --> EZShop : success
+":ReturnTransaction" -> ":ReturnTransaction" : checkCreditCard()
+":ReturnTransaction" --> ":EZShop" : success
 note left: end scenario 10.1
-EZShop -> BalanceOperation : recordBalanceUpdate()
-BalanceOperation -> AccountBook : updateBalance()
-EZShop -> ReturnTransaction : endReturnTransaction()
-ReturnTransaction --> EZShop : success
+":EZShop" -> ":BalanceOperation" : recordBalanceUpdate()
+":BalanceOperation" -> ":AccountBook" : updateBalance()
+":EZShop" -> ":ReturnTransaction" : endReturnTransaction()
+":ReturnTransaction" --> ":EZShop" : success
 ```
