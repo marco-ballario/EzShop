@@ -347,6 +347,7 @@ end note
 ":EZShop" -> ":SaleTransaction" : receiveCreditCardPayment()
 ":SaleTransaction" -> ":SaleTransaction" : checkCreditCard()
 ":SaleTransaction" --> ":EZShop" : success
+note left: end scenario 7.1
 ":EZShop" -> ":EZShop" : computePointsForSale()
 ":EZShop" -> ":EZShop" : modifyPointsOnCard()
 ":EZShop" -> ":AccountBook" : recordBalanceUpdate()
