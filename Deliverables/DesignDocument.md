@@ -46,8 +46,6 @@ model ..> gui
 
 # Low level design
 
-<for each package, report class diagram>
-
 ```plantuml
 @startuml
 package data{
@@ -102,13 +100,21 @@ interface EZShopInterface{
     + computeBalance(): double
 } 
 }
+@enduml
+```
+<br>
+
+```plantuml
+@startuml
+interface EZShopInterface{}
+
 package model{
 class EZShop implements EZShopInterface{
-    -userList: LinkedHashMap<Integer User>
-    -loggedUser: User
-    -productList: LinkedHashMap <Integer ProductType>
-    -orderList: HashMap<Integer Order>
-    -customerList: HashMap<Integer Customer>
+-userList: LinkedHashMap<Integer User>
+-loggedUser: User
+-productList: LinkedHashMap <Integer ProductType>
+-orderList: HashMap<Integer Order>
+-customerList: HashMap<Integer Customer>
 -cardList: HashMap<String Card>
 -TransactionList: HashMap<Integer SaleTransaction>
 -ReturnList: HashMap<Integer ReturnTransaction>
@@ -119,9 +125,11 @@ class EZShop implements EZShopInterface{
 -saleId: Integer
 -returnId: Integer
 -userId: Integer
--getLoyaltyCard(): LoyaltyCard
--getOrder(): Order
-
+-appState: List<WriteObject>
+-getLoyaltyCard(Integer CardNo): LoyaltyCard
+-getOrder(Integer orderId): Order
+-saveAppState(List<WriteObject>): boolean
+-readAppState(List<WriteObject>): boolean
 }
 class User{
     -userId: Integer
@@ -211,23 +219,34 @@ class ReturnTransaction{
 checkCreditCard(in String cardno): boolean
 }
 
-EZShop -u-"*"User
-EZShop -u-"*"Customer
-EZShop -u-"*"LoyaltyCard
-Customer -l- LoyaltyCard
-EZShop -d-AccountBook
-AccountBook-d-"*"BalanceOperation
-EZShop -r- "*"ReturnTransaction 
-EZShop -r- "*"SaleTransaction 
-SaleTransaction -d- ReturnTransaction
-EZShop -d- "*"Order
-EZShop -l- "*"ProductType
-Order -u- ProductType
-ProductType -u- Position
-Order -r- BalanceOperation
-SaleTransaction-r- BalanceOperation
-ReturnTransaction-r- BalanceOperation
-}
+EZShop -u->"*"User
+EZShop -l->"*"Customer
+EZShop -l->"*"LoyaltyCard
+Customer -u- LoyaltyCard
+EZShop --> AccountBook
+AccountBook -->"*"BalanceOperation
+EZShop --> "*"ReturnTransaction 
+EZShop --> "*"SaleTransaction 
+SaleTransaction --"*" ReturnTransaction
+EZShop --> "*"Order
+EZShop --> "*"ProductType
+SaleTransaction  -->"*" ProductType
+ReturnTransaction  -->"*" ProductType
+Order --> ProductType
+ProductType --> Position
+Order --> BalanceOperation
+SaleTransaction --> BalanceOperation
+ReturnTransaction--> BalanceOperation
+
+
+
+note "Persistency on this class is provided \nby methods saveAppState() and \nreadAppState() which serialize\na list of object that in our case \nare the list of user, customer, productType,\norders, sales, returns and \nthe Account Book class" as N1
+
+
+note "Persistency assured by methods\nsaveAppState() and \nreadAppState() of EZShop class" as N2
+
+EZShop .r. N1
+AccountBook .u. N2
 @enduml
 ```
 
