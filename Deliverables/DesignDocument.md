@@ -339,6 +339,10 @@ title Scenario 6.4
 ":ProductType" --> ":EZShop" : success
 ":EZShop" -> ":EZShop" : endSaleTransaction()
 ":EZShop" -> ":EZShop" : attachCardToCustomer()
+note left
+start scenario 7.1 
+Manage payment by 
+valid credit card
 ":EZShop" -> ":SaleTransaction" : receiveCreditCardPayment()
 ":SaleTransaction" -> ":SaleTransaction" : checkCreditCard()
 ":SaleTransaction" --> ":EZShop" : success
