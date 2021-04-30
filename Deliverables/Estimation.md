@@ -58,7 +58,9 @@ Version: 1.0
 
 Total = 528 person hours<br><br><br>
 
-<h2>Gantt's diagram<h2>
+<h2>Gantt's diagram</h2>
+NOTE: some activities in the Gantt's diagram has been grouped since they last less than 1 day and some activities' name has been abbreviated for aesthetic reasons.<br><br>
+
 
 ```plantuml
 @startgantt
