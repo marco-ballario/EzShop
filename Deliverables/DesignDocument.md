@@ -109,13 +109,15 @@ interface EZShopInterface{
 interface EZShopInterface{}
 
 package model{
+note "The relationships of EZShop with the other classes are\nmodeled using HashMaps.\nMore details are given below:\n\nuserList {Key: userId, Val: User}\nproductList{Key: productId, Val:ProductType}\norderList{Key: orderId, Val:Order}\ncustomerList{Key: customerId, Val:Customer}\nloyaltyCardList{Key: CardCode, Val:LoyaltyCard}\ntransactionList{Key: transactionId, Val:SaleTransaction}\nreturnList{Key: returnId, Val:ReturnTransaction}" as N3
+
 class EZShop implements EZShopInterface{
 -userList: LinkedHashMap<Integer User>
 -loggedUser: User
 -productList: LinkedHashMap <Integer ProductType>
 -orderList: HashMap<Integer Order>
 -customerList: HashMap<Integer Customer>
--cardList: HashMap<String Card>
+-loyalCardList: HashMap<String Card>
 -TransactionList: HashMap<Integer SaleTransaction>
 -ReturnList: HashMap<Integer ReturnTransaction>
 -accounting: AccountBook
