@@ -371,8 +371,9 @@ end note
 ":ReturnTransaction" -> ":ReturnTransaction" : checkCreditCard()
 ":ReturnTransaction" --> ":EZShop" : success
 note left: end scenario 10.1
-":EZShop" -> ":BalanceOperation" : recordBalanceUpdate()
-":BalanceOperation" -> ":AccountBook" : updateBalance()
+":EZShop" -> ":AccountBook" : recordBalanceUpdate()
+":AccountBook" -> ":AccountBook" : createBalanceOperation()
+":AccountBook" --> ":EZShop" : success
 ":EZShop" -> ":ReturnTransaction" : endReturnTransaction()
 ":ReturnTransaction" --> ":EZShop" : success
 ```
