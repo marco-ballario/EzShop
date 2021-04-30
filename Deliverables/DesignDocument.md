@@ -280,21 +280,21 @@ AccountBook .u. N2
 ```plantuml
 title Scenario 1.3
 actor "ShopManager or\nAdministrator" as act
-act -> EZShop : getProductTypeByBarCode()
-EZShop --> act : ProductType
-act -> EZShop : new pricePerUnit
-EZShop -> ProductType: updateProduct()
-ProductType --> EZShop : updated ProductType
+act -> ":EZShop" : getProductTypeByBarCode()
+":EZShop" --> act : ProductType
+act -> ":EZShop" : new pricePerUnit
+":EZShop" -> ":ProductType": updateProduct()
+":ProductType" --> EZShop : updated ProductType
 ```
 
 ```plantuml
 title Scenario 2.3
 actor Administrator
-Administrator-> EZShop : getUser()
-EZShop --> Administrator: User
-Administrator -> EZShop : new role
-EZShop -> User: updateUserRights()
-User--> EZShop : updated User
+Administrator-> ":EZShop" : getUser()
+":EZShop" --> Administrator: User
+Administrator -> ":EZShop" : new role
+":EZShop" -> ":User": updateUserRights()
+":User"--> ":EZShop" : updated User
 ```
 
 ```plantuml
