@@ -3,8 +3,10 @@ Authors:  Marco Ballario, Pietro Macori, Cosimo Michelagnoli, Lucia Vencato<br>
 Date: 27/04/2021<br>
 Version: 1.0
 # Contents
-- [Estimate by product decomposition]
-- [Estimate by activity decomposition ]
+- [Estimation approach](#estimation-approach)
+- [Estimate by product decomposition](#estimate-by-product-decomposition)
+- [Estimate by activity decomposition](#estimate-by-activity-decomposition)
+- [Gantt's diagram](#gantts-diagram)
 # Estimation approach
 <Consider the EZGas  project as described in YOUR requirement document, assume that you are going to develop the project INDEPENDENT of the deadlines of the course>
 # Estimate by product decomposition
