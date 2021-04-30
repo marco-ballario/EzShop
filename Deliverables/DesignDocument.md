@@ -322,6 +322,16 @@ title Scenario 3.3
 ```
 
 ```plantuml
+Title : Scenario 4.2
+EZShop -> LoyaltyCard : createCard()
+LoyaltyCard --> EZShop : success
+EZShop -> EZShop : getCard()
+EZShop -> EZShop : getCostumer()
+EZShop -> Customer : attachCardToCustomer()
+Customer --> EZShop : success
+```
+
+```plantuml
 title Scenario 5.1
 actor "Cashier or\n ShopManager or\n Administrator" as act
 act -> ":EZShop" : insert username
