@@ -2,51 +2,182 @@ package it.polito.ezshop.data;
 
 import it.polito.ezshop.exceptions.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 
 public class EZShop implements EZShopInterface {
+	private LinkedHashMap<Integer, User> userList = null;
+	private User loggedUser;
+	private int userId=1;
+	private List<Object> appState = new ArrayList<Object>();
+	File f = new File("./src/main/java/it/polito/ezshop/appState.db");
+	
 
+    public EZShop() {
+    	boolean res = readAppState();
+	}
 
-    @Override
+	private boolean readAppState() {
+		if (!f.isFile() || !f.canRead()) {
+			userList = new LinkedHashMap<Integer, User>();
+		}
+		else {
+		try {
+			 List<Object> e=null;
+			 LinkedHashMap<Integer, User> tmp = null;
+	         FileInputStream fileIn = new FileInputStream(f);
+	         ObjectInputStream in = new ObjectInputStream(fileIn);
+	         e = (List<Object>) in.readObject();
+	         if(e != null) {
+		         userList = (LinkedHashMap<Integer, User>) e.get(0);
+		         userId = (Integer)e.get(1);
+	         }
+	         else {
+	        	 userList = new LinkedHashMap<Integer, User>();
+		         userId = 1;
+	         }
+	         in.close();
+	         fileIn.close();
+	      } catch (IOException i) {
+	         i.printStackTrace();
+	         return false;
+	      } catch (ClassNotFoundException c) {
+	         c.printStackTrace();
+	         return false;
+	      }}
+		return true;
+	}
+
+	private boolean writeAppState() {
+		appState.add(0, userList);
+		appState.add(1,userId);
+		try {
+	         FileOutputStream fileOut = new FileOutputStream(f);
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(appState);
+	         out.close();
+	         fileOut.close();
+	         return true;
+	      } catch (IOException i) {
+	         return false;
+	      }
+	}
+
+	@Override
     public void reset() {
-
+    	
     }
 
     @Override
     public Integer createUser(String username, String password, String role) throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
-        return null;
+        if(username == null ||username.length() == 0  ) {
+        	throw new InvalidUsernameException();
+        }
+        if(password == null || password.length() == 0 ) {
+        	throw new InvalidPasswordException();
+        }
+        if(username == null || role.length() == 0 || (!role.equals("Administrator") && !role.equals("Cashier") && !role.equals("ShopManager"))) {
+        	throw new InvalidRoleException();
+        }
+    	User user = new it.polito.ezshop.model.User(username, password, role, userId);
+        userList.put(userId, user); //insert user inside the data structure
+        Integer id = user.getId();
+        userId=userId+1; //prepare Id for next user
+        writeAppState();
+    	return id;
     }
 
     @Override
     public boolean deleteUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
+    	if(id==null || id <= 0) {
+    		throw new InvalidUserIdException();
+    	}
+    	if(loggedUser == null || !loggedUser.getRole().equals("Administrator")) {
+    		throw new UnauthorizedException();
+    	}
+    	userList.remove(id);
         return false;
     }
 
     @Override
     public List<User> getAllUsers() throws UnauthorizedException {
-        return null;
+    	if(loggedUser == null || !loggedUser.getRole().equals("Administrator")) {
+    		throw new UnauthorizedException();
+    	}
+        return (List<User>) userList.values();
     }
 
     @Override
     public User getUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
-        return null;
+    	if(id==null || id <= 0) {
+    		throw new InvalidUserIdException();
+    	}
+    	if(loggedUser == null || !loggedUser.getRole().equals("Administrator")) {
+    		throw new UnauthorizedException();
+    	}
+    	User user = userList.get(id);
+        return user;
     }
 
     @Override
     public boolean updateUserRights(Integer id, String role) throws InvalidUserIdException, InvalidRoleException, UnauthorizedException {
-        return false;
+    	if(id==null || id <= 0) {
+    		throw new InvalidUserIdException();
+    	}
+    	if(role==null || role.length()==0 || (!role.equals("Administrator") && !role.equals("Cashier") && !role.equals("ShopManager"))) {
+    		throw new InvalidRoleException();
+    	}
+    	if(loggedUser == null || !loggedUser.getRole().equals("Administrator")) {
+    		throw new UnauthorizedException();
+    	}
+    	User user = userList.get(id);
+    	if(user == null) {
+    		return false;
+    	}
+    	user.setRole(role);
+    	return true;
     }
 
     @Override
     public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
+    	if(username == null || username.length()==0) {
+    		throw new InvalidUsernameException();
+    	}
+    	if(password ==null || password.length()==0) {
+    		throw new InvalidPasswordException();	
+    	}
+    	
+    	Collection<User> list = userList.values();
+    	for (User u: list) {
+    		
+    		if(u.getPassword().contentEquals(password) && u.getUsername().equals(username)) {
+    			return u;
+    		}
+    	}
         return null;
     }
 
     @Override
     public boolean logout() {
-        return false;
+    	if(loggedUser == null) {
+    		return false;
+    	}
+    	else {
+    		loggedUser = null;
+    		return true;
+    	} 
     }
 
     @Override
