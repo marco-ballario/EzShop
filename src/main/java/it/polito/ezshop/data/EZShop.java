@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
 
 public class EZShop implements EZShopInterface {
@@ -220,7 +221,35 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer createProductType(String description, String productCode, double pricePerUnit, String note) throws InvalidProductDescriptionException, InvalidProductCodeException, InvalidPricePerUnitException, UnauthorizedException {
-        return null;
+    	if(description == null || description.length() == 0)
+    		throw new InvalidProductDescriptionException();
+    	
+    	if(productCode == null || productCode.isEmpty()) 
+    		throw new InvalidProductCodeException();
+    	try{
+			Integer.parseInt(productCode);
+		}catch(NumberFormatException e) {
+			throw new InvalidProductCodeException();
+		}
+    	// to do
+    	
+    	if(pricePerUnit <= 0)
+    		throw new InvalidPricePerUnitException();
+    	
+    	if( !this.loggedUser.equals("Administrator") || !this.loggedUser.equals("ShopManager") )
+    		throw new UnauthorizedException();
+    	
+    	if ( this.productList.get(this.productId) != null )
+    		return -1;
+    	
+    	ProductType pt = new it.polito.ezshop.model.ProductType(description, productCode, pricePerUnit, note);
+    	pt.setId(this.productId);
+    	this.productList.put(this.productId, pt);
+    	
+    	if( this.writeAppState() == false )
+    		return -1;
+    	
+    	return this.productId++;
     }
 
     @Override
