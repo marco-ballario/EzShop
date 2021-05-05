@@ -21,22 +21,22 @@ public class EZShop implements EZShopInterface {
 	private LinkedHashMap<Integer, User> userList = null;
 	private User loggedUser;
 	private int userId=1;
-	private List<Object> appState = new ArrayList<Object>();
+	private List<Object> appState = null;
 	File f = new File("./src/main/java/it/polito/ezshop/appState.db");
 	
 
     public EZShop() {
-    	boolean res = readAppState();
+    	readAppState();
 	}
 
-	private boolean readAppState() {
+	@SuppressWarnings("unchecked")
+	private void readAppState() {
 		if (!f.isFile() || !f.canRead()) {
 			userList = new LinkedHashMap<Integer, User>();
 		}
 		else {
 		try {
 			 List<Object> e=null;
-			 LinkedHashMap<Integer, User> tmp = null;
 	         FileInputStream fileIn = new FileInputStream(f);
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
 	         e = (List<Object>) in.readObject();
@@ -52,12 +52,12 @@ public class EZShop implements EZShopInterface {
 	         fileIn.close();
 	      } catch (IOException i) {
 	         i.printStackTrace();
-	         return false;
+	         
 	      } catch (ClassNotFoundException c) {
 	         c.printStackTrace();
-	         return false;
+	        
 	      }}
-		return true;
+		return;
 	}
 
 	private boolean writeAppState() {
@@ -91,11 +91,21 @@ public class EZShop implements EZShopInterface {
         if(username == null || role.length() == 0 || (!role.equals("Administrator") && !role.equals("Cashier") && !role.equals("ShopManager"))) {
         	throw new InvalidRoleException();
         }
+        //Check if username already present
+        for(User u:userList.values()) {
+        	if(u.getUsername().equals(username)) {
+        		return -1;
+        	}
+        }
+        //Create new user
     	User user = new it.polito.ezshop.model.User(username, password, role, userId);
         userList.put(userId, user); //insert user inside the data structure
         Integer id = user.getId();
         userId=userId+1; //prepare Id for next user
-        writeAppState();
+        boolean res = writeAppState(); // update the state of the app
+        if(res == false) {
+        	return -1;
+        }
     	return id;
     }
 
