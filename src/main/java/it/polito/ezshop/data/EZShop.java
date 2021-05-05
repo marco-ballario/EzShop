@@ -126,9 +126,7 @@ public class EZShop implements EZShopInterface {
         }
         //Create new user
     	User user = new it.polito.ezshop.model.User(username, password, role, userId);
-    	System.out.println(userList);
         userList.put(userId, user); //insert user inside the data structure
-        System.out.println(userList);
         Integer id = user.getId();
         userId=userId+1; //prepare Id for next user
         boolean res = writeAppState(); // update the state of the app
@@ -314,7 +312,22 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer defineCustomer(String customerName) throws InvalidCustomerNameException, UnauthorizedException {
-        return null;
+        if(customerName == null || customerName.length()==0) {
+        	throw new InvalidCustomerNameException();
+        }
+        if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager") && !this.loggedUser.getRole().equals("Cashier"))) {
+        	throw new UnauthorizedException();
+        }
+        Customer c = new it.polito.ezshop.model.Customer(customerName);
+        c.setId(customerId);
+        if(customerList.put(customerId, c) != null) {
+        	return -1;
+        }
+        boolean res = writeAppState();
+        if(res==false) {
+        	return -1;
+        }
+    	return customerId++;
     }
 
     @Override
