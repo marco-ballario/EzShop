@@ -8,12 +8,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -21,7 +19,7 @@ public class EZShop implements EZShopInterface {
 	private LinkedHashMap<Integer, User> userList = null;
 	private User loggedUser;
 	private int userId=1;
-	private List<Object> appState = null;
+	private List<Object> appState = new ArrayList<Object>();
 	File f = new File("./src/main/java/it/polito/ezshop/appState.db");
 	
 
@@ -99,7 +97,9 @@ public class EZShop implements EZShopInterface {
         }
         //Create new user
     	User user = new it.polito.ezshop.model.User(username, password, role, userId);
+    	System.out.println(userList);
         userList.put(userId, user); //insert user inside the data structure
+        System.out.println(userList);
         Integer id = user.getId();
         userId=userId+1; //prepare Id for next user
         boolean res = writeAppState(); // update the state of the app
