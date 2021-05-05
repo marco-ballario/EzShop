@@ -3,7 +3,8 @@ package it.polito.ezshop.model;
 public class Customer implements it.polito.ezshop.data.Customer{
 	private String name;
 	private Integer customerId;
-	private LoyaltyCard card;
+	private String card;
+	private Integer points;
 	
 	
 
@@ -14,49 +15,50 @@ public class Customer implements it.polito.ezshop.data.Customer{
 
 	@Override
 	public String getCustomerName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public void setCustomerName(String customerName) {
-		// TODO Auto-generated method stub
+		this.name = customerName;
 		
 	}
 
 	@Override
 	public String getCustomerCard() {
-		// TODO Auto-generated method stub
-		return null;
+		return card;
 	}
 
 	@Override
 	public void setCustomerCard(String customerCard) {
-		// TODO Auto-generated method stub
-		
+		if(customerCard == null) {
+			this.card = null;
+		}
+		else {
+			this.card = customerCard;
+		}
 	}
+
 
 	@Override
 	public Integer getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return customerId;
 	}
 
 	@Override
 	public void setId(Integer id) {
-		// TODO Auto-generated method stub
+		this.customerId = id;
 		
 	}
 
 	@Override
 	public Integer getPoints() {
-		// TODO Auto-generated method stub
-		return null;
+		return points;
 	}
 
 	@Override
 	public void setPoints(Integer points) {
-		// TODO Auto-generated method stub
+		this.points = points;
 		
 	}
 

@@ -101,6 +101,39 @@ public class EZShop implements EZShopInterface {
 	         return false;
 	      }
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	private ArrayList<Long> readLoyalty() {;
+		ArrayList<Long> cardsNo = null;
+		try {
+			 String fName = "./src/main/java/it/polito/cards.in/";
+	         FileInputStream fileIn = new FileInputStream(fName);
+	         ObjectInputStream in = new ObjectInputStream(fileIn);
+	         cardsNo = (ArrayList<Long>) in.readObject();
+	         in.close();
+	         fileIn.close();
+	      } catch (IOException i) {
+	         i.printStackTrace();} 
+			catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return cardsNo;
+	}
+	
+	private boolean updateLoyalty(ArrayList<Long> cardsNo) {
+		String fName = "./src/main/java/it/polito/cards.in/";
+		try {
+	         FileOutputStream fileOut = new FileOutputStream(fName);
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(cardsNo);
+	         out.close();
+	         fileOut.close();
+	         return true;
+	      } catch (IOException i) {
+	         return false;
+	      }
+	}
 
 	@Override
     public void reset() {
@@ -234,7 +267,7 @@ public class EZShop implements EZShopInterface {
     	if(pricePerUnit <= 0)
     		throw new InvalidPricePerUnitException();
     	
-    	if( !this.loggedUser.equals("Administrator") || !this.loggedUser.equals("ShopManager") )
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")))
     		throw new UnauthorizedException();
     	
     	if ( this.productList.get(this.productId) != null )
@@ -318,7 +351,7 @@ public class EZShop implements EZShopInterface {
         if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager") && !this.loggedUser.getRole().equals("Cashier"))) {
         	throw new UnauthorizedException();
         }
-        Customer c = new it.polito.ezshop.model.Customer(customerName);
+        it.polito.ezshop.model.Customer c = new it.polito.ezshop.model.Customer(customerName);
         c.setId(customerId);
         if(customerList.put(customerId, c) != null) {
         	return -1;
@@ -332,32 +365,131 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public boolean modifyCustomer(Integer id, String newCustomerName, String newCustomerCard) throws InvalidCustomerNameException, InvalidCustomerCardException, InvalidCustomerIdException, UnauthorizedException {
-        return false;
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")) )
+    		throw new UnauthorizedException();
+    	if(newCustomerName == null || newCustomerName.length()==0)
+    		throw new InvalidCustomerNameException();
+    	LoyaltyCard lc = this.loyaltyCardList.get(newCustomerCard);
+    	if( lc != null || newCustomerCard.length()!=10 ) {
+    		throw new InvalidCustomerCardException();
+    	}
+    	try {
+    		Integer.parseInt(newCustomerCard);
+    	}
+    	catch(NumberFormatException e) {
+    		throw new InvalidCustomerCardException();
+    	}
+    	if(id == null || id<=0) {
+    		throw new InvalidCustomerIdException();
+    	}
+    	
+    	Customer c = customerList.get(id);
+    	if (c == null) {
+    		return false;
+    	}
+    	
+    	c.setCustomerName(newCustomerName);
+    	if(newCustomerCard.length()==0) {
+    		c.setCustomerCard(null);
+    	}
+    	else if(newCustomerCard != null) {
+    		c.setCustomerCard(newCustomerCard);
+    	}
+    	boolean ret = writeAppState();
+    	if (ret==false)
+    		return false;
+    	return true;
     }
 
-    @Override
+
+	@Override
     public boolean deleteCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
-        return false;
+		if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")) )
+    		throw new UnauthorizedException();
+		if(id == null || id<=0)
+			throw new InvalidCustomerIdException();
+		
+		Customer c = customerList.remove(id);
+		if(c==null) {
+			return false;
+		}
+		boolean ret = writeAppState();
+    	if (ret==false)
+    		return false;
+        return true;
     }
 
     @Override
     public Customer getCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
-        return null;
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")) )
+    		throw new UnauthorizedException();
+    	if(id == null || id<=0)
+			throw new InvalidCustomerIdException();
+    	Customer c = customerList.get(id);
+    	return c;
     }
 
     @Override
     public List<Customer> getAllCustomers() throws UnauthorizedException {
-        return null;
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")) )
+    		throw new UnauthorizedException();
+        return (List<Customer>) customerList.values();
     }
 
     @Override
     public String createCard() throws UnauthorizedException {
-        return null;
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")) )
+    		throw new UnauthorizedException();
+    	LoyaltyCard lc = new LoyaltyCard();
+    	ArrayList<Long> cards = readLoyalty();
+    	if(cards == null) {
+    		return "";
+    	}
+    	String code = cards.remove(0).toString();
+    	if(!updateLoyalty(cards)) {
+    		return "";
+    	}
+    	lc.setCode(code);
+    	loyaltyCardList.put(code, lc);
+    	boolean ret = writeAppState();
+    	if (ret==false)
+    		return "";
+        return code;
     }
 
     @Override
     public boolean attachCardToCustomer(String customerCard, Integer customerId) throws InvalidCustomerIdException, InvalidCustomerCardException, UnauthorizedException {
-        return false;
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")) )
+    		throw new UnauthorizedException();
+    	if(customerId==null || customerId<=0)
+    		throw new InvalidCustomerIdException();
+    	if(customerCard == null || customerCard.length()!=10 ) {
+    		throw new InvalidCustomerCardException();
+    	}
+    	try {
+    		Integer.parseInt(customerCard);
+    	}
+    	catch(NumberFormatException e) {
+    		throw new InvalidCustomerCardException();
+    	}
+    	
+    	Customer c = customerList.get(customerId);
+    	if(c == null) {
+    		return false;
+    	}
+    	LoyaltyCard lc = loyaltyCardList.get(customerCard);
+    	
+    	for(Customer cu : customerList.values()) {
+    		if(cu.getCustomerCard().equals(customerCard)) {
+    			return false; //someone alreay has it
+    		}
+    	}
+    	lc.setCustomer(c);   	
+    	c.setCustomerCard(customerCard);
+    	boolean ret = writeAppState();
+    	if (ret==false)
+    		return false;
+    	return false;
     }
 
     @Override
