@@ -1,6 +1,7 @@
 package it.polito.ezshop.data;
 
 import it.polito.ezshop.exceptions.*;
+import it.polito.ezshop.model.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,6 +12,7 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -19,6 +21,19 @@ public class EZShop implements EZShopInterface {
 	private LinkedHashMap<Integer, User> userList = null;
 	private User loggedUser;
 	private int userId=1;
+	private LinkedHashMap<Integer, ProductType> productList = null;
+	private int productId=1;
+	private HashMap<Integer, Customer> customerList = null;
+	private int customerId=1;
+	private HashMap<Integer, Order> orderList = null;
+	private int orderId=1;
+	private HashMap<String, LoyaltyCard> loyaltyCardList = null;
+	private int loyaltyCardId = 1;
+	private HashMap<Integer, SaleTransaction> transactionList = null;
+	private int saleId=1;
+	private HashMap<Integer, ReturnTransaction> returnList = null;
+	private int returnId=1;
+	private AccountBook accounting = null;
 	private List<Object> appState = new ArrayList<Object>();
 	File f = new File("./src/main/java/it/polito/ezshop/appState.db");
 	
@@ -60,7 +75,20 @@ public class EZShop implements EZShopInterface {
 
 	private boolean writeAppState() {
 		appState.add(0, userList);
-		appState.add(1,userId);
+		appState.add(1, userId);
+		appState.add(2, productList);
+		appState.add(3, productId);
+		appState.add(4, customerList);
+		appState.add(5, customerId);
+		appState.add(6, loyaltyCardList);
+		appState.add(7, loyaltyCardId);
+		appState.add(8, transactionList);
+		appState.add(9, saleId);
+		appState.add(10, returnList);
+		appState.add(11, returnId);
+		appState.add(12, accounting);
+		appState.add(13, orderList);
+		appState.add(14, orderId);
 		try {
 	         FileOutputStream fileOut = new FileOutputStream(f);
 	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
