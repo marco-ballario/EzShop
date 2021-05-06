@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class Order implements it.polito.ezshop.data.Order, Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2649617442756178065L;
 	private String productCode;
 	private int quantity;
 	private double pricePerUnit;
@@ -14,7 +18,6 @@ public class Order implements it.polito.ezshop.data.Order, Serializable{
 	
 
 	public Order(String product, int quantity, double pricePerUnit) {
-		super();
 		this.productCode = product;
 		this.quantity = quantity;
 		this.pricePerUnit = pricePerUnit;
@@ -22,73 +25,69 @@ public class Order implements it.polito.ezshop.data.Order, Serializable{
 
 	@Override
 	public Integer getBalanceId() {
-		// TODO Auto-generated method stub
-		return null;
+		return payment.getBalanceId();
 	}
 
 	@Override
 	public void setBalanceId(Integer balanceId) {
-		// TODO Auto-generated method stub
+		this.payment.setBalanceId(balanceId);
 		
 	}
 
 	@Override
 	public String getProductCode() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.productCode;
 	}
 
 	@Override
 	public void setProductCode(String productCode) {
-		// TODO Auto-generated method stub
+		this.productCode = productCode;
 		
 	}
 
 	@Override
 	public double getPricePerUnit() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.pricePerUnit;
 	}
 
 	@Override
 	public void setPricePerUnit(double pricePerUnit) {
-		// TODO Auto-generated method stub
+		this.pricePerUnit = pricePerUnit;
 		
 	}
 
 	@Override
 	public int getQuantity() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.quantity;
 	}
 
 	@Override
 	public void setQuantity(int quantity) {
-		// TODO Auto-generated method stub
+		this.quantity = quantity;
 		
 	}
 
 	@Override
 	public String getStatus() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return state;
 	}
 
 	@Override
 	public void setStatus(String status) {
-		// TODO Auto-generated method stub
+		this.state = status;
 		
 	}
 
 	@Override
 	public Integer getOrderId() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.orderId;
 	}
 
 	@Override
 	public void setOrderId(Integer orderId) {
-		// TODO Auto-generated method stub
+		this.orderId = orderId;
 		
 	}
 
