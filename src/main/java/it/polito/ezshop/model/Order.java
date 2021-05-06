@@ -4,9 +4,7 @@ import java.io.Serializable;
 
 public class Order implements it.polito.ezshop.data.Order, Serializable{
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -2649617442756178065L;
 	private String productCode;
 	private int quantity;
