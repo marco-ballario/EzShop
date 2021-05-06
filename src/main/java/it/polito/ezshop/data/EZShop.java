@@ -387,12 +387,22 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer payOrderFor(String productCode, int quantity, double pricePerUnit) throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException {
+    	
         return null;
     }
 
     @Override
     public boolean payOrder(Integer orderId) throws InvalidOrderIdException, UnauthorizedException {
-        return false;
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")) )
+    		throw new UnauthorizedException();
+    	if(orderId == null || orderId<=0) {
+    		throw new InvalidOrderIdException();
+    	}
+    	Order order = this.orderList.get(orderId);
+    	if(order == null || (order.getStatus()!="ISSUED" && order.getStatus()!="ORDERED"))
+    		return false;
+    	order.setStatus("PAYED");;
+    	return true;
     }
 
     @Override
