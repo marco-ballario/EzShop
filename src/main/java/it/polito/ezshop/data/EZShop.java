@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
 
 public class EZShop implements EZShopInterface {
@@ -55,8 +54,22 @@ public class EZShop implements EZShopInterface {
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
 	         e = (List<Object>) in.readObject();
 	         if(e != null) {
+	        	 //cast back read elements
 		         userList = (LinkedHashMap<Integer, User>) e.get(0);
 		         userId = (Integer)e.get(1);
+		         productList = (LinkedHashMap<Integer, ProductType>)e.get(2);
+		         productId =(Integer)e.get(3);
+		         customerList = (HashMap<Integer, Customer>) e.get(4);
+		         customerId = (Integer) e.get(5);
+		         loyaltyCardList =(HashMap<String, LoyaltyCard>) e.get(6);
+		 		 loyaltyCardId = (Integer) e.get(7);
+		 		 transactionList = (HashMap<Integer, SaleTransaction>) e.get(8);
+		 		 saleId =  (Integer) e.get(9);
+		 		 returnList = (HashMap<Integer, ReturnTransaction>) e.get(10);
+		 		 returnId = (Integer) e.get(11);
+		 		 accounting = (AccountBook) e.get(12);
+		 		 orderList = (HashMap<Integer, Order>) e.get(13);
+		 		 orderId = (Integer) e.get(14);
 	         }
 	         else {
 	        	 userList = new LinkedHashMap<Integer, User>();
@@ -75,6 +88,7 @@ public class EZShop implements EZShopInterface {
 	}
 
 	private boolean writeAppState() {
+		//save data structure inside the list that will be stored in the file
 		appState.add(0, userList);
 		appState.add(1, userId);
 		appState.add(2, productList);
@@ -137,6 +151,8 @@ public class EZShop implements EZShopInterface {
 
 	@Override
     public void reset() {
+		readAppState();
+		this.loggedUser = null;
     	
     }
 
@@ -310,7 +326,7 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public boolean updateQuantity(Integer productId, int toBeAdded) throws InvalidProductIdException, UnauthorizedException {
-        return false;
+        return true;
     }
 
     @Override
@@ -484,17 +500,47 @@ public class EZShop implements EZShopInterface {
     			return false; //someone alreay has it
     		}
     	}
+    	
     	lc.setCustomer(c);   	
     	c.setCustomerCard(customerCard);
     	boolean ret = writeAppState();
-    	if (ret==false)
-    		return false;
+    	if (ret==false) {
+    		//rollback
+    		lc.setCustomer(null);
+    		c.setCustomerCard("");
+    		return false;}
     	return false;
     }
 
     @Override
     public boolean modifyPointsOnCard(String customerCard, int pointsToBeAdded) throws InvalidCustomerCardException, UnauthorizedException {
-        return false;
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")) )
+    		throw new UnauthorizedException();
+    	//card validity
+    	if(customerCard == null || customerCard.length()!=10 ) {
+    		throw new InvalidCustomerCardException();
+    	}
+    	try {
+    		Integer.parseInt(customerCard);//check is composed by numbers
+    	}
+    	catch(NumberFormatException e) {
+    		throw new InvalidCustomerCardException();
+    	}
+    	//end check on card
+    	
+    	LoyaltyCard lc = loyaltyCardList.get(customerCard);
+    	if(lc == null || (lc.getPoints() + pointsToBeAdded)<0) {
+    		return false;
+    	}
+    	
+    	Integer oldPoint =lc.getPoints();
+    	lc.setPoints(oldPoint + pointsToBeAdded);
+    	
+    	if (! writeAppState()) {
+    		lc.setPoints(oldPoint); //RollBack
+    		return false;
+    	}
+    	return true;
     }
 
     @Override
