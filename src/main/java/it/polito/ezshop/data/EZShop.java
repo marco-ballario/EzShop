@@ -363,7 +363,26 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer issueOrder(String productCode, int quantity, double pricePerUnit) throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException {
-        return null;
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")) )
+    		throw new UnauthorizedException();
+    	if(productCode == null || productCode.isEmpty()) 
+    		throw new InvalidProductCodeException();
+    	try{
+			Integer.parseInt(productCode);
+		}catch(NumberFormatException e) {
+			throw new InvalidProductCodeException();
+		}
+    	if(quantity <= 0)
+    		throw new InvalidQuantityException();
+    	if(pricePerUnit <= 0)
+    		throw new InvalidPricePerUnitException();
+    	Order newOrder = new it.polito.ezshop.model.Order(productCode,quantity,pricePerUnit);
+    	newOrder.setOrderId(this.orderId);
+    	this.orderList.put(this.orderId,newOrder);
+    	if( this.writeAppState() == false )
+    		return -1;
+    	
+    	return this.orderId++;
     }
 
     @Override
@@ -383,7 +402,9 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public List<Order> getAllOrders() throws UnauthorizedException {
-        return null;
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")) )
+    		throw new UnauthorizedException();
+    	return (List<Order>) orderList.values();
     }
 
     @Override
