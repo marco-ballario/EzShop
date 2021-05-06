@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -33,7 +34,7 @@ public class EZShop implements EZShopInterface {
 	private int saleId=1;
 	private HashMap<Integer, ReturnTransaction> returnList = null;
 	private int returnId=1;
-	private AccountBook accounting = null;
+	private AccountBook accounting = AccountBook.getIstance(); //SINGLETON PATTERN THAT AVOIDS MULTIPLE ACCOUNTS
 	private List<Object> appState = new ArrayList<Object>();
 	File f = new File("./src/main/java/it/polito/ezshop/appState.db");
 	
@@ -630,16 +631,58 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public boolean recordBalanceUpdate(double toBeAdded) throws UnauthorizedException {
-        return false;
+    	if(this.loggedUser==null ||(! this.loggedUser.getRole().equals("Administrator") && ! this.loggedUser.getRole().equals("ShopManager"))) {
+        	throw new UnauthorizedException();
+        }
+    	boolean res = accounting.isertBalanceOperation(toBeAdded);
+    	
+        return res;
     }
 
     @Override
     public List<BalanceOperation> getCreditsAndDebits(LocalDate from, LocalDate to) throws UnauthorizedException {
-        return null;
+    	if(this.loggedUser==null ||(! this.loggedUser.getRole().equals("Administrator") && ! this.loggedUser.getRole().equals("ShopManager"))) {
+        	throw new UnauthorizedException();
+        }
+    	if (from != null && to != null && from.compareTo(to)>0) {
+    		//invert dates if from is gretaer than to
+    		LocalDate tmp = from;
+    		from = to;
+    		to = tmp;
+    	}
+    	List<BalanceOperation> result = new LinkedList<BalanceOperation>();
+    	if(from == null) {
+    		for (BalanceOperation bo: accounting.getOperationList() ) {
+        		if(bo.getDate().compareTo(to) <= 0) {
+        			result.add(bo);
+        		}
+        	}
+    	}
+    	else if(to == null) {
+    		for (BalanceOperation bo: accounting.getOperationList() ) {
+        		if(bo.getDate().compareTo(from) >= 0) {
+        			result.add(bo);
+        		}
+        	}
+    	}
+    	else if(from == null || to == null) {
+    		result = accounting.getOperationList();
+    	}
+    	else {
+    		for (BalanceOperation bo: accounting.getOperationList() ) {
+        		if( bo.getDate().compareTo(from) >= 0 && bo.getDate().compareTo(to) <= 0) {
+        			result.add(bo);
+        		}
+        	}
+    	}
+    	return result;
     }
 
     @Override
     public double computeBalance() throws UnauthorizedException {
-        return 0;
+    	if(this.loggedUser==null ||(! this.loggedUser.getRole().equals("Administrator") && ! this.loggedUser.getRole().equals("ShopManager"))) {
+        	throw new UnauthorizedException();
+        }
+        return accounting.getBalance();
     }
 }
