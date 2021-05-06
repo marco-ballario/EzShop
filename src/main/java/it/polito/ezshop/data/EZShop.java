@@ -638,7 +638,23 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer startReturnTransaction(Integer saleNumber) throws /*InvalidTicketNumberException,*/InvalidTransactionIdException, UnauthorizedException {
-        return null;
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")) )
+    		throw new UnauthorizedException();
+    	if(saleNumber == null || saleNumber <=0)
+    		throw new InvalidTransactionIdException();
+    	SaleTransaction s = transactionList.get(saleNumber);
+    	if(s==null) {
+    		return -1;
+    	}
+    	ReturnTransaction rt = new ReturnTransaction(returnId, s);
+    	returnList.put(returnId, rt);
+    	//TO DO add return trasaction to SaleTransaction list
+    	
+    	if (! writeAppState()) {
+    		returnList.remove(returnId); //RollBack
+    		return -1;
+    	}
+    	return returnId++;
     }
 
     @Override
