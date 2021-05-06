@@ -1,8 +1,13 @@
 package it.polito.ezshop.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class BalanceOperation implements it.polito.ezshop.data.BalanceOperation {
+public class BalanceOperation implements it.polito.ezshop.data.BalanceOperation, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6909291975684258125L;
 	private Integer balanceId;
 	private LocalDate date;
 	private String type;

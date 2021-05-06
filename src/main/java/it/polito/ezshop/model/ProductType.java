@@ -1,7 +1,13 @@
 package it.polito.ezshop.model;
 
-public class ProductType implements it.polito.ezshop.data.ProductType {
+import java.io.Serializable;
 
+public class ProductType implements it.polito.ezshop.data.ProductType, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1127825657944190527L;
 	private String description, barCode, note;
 	private Integer productID, quantity;
 	private double pricePerUnit;

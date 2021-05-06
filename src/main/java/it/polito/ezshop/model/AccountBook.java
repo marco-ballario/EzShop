@@ -1,11 +1,16 @@
 package it.polito.ezshop.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
 import it.polito.ezshop.data.BalanceOperation;
 
-public class AccountBook {
+public class AccountBook implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9164632041456229108L;
 	private static AccountBook istance=null;
 	private double balance;
 	private LinkedList<BalanceOperation> operationList = new LinkedList<BalanceOperation>();

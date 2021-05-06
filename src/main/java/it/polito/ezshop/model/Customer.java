@@ -1,6 +1,12 @@
 package it.polito.ezshop.model;
 
-public class Customer implements it.polito.ezshop.data.Customer{
+import java.io.Serializable;
+
+public class Customer implements it.polito.ezshop.data.Customer, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1851008845939686219L;
 	private String name;
 	private Integer customerId;
 	private String card;

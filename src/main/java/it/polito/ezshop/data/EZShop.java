@@ -21,19 +21,19 @@ import java.util.List;
 public class EZShop implements EZShopInterface {
 	private LinkedHashMap<Integer, User> userList = null;
 	private User loggedUser;
-	private int userId=1;
+	private int userId;
 	private LinkedHashMap<Integer, ProductType> productList = null;
-	private int productId=1;
+	private int productId;
 	private HashMap<Integer, Customer> customerList = null;
-	private int customerId=1;
+	private int customerId;
 	private HashMap<Integer, Order> orderList = null;
-	private int orderId=1;
+	private int orderId;
 	private HashMap<String, LoyaltyCard> loyaltyCardList = null;
-	private int loyaltyCardId = 1;
+	private int loyaltyCardId;
 	private HashMap<Integer, SaleTransaction> transactionList = null;
-	private int saleId=1;
+	private int saleId;
 	private HashMap<Integer, ReturnTransaction> returnList = null;
-	private int returnId=1;
+	private int returnId;
 	private AccountBook accounting = AccountBook.getIstance(); //SINGLETON PATTERN THAT AVOIDS MULTIPLE ACCOUNTS
 	private List<Object> appState = new ArrayList<Object>();
 	File f = new File("./src/main/java/it/polito/ezshop/appState.db");
@@ -47,6 +47,19 @@ public class EZShop implements EZShopInterface {
 	private void readAppState() {
 		if (!f.isFile() || !f.canRead()) {
 			userList = new LinkedHashMap<Integer, User>();
+			productList = new LinkedHashMap<Integer, ProductType>();
+			customerList = new HashMap<Integer, Customer>();
+			orderList = new HashMap<Integer, Order>();
+			loyaltyCardList = new HashMap<String, LoyaltyCard>();
+			transactionList = new HashMap<Integer, SaleTransaction>();
+			returnList = new HashMap<Integer, ReturnTransaction>();
+			userId = 1;
+			productId=1;
+			customerId=1;
+			orderId=1;
+			loyaltyCardId =1;
+			saleId = 1;
+			returnId=1;
 		}
 		else {
 		try {
@@ -74,12 +87,25 @@ public class EZShop implements EZShopInterface {
 	         }
 	         else {
 	        	 userList = new LinkedHashMap<Integer, User>();
-		         userId = 1;
+	 			productList = new LinkedHashMap<Integer, ProductType>();
+	 			customerList = new HashMap<Integer, Customer>();
+	 			orderList = new HashMap<Integer, Order>();
+	 			loyaltyCardList = new HashMap<String, LoyaltyCard>();
+	 			transactionList = new HashMap<Integer, SaleTransaction>();
+	 			returnList = new HashMap<Integer, ReturnTransaction>();
+	 			userId = 1;
+	 			productId=1;
+	 			customerId=1;
+	 			orderId=1;
+	 			loyaltyCardId =1;
+	 			saleId = 1;
+	 			returnId=1;
 	         }
 	         in.close();
 	         fileIn.close();
 	      } catch (IOException i) {
-	         i.printStackTrace();
+	    	  System.out.println(i.getMessage());
+	         
 	         
 	      } catch (ClassNotFoundException c) {
 	         c.printStackTrace();
