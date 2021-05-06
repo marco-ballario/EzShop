@@ -11,10 +11,10 @@ public class ProductType implements it.polito.ezshop.data.ProductType, Serializa
 	private String description, barCode, note;
 	private Integer productID, quantity;
 	private double pricePerUnit;
+	private String location;
 	
 
 	public ProductType(String description, String barCode, double pricePerUnit, String note) {
-		super();
 		this.description = description;
 		this.barCode = barCode;
 		this.note = note;
@@ -33,73 +33,70 @@ public class ProductType implements it.polito.ezshop.data.ProductType, Serializa
 
 	@Override
 	public String getLocation() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.location;
 	}
 
 	@Override
 	public void setLocation(String location) {
-		// TODO Auto-generated method stub
+		this.location = location;
 		
 	}
 
 	@Override
 	public String getNote() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.note;
 	}
 
 	@Override
 	public void setNote(String note) {
-		// TODO Auto-generated method stub
+		this.note = note;
 		
 	}
 
 	@Override
 	public String getProductDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.description;
 	}
 
 	@Override
 	public void setProductDescription(String productDescription) {
-		// TODO Auto-generated method stub
+		this.description = productDescription;
 		
 	}
 
 	@Override
 	public String getBarCode() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.barCode;
 	}
 
 	@Override
 	public void setBarCode(String barCode) {
-		// TODO Auto-generated method stub
+		this.barCode = barCode;
 		
 	}
 
 	@Override
 	public Double getPricePerUnit() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.pricePerUnit;
 	}
 
 	@Override
 	public void setPricePerUnit(Double pricePerUnit) {
-		// TODO Auto-generated method stub
-		
+		this.pricePerUnit = pricePerUnit;
 	}
 
 	@Override
 	public Integer getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.productID;
 	}
 
 	@Override
 	public void setId(Integer id) {
-		// TODO Auto-generated method stub
+		this.productID = id;
 		
 	}
 
