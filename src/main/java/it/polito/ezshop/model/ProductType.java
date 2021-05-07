@@ -39,24 +39,20 @@ public class ProductType implements it.polito.ezshop.data.ProductType, Serializa
 	@Override
 	public void setLocation(String location) {
 		this.location = location;
-		
 	}
 
 	@Override
 	public String getNote() {
-		
 		return this.note;
 	}
 
 	@Override
 	public void setNote(String note) {
 		this.note = note;
-		
 	}
 
 	@Override
 	public String getProductDescription() {
-		
 		return this.description;
 	}
 
@@ -68,19 +64,16 @@ public class ProductType implements it.polito.ezshop.data.ProductType, Serializa
 
 	@Override
 	public String getBarCode() {
-		
 		return this.barCode;
 	}
 
 	@Override
 	public void setBarCode(String barCode) {
 		this.barCode = barCode;
-		
 	}
 
 	@Override
 	public Double getPricePerUnit() {
-		
 		return this.pricePerUnit;
 	}
 
@@ -96,8 +89,7 @@ public class ProductType implements it.polito.ezshop.data.ProductType, Serializa
 
 	@Override
 	public void setId(Integer id) {
-		this.productID = id;
-		
+		this.productID = id;	
 	}
 
 }

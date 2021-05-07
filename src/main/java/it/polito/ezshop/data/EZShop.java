@@ -316,7 +316,7 @@ public class EZShop implements EZShopInterface {
     	if ( this.productList.get(this.productId) != null )
     		return -1;
     	
-    	ProductType pt = new it.polito.ezshop.model.ProductType(description, productCode, pricePerUnit, note);
+    	it.polito.ezshop.model.ProductType pt = new it.polito.ezshop.model.ProductType(description, productCode, pricePerUnit, note);
     	pt.setId(this.productId);
     	this.productList.put(this.productId, pt);
     	
@@ -603,7 +603,19 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer startSaleTransaction() throws UnauthorizedException {
-        return null;
+    	if(this.loggedUser == null || ( !this.loggedUser.getRole().equals("Cashier") &&
+    									!this.loggedUser.getRole().equals("Administrator") &&
+    									!this.loggedUser.getRole().equals("ShopManager")) )
+    		throw new UnauthorizedException();
+    	
+    	it.polito.ezshop.model.SaleTransaction st = new it.polito.ezshop.model.SaleTransaction();
+    	st.setTicketNumber(this.saleId);
+    	this.transactionList.put(this.saleId, st);
+    	
+    	if( this.writeAppState() == false )
+    		return -1;
+    	
+        return this.saleId++;
     }
 
     @Override
