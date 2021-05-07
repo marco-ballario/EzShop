@@ -8,7 +8,7 @@ import java.util.List;
 public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction {
 
 	// design properties
-	private HashMap<ProductType, Integer> products;
+	private HashMap<Integer, ProductType> products;
 	private List<ReturnTransaction> returnTransactions;
 	private BalanceOperation payment;
 	private Integer TransactionId, transactionPoints;
@@ -66,4 +66,10 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction {
 		this.price = price;		
 	}
 
+	public void addProduct(int productCode, ProductType product, int amount) {
+		this.products.put(productCode, product);
+		this.price += product.getPricePerUnit() * amount;
+		// how to keep track of each product quantity here ?
+	}
+	
 }
