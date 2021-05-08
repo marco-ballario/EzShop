@@ -813,9 +813,10 @@ public class EZShop implements EZShopInterface {
 
 	@Override
 	public Integer startSaleTransaction() throws UnauthorizedException {
-		if (this.loggedUser == null
-				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
-						&& !this.loggedUser.getRole().equals("ShopManager")))
+		if ( this.loggedUser == null || (
+			!this.loggedUser.getRole().equals("Cashier") &&
+			!this.loggedUser.getRole().equals("Administrator") &&
+			!this.loggedUser.getRole().equals("ShopManager")) )
 			throw new UnauthorizedException();
 
 		it.polito.ezshop.model.SaleTransaction st = new it.polito.ezshop.model.SaleTransaction();
@@ -832,9 +833,10 @@ public class EZShop implements EZShopInterface {
 	public boolean addProductToSale(Integer transactionId, String productCode, int amount)
 			throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,
 			UnauthorizedException {
-		if (this.loggedUser == null
-				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
-						&& !this.loggedUser.getRole().equals("ShopManager")))
+		if ( this.loggedUser == null || (
+			!this.loggedUser.getRole().equals("Cashier") &&
+			!this.loggedUser.getRole().equals("Administrator") &&
+			!this.loggedUser.getRole().equals("ShopManager")) )
 			throw new UnauthorizedException();
 
 		if (transactionId == null || transactionId <= 0)
@@ -862,7 +864,7 @@ public class EZShop implements EZShopInterface {
 			return false;
 		pt.setQuantity(oldQuantity - amount);
 
-		st.addProduct(pc, (it.polito.ezshop.model.ProductType) pt, amount); // to be checked
+		st.addProduct(pt, amount); // to be checked
 
 		if (this.writeAppState() == false)
 			return false;
@@ -910,6 +912,15 @@ public class EZShop implements EZShopInterface {
 	@Override
 	public SaleTransaction getSaleTransaction(Integer transactionId)
 			throws InvalidTransactionIdException, UnauthorizedException {
+		if ( this.loggedUser == null || (
+			!this.loggedUser.getRole().equals("Cashier") &&
+			!this.loggedUser.getRole().equals("Administrator") &&
+			!this.loggedUser.getRole().equals("ShopManager")) )
+			throw new UnauthorizedException();
+		if ( transactionId <= 0  || transactionId == null )
+			throw new InvalidTransactionIdException();
+		
+		
 		return null;
 	}
 
