@@ -574,7 +574,7 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidOrderIdException();
 		}
 		Order order = this.orderList.get(orderId);
-		if (order == null || (order.getStatus() != "ISSUED" && order.getStatus() != "ORDERED"))
+		if (order == null || !order.getStatus().equals("ISSUED"))
 			return false;
 		order.setStatus("PAYED");
 		this.accounting.setBalance(order.getPricePerUnit() * order.getQuantity());
@@ -584,6 +584,22 @@ public class EZShop implements EZShopInterface {
 	@Override
 	public boolean recordOrderArrival(Integer orderId)
 			throws InvalidOrderIdException, UnauthorizedException, InvalidLocationException {
+		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator")
+				&& !this.loggedUser.getRole().equals("ShopManager")))
+			throw new UnauthorizedException();
+		if (orderId == null || orderId <= 0) {
+			throw new InvalidOrderIdException();
+		}
+		Order order = this.orderList.get(orderId);
+		ProductType product ;
+		if (order == null || (!order.getStatus().equals("COMPLETED") && !order.getStatus().equals("ISSUED")))
+			return false;
+		if(order.getStatus().equals("ISSUED")) {
+			order.setStatus("COMPLETED");
+			product = this.productList.get(orderId); //todo aggiungere qunatità
+			
+		}
+
 		return false;
 	}
 
