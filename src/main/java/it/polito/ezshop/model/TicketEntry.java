@@ -2,71 +2,74 @@ package it.polito.ezshop.model;
 
 import java.io.Serializable;
 
+import it.polito.ezshop.data.ProductType;
+
 public class TicketEntry implements it.polito.ezshop.data.TicketEntry, Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6159303808059742186L;
-
+	private String barCode, productDescription;
+	private double discountRate, pricePerUnit;
+	private int amount;
+	
+	public TicketEntry(ProductType p, int amount) {
+		this.barCode = p.getBarCode();
+		this.productDescription = p.getProductDescription();
+		this.pricePerUnit = p.getPricePerUnit();
+		this.amount = amount;
+		this.discountRate = 0;
+	}
+	
 	@Override
 	public String getBarCode() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.barCode;
 	}
 
 	@Override
 	public void setBarCode(String barCode) {
-		// TODO Auto-generated method stub
-		
+		this.barCode = barCode;		
 	}
 
 	@Override
 	public String getProductDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.productDescription;
 	}
 
 	@Override
 	public void setProductDescription(String productDescription) {
-		// TODO Auto-generated method stub
-		
+		this.productDescription = productDescription;
 	}
 
 	@Override
 	public int getAmount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.amount;
 	}
 
 	@Override
 	public void setAmount(int amount) {
-		// TODO Auto-generated method stub
-		
+		this.amount = amount;
 	}
 
 	@Override
 	public double getPricePerUnit() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.pricePerUnit;
 	}
 
 	@Override
 	public void setPricePerUnit(double pricePerUnit) {
-		// TODO Auto-generated method stub
-		
+		this.pricePerUnit = pricePerUnit;
 	}
 
 	@Override
 	public double getDiscountRate() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.discountRate;
 	}
 
 	@Override
 	public void setDiscountRate(double discountRate) {
-		// TODO Auto-generated method stub
-		
+		this.discountRate = discountRate;
 	}
 
 }
