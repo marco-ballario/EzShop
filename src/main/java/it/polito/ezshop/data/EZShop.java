@@ -316,6 +316,11 @@ public class EZShop implements EZShopInterface {
     	if ( this.productList.get(this.productId) != null )
     		return -1;
     	
+    	for(ProductType p : productList.values()) {    //Check if a product with the same barcode is already present
+        	if(p.getBarCode().equals(productCode))
+        		return -1;
+        }
+    	
     	it.polito.ezshop.model.ProductType pt = new it.polito.ezshop.model.ProductType(description, productCode, pricePerUnit, note);
     	pt.setId(this.productId);
     	this.productList.put(this.productId, pt);
@@ -328,27 +333,109 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public boolean updateProduct(Integer id, String newDescription, String newCode, double newPrice, String newNote) throws InvalidProductIdException, InvalidProductDescriptionException, InvalidProductCodeException, InvalidPricePerUnitException, UnauthorizedException {
-        return false;
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")))
+    		throw new UnauthorizedException();
+    	
+    	if(id <= 0 || id == null )
+    		throw new InvalidProductIdException();
+    	
+    	if(newDescription == null || newDescription.length() == 0)
+    		throw new InvalidProductDescriptionException();
+    	
+    	if(newCode == null || newCode.isEmpty()) 
+    		throw new InvalidProductCodeException();
+    	try{
+			Integer.parseInt(newCode);
+		}catch(NumberFormatException e) {
+			throw new InvalidProductCodeException();   //TODO barcode valido --> algoritmo
+		}
+    	
+    	if(newPrice <= 0)
+    		throw new InvalidPricePerUnitException();
+    	
+        for(it.polito.ezshop.model.ProductType pt : productList.values()) {    //Check if a product with the same barcode is already present
+        	if(pt.getBarCode().equals(newCode))
+        		return false;
+        }
+    	
+        it.polito.ezshop.model.ProductType p = productList.get(id);
+    	if(p == null)
+    		return false;
+        
+        //if p is not null update product
+        p.setProductDescription(newDescription);
+        p.setBarCode(newCode);
+        p.setPricePerUnit(newPrice);
+        p.setNote(newNote);
+        
+    	boolean ret = writeAppState();
+    	if (ret==false)
+    		return false;
+    	
+    	return true;
     }
 
     @Override
     public boolean deleteProductType(Integer id) throws InvalidProductIdException, UnauthorizedException {
-        return false;
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")))
+    		throw new UnauthorizedException();
+    	
+    	if(id <= 0 || id == null )
+    		throw new InvalidProductIdException();
+    	
+    	it.polito.ezshop.model.ProductType p = productList.remove(id);;
+    	if(p == null)
+    		return false;
+    	
+    	boolean ret = writeAppState();
+    	if (ret==false)
+    		return false;
+    	
+    	return true;
+ 
     }
 
     @Override
     public List<ProductType> getAllProductTypes() throws UnauthorizedException {
-        return null;
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager") && !this.loggedUser.getRole().equals("Cashier")))
+    		throw new UnauthorizedException();
+    	
+    	return (List<ProductType>) productList.values();
     }
 
     @Override
     public ProductType getProductTypeByBarCode(String barCode) throws InvalidProductCodeException, UnauthorizedException {
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")))
+    		throw new UnauthorizedException();
+    	
+    	if(barCode == null || barCode.isEmpty()) 
+    		throw new InvalidProductCodeException();
+    	try{
+			Integer.parseInt(barCode);
+		}catch(NumberFormatException e) {
+			throw new InvalidProductCodeException();   //TODO barcode valido
+		}
+    	
+    	for(ProductType p : productList.values()) {
+    		if(p.getBarCode().equals(barCode))
+    			return p;
+    	}
+    	
         return null;
     }
 
     @Override
     public List<ProductType> getProductTypesByDescription(String description) throws UnauthorizedException {
-        return null;
+    	if(this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")))
+    		throw new UnauthorizedException();
+    	
+    	List<ProductType> lp = new ArrayList<ProductType>();
+    	
+    	for(ProductType p : productList.values()) {
+    		if(p.getProductDescription().contains(description))
+    			lp.add(p);
+    	}
+        return lp;
     }
 
     @Override
