@@ -1,20 +1,25 @@
 package it.polito.ezshop.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
 //import it.polito.ezshop.data.TicketEntry;
 
-public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction {
+public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2068771338240775445L;
 	// design properties
 	private HashMap<Integer, ProductType> products;
 	private List<ReturnTransaction> returnTransactions;
 	private BalanceOperation payment;
 	private Integer TransactionId, transactionPoints;
 	private String state;
-	private double amount;
-	private boolean paid;
+	private Double amount;
+	private Double paid;
 
 	// interface properties
 	private double price;

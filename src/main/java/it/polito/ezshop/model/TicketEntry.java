@@ -1,6 +1,13 @@
 package it.polito.ezshop.model;
 
-public class TicketEntry implements it.polito.ezshop.data.TicketEntry {
+import java.io.Serializable;
+
+public class TicketEntry implements it.polito.ezshop.data.TicketEntry, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6159303808059742186L;
 
 	@Override
 	public String getBarCode() {
