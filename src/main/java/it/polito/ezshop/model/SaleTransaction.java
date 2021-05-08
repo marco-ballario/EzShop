@@ -2,6 +2,7 @@ package it.polito.ezshop.model;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 //import it.polito.ezshop.data.TicketEntry;
@@ -13,7 +14,7 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	 */
 	private static final long serialVersionUID = 2068771338240775445L;
 	// design properties
-	private HashMap<Integer, ProductType> products;
+	private HashMap<ProductType,Integer> products;
 	private List<ReturnTransaction> returnTransactions;
 	private BalanceOperation payment;
 	private Integer TransactionId, transactionPoints;
@@ -71,10 +72,27 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 		this.price = price;		
 	}
 
-	public void addProduct(int productCode, ProductType product, int amount) {
-		this.products.put(productCode, product);
-		this.price += product.getPricePerUnit() * amount;
+	public void addProduct(ProductType product, int amount) {
+		this.products.put(product, this.products.get(product) + amount);
+		this.amount += product.getPricePerUnit() * amount;
 		// how to keep track of each product quantity here ?
 	}
+
+	public List<ReturnTransaction> getReturnTransactions() {
+		return returnTransactions;
+	}
+
+	public void setReturnTransactions(List<ReturnTransaction> returnTransactions) {
+		this.returnTransactions = returnTransactions;
+	}
+
+	public HashMap<ProductType, Integer> getProducts() {
+		return products;
+	}
+
+	
+	
+	
+	
 	
 }
