@@ -142,17 +142,17 @@ public class EZShop implements EZShopInterface {
 
 	@SuppressWarnings("unchecked")
 	private ArrayList<Long> readLoyalty() {
-		;
+		
 		ArrayList<Long> cardsNo = null;
 		try {
-			String fName = "./src/main/java/it/polito/cards.in/";
+			String fName = "./src/main/java/it/polito/ezshop/cards.in/";
 			FileInputStream fileIn = new FileInputStream(fName);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			cardsNo = (ArrayList<Long>) in.readObject();
 			in.close();
 			fileIn.close();
 		} catch (IOException i) {
-			i.printStackTrace();
+			System.out.println(i.getMessage());
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -160,7 +160,7 @@ public class EZShop implements EZShopInterface {
 	}
 
 	private boolean updateLoyalty(ArrayList<Long> cardsNo) {
-		String fName = "./src/main/java/it/polito/cards.in/";
+		String fName = "./src/main/java/it/polito/ezshop/cards.in/";
 		try {
 			FileOutputStream fileOut = new FileOutputStream(fName);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -317,6 +317,9 @@ public class EZShop implements EZShopInterface {
 			return false;
 		}
 		user.setRole(role);
+		if(!writeAppState()) {
+			return false;
+		}
 		return true;
 	}
 
@@ -470,8 +473,8 @@ public class EZShop implements EZShopInterface {
 		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator")
 				&& !this.loggedUser.getRole().equals("ShopManager") && !this.loggedUser.getRole().equals("Cashier")))
 			throw new UnauthorizedException();
-		
-		return new LinkedList<ProductType>(productList.values());
+		List<ProductType> l = new LinkedList<ProductType>(productList.values());
+		return l;
 	}
 
 	@Override
@@ -591,12 +594,17 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidOrderIdException();
 		}
 		Order order = this.orderList.get(orderId);
-		ProductType product ;
 		if (order == null || (!order.getStatus().equals("COMPLETED") && !order.getStatus().equals("ISSUED")))
 			return false;
 		if(order.getStatus().equals("ISSUED")) {
 			order.setStatus("COMPLETED");
-			product = this.productList.get(orderId); //todo aggiungere qunatità
+			ProductType product=null;
+			try {
+				product = this.getProductTypeByBarCode(order.getProductCode());
+			} catch (InvalidProductCodeException | UnauthorizedException e) {
+				e.printStackTrace();
+			}
+			product.setQuantity(product.getQuantity()+order.getQuantity());
 			
 		}
 
@@ -779,7 +787,7 @@ public class EZShop implements EZShopInterface {
 			c.setCustomerCard("");
 			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -824,11 +832,9 @@ public class EZShop implements EZShopInterface {
 
 		it.polito.ezshop.model.SaleTransaction st = new it.polito.ezshop.model.SaleTransaction();
 		st.setTicketNumber(this.saleId);
+		st.setStatus("open");
 		this.transactionList.put(this.saleId, st);
-
-		if (this.writeAppState() == false)
-			return -1;
-
+		
 		return this.saleId++;
 	}
 
@@ -868,9 +874,7 @@ public class EZShop implements EZShopInterface {
 
 		st.addProduct( pt, amount); // to be checked
 
-		if (this.writeAppState() == false)
-			return false;
-
+		
 		return true;
 	}
 
@@ -878,42 +882,147 @@ public class EZShop implements EZShopInterface {
 	public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount)
 			throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,
 			UnauthorizedException {
-		return false;
+		if (this.loggedUser == null
+				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
+						&& !this.loggedUser.getRole().equals("ShopManager")))
+			throw new UnauthorizedException();
+		if (transactionId == null || transactionId<=0)
+			throw new InvalidTransactionIdException();
+		if(productCode == null || productCode.length()==0 || !checkDigit(productCode))
+			throw new InvalidProductCodeException();
+		if (amount <0)
+			throw new InvalidQuantityException();
+		it.polito.ezshop.model.SaleTransaction st = this.transactionList.get(transactionId);
+		ProductType p = getProductTypeByBarCode(productCode);
+		if(st == null || !st.getStatus().equals("open") || p==null || p.getQuantity()<amount) {
+			return false;
+		}
+		HashMap<it.polito.ezshop.model.ProductType, Integer> map = st.getProducts();
+		Integer q = map.get(p);
+		q = q - amount;
+		p.setQuantity(p.getQuantity()+amount);
+		
+		return true;
 	}
 
 	@Override
 	public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate)
 			throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException,
 			UnauthorizedException {
-		return false;
+		if (this.loggedUser == null
+				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
+						&& !this.loggedUser.getRole().equals("ShopManager")))
+			throw new UnauthorizedException();
+		if (transactionId == null || transactionId<=0)
+			throw new InvalidTransactionIdException();
+		if(productCode == null || productCode.length()==0 || !checkDigit(productCode))
+			throw new InvalidProductCodeException();
+		if(discountRate > 1 || discountRate<0)
+			throw new InvalidDiscountRateException();
+		
+		it.polito.ezshop.model.SaleTransaction st = transactionList.get(transactionId);
+		ProductType p = getProductTypeByBarCode(productCode);
+		if(p==null || st==null || !st.getStatus().equals("open")) {
+			return false;
+		}
+		st.applyProdDisc(p,discountRate);
+		
+		return true;
 	}
 
 	@Override
 	public boolean applyDiscountRateToSale(Integer transactionId, double discountRate)
 			throws InvalidTransactionIdException, InvalidDiscountRateException, UnauthorizedException {
-		return false;
+		if (this.loggedUser == null
+				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
+						&& !this.loggedUser.getRole().equals("ShopManager")))
+			throw new UnauthorizedException();
+		if (transactionId == null || transactionId<=0)
+			throw new InvalidTransactionIdException();
+		if(discountRate > 1 || discountRate<0)
+			throw new InvalidDiscountRateException();
+		
+		it.polito.ezshop.model.SaleTransaction st = this.transactionList.get(transactionId);
+		if(st==null || st.getStatus().equals("payed")) {
+			return false;
+		}
+		st.setPrice(st.getPrice()*discountRate);
+		
+		return true;
 	}
 
 	@Override
 	public int computePointsForSale(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
-		return 0;
+		if (this.loggedUser == null
+				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
+						&& !this.loggedUser.getRole().equals("ShopManager")))
+			throw new UnauthorizedException();
+		if (transactionId==null || transactionId<=0)
+			throw new InvalidTransactionIdException();
+		it.polito.ezshop.model.SaleTransaction sl = this.transactionList.get(transactionId);
+		if(sl == null) {
+			return -1;
+		}
+		double tot = sl.getPrice();
+		int point = (int) (tot/10);
+		sl.setTransactionPoints(point);
+		
+		return point;
 	}
 
 	@Override
 	public boolean endSaleTransaction(Integer transactionId)
 			throws InvalidTransactionIdException, UnauthorizedException {
-		return false;
+		if (this.loggedUser == null
+				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
+						&& !this.loggedUser.getRole().equals("ShopManager")))
+			throw new UnauthorizedException();
+		if (transactionId==null || transactionId<=0)
+			throw new InvalidTransactionIdException();
+		it.polito.ezshop.model.SaleTransaction sl = this.transactionList.get(transactionId);
+		if(sl == null || !sl.getStatus().equals("closed")) {
+			return false;
+		}
+		sl.setStatus("closed");
+		if(!writeAppState()) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public boolean deleteSaleTransaction(Integer saleNumber)
 			throws InvalidTransactionIdException, UnauthorizedException {
-		return false;
+		if (this.loggedUser == null
+				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
+						&& !this.loggedUser.getRole().equals("ShopManager")))
+			throw new UnauthorizedException();
+		if (saleNumber==null || saleNumber<=0)
+			throw new InvalidTransactionIdException();
+		it.polito.ezshop.model.SaleTransaction sl = this.transactionList.get(saleNumber);
+		if(sl==null || sl.getStatus().equals("payed")) {
+			return false;
+		}
+		this.transactionList.remove(saleNumber);
+		if(!writeAppState()) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public SaleTransaction getSaleTransaction(Integer transactionId)
 			throws InvalidTransactionIdException, UnauthorizedException {
+		if (this.loggedUser == null
+				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
+						&& !this.loggedUser.getRole().equals("ShopManager")))
+			throw new UnauthorizedException();
+		if (transactionId==null || transactionId<=0)
+			throw new InvalidTransactionIdException();
+		it.polito.ezshop.model.SaleTransaction sl = this.transactionList.get(transactionId);
+		if(sl != null && sl.getStatus().equals("closed")) {
+			return sl;
+		}
 		return null;
 	}
 
@@ -961,7 +1070,7 @@ public class EZShop implements EZShopInterface {
 		if(amount <= 0) {
 			throw new InvalidQuantityException();
 		}
-		ProductType pt = productList.get(productCode);
+		ProductType pt = this.getProductTypeByBarCode(productCode);
 		if(pt==null)
 			return false;
 		ReturnTransaction rt = returnList.get(returnId);
@@ -970,10 +1079,10 @@ public class EZShop implements EZShopInterface {
 		}
 		it.polito.ezshop.model.SaleTransaction st = rt.getOriginalTransaction();
 		HashMap<it.polito.ezshop.model.ProductType, Integer> original_list =  st.getProducts();
-		if(original_list.get(productCode)==null) {
+		if(original_list.get(pt)==null) {
 			return false;
 		}
-		if(original_list.get(productCode) < amount) {
+		if(original_list.get(pt) < amount) {
 			return false;
 		}
 		

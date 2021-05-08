@@ -21,6 +21,7 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	private String state;
 	private Double amount;
 	private Double paid;
+	private String status;
 
 	// interface properties
 	private double price;
@@ -29,6 +30,9 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	private Integer ticketNumber;
 	
 	public SaleTransaction() {
+		this.amount = 0.0;
+		this.setTransactionPoints(0);
+		this.state="open";
 		
 	}
 
@@ -88,6 +92,32 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 
 	public HashMap<ProductType, Integer> getProducts() {
 		return products;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public void applyProdDisc(it.polito.ezshop.data.ProductType p, double discountRate) {
+		int qnt = this.products.get(p);
+		double price = p.getPricePerUnit();
+		this.amount = this.amount - price;
+		
+		this.amount = this.amount + price*discountRate;
+		
+		return;
+	}
+
+	public Integer getTransactionPoints() {
+		return transactionPoints;
+	}
+
+	public void setTransactionPoints(Integer transactionPoints) {
+		this.transactionPoints = transactionPoints;
 	}
 
 	
