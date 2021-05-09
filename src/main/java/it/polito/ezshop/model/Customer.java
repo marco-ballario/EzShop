@@ -10,8 +10,7 @@ public class Customer implements it.polito.ezshop.data.Customer, Serializable{
 	private String name;
 	private Integer customerId;
 	private String card;
-	private Integer points;
-	
+	private LoyaltyCard lc;
 	
 
 	public Customer(String name) {
@@ -59,13 +58,33 @@ public class Customer implements it.polito.ezshop.data.Customer, Serializable{
 
 	@Override
 	public Integer getPoints() {
-		return points;
+		if(lc==null) {
+			return 0;
+		}
+		return lc.getPoints();
 	}
 
 	@Override
 	public void setPoints(Integer points) {
-		this.points = points;
+		this.lc.setPoints(points);
 		
 	}
+
+	@Override
+	public String toString() {
+		return "Customer [name=" + name + ", customerId=" + customerId + ", card=" + card  +" ]";
+	}
+
+	public LoyaltyCard getLoyaltyCard() {
+		return lc;
+	}
+
+	public void setLoyaltyCard(LoyaltyCard lc) {
+		this.setCustomerCard(lc.getCode());
+		this.lc = lc;
+	}
+	
+	
+	
 
 }

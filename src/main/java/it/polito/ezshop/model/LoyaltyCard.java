@@ -35,6 +35,11 @@ public class LoyaltyCard  implements Serializable{
 	public void setCode(String code) {
 		this.code = code;
 	}
+
+	@Override
+	public String toString() {
+		return "LoyaltyCard [customer=" + customer + ", points=" + points + ", code=" + code + "]";
+	}
 	
 	
 

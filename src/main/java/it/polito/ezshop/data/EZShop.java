@@ -19,20 +19,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class EZShop implements EZShopInterface {
-	private LinkedHashMap<Integer, User> userList = null;
+	private LinkedHashMap<Integer, it.polito.ezshop.model.User> userList = null;
 	private User loggedUser;
 	private int userId;
 	private LinkedHashMap<Integer, it.polito.ezshop.model.ProductType> productList = null;
 	private int productId;
-	private HashMap<Integer, Customer> customerList = null;
+	private HashMap<Integer, it.polito.ezshop.model.Customer> customerList = null;
 	private int customerId;
-	private HashMap<Integer, Order> orderList = null;
+	private HashMap<Integer, it.polito.ezshop.model.Order> orderList = null;
 	private int orderId;
-	private HashMap<String, LoyaltyCard> loyaltyCardList = null;
+	private HashMap<String, it.polito.ezshop.model.LoyaltyCard> loyaltyCardList = null;
 	private int loyaltyCardId;
 	private HashMap<Integer, it.polito.ezshop.model.SaleTransaction> transactionList = null;
 	private int saleId;
-	private HashMap<Integer, ReturnTransaction> returnList = null;
+	private HashMap<Integer, it.polito.ezshop.model.ReturnTransaction> returnList = null;
 	private int returnId;
 	private AccountBook accounting = AccountBook.getIstance(); // SINGLETON PATTERN THAT AVOIDS MULTIPLE ACCOUNTS
 	private List<Object> appState = new ArrayList<Object>();
@@ -45,13 +45,13 @@ public class EZShop implements EZShopInterface {
 	@SuppressWarnings("unchecked")
 	private void readAppState() {
 		if (!f.isFile() || !f.canRead()) {
-			userList = new LinkedHashMap<Integer, User>();
+			userList = new LinkedHashMap<Integer, it.polito.ezshop.model.User>();
 			productList = new LinkedHashMap<Integer, it.polito.ezshop.model.ProductType>();
-			customerList = new HashMap<Integer, Customer>();
-			orderList = new HashMap<Integer, Order>();
-			loyaltyCardList = new HashMap<String, LoyaltyCard>();
+			customerList = new HashMap<Integer, it.polito.ezshop.model.Customer>();
+			orderList = new HashMap<Integer, it.polito.ezshop.model.Order>();
+			loyaltyCardList = new HashMap<String, it.polito.ezshop.model.LoyaltyCard>();
 			transactionList = new HashMap<Integer, it.polito.ezshop.model.SaleTransaction>();
-			returnList = new HashMap<Integer, ReturnTransaction>();
+			returnList = new HashMap<Integer, it.polito.ezshop.model.ReturnTransaction>();
 			userId = 1;
 			productId = 1;
 			customerId = 1;
@@ -67,29 +67,29 @@ public class EZShop implements EZShopInterface {
 				e = (List<Object>) in.readObject();
 				if (e != null) {
 					// cast back read elements
-					userList = (LinkedHashMap<Integer, User>) e.get(0);
+					userList = (LinkedHashMap<Integer, it.polito.ezshop.model.User>) e.get(0);
 					userId = (Integer) e.get(1);
 					productList = (LinkedHashMap<Integer,it.polito.ezshop.model.ProductType>) e.get(2);
 					productId = (Integer) e.get(3);
-					customerList = (HashMap<Integer, Customer>) e.get(4);
+					customerList = (HashMap<Integer, it.polito.ezshop.model.Customer>) e.get(4);
 					customerId = (Integer) e.get(5);
-					loyaltyCardList = (HashMap<String, LoyaltyCard>) e.get(6);
+					loyaltyCardList = (HashMap<String, it.polito.ezshop.model.LoyaltyCard>) e.get(6);
 					loyaltyCardId = (Integer) e.get(7);
 					transactionList = (HashMap<Integer, it.polito.ezshop.model.SaleTransaction>) e.get(8);
 					saleId = (Integer) e.get(9);
-					returnList = (HashMap<Integer, ReturnTransaction>) e.get(10);
+					returnList = (HashMap<Integer, it.polito.ezshop.model.ReturnTransaction>) e.get(10);
 					returnId = (Integer) e.get(11);
 					accounting = (AccountBook) e.get(12);
-					orderList = (HashMap<Integer, Order>) e.get(13);
+					orderList = (HashMap<Integer, it.polito.ezshop.model.Order>) e.get(13);
 					orderId = (Integer) e.get(14);
 				} else {
-					userList = new LinkedHashMap<Integer, User>();
+					userList = new LinkedHashMap<Integer, it.polito.ezshop.model.User>();
 					productList = new LinkedHashMap<Integer, it.polito.ezshop.model.ProductType>();
-					customerList = new HashMap<Integer, Customer>();
-					orderList = new HashMap<Integer, Order>();
-					loyaltyCardList = new HashMap<String, LoyaltyCard>();
+					customerList = new HashMap<Integer, it.polito.ezshop.model.Customer>();
+					orderList = new HashMap<Integer, it.polito.ezshop.model.Order>();
+					loyaltyCardList = new HashMap<String, it.polito.ezshop.model.LoyaltyCard>();
 					transactionList = new HashMap<Integer, it.polito.ezshop.model.SaleTransaction>();
-					returnList = new HashMap<Integer, ReturnTransaction>();
+					returnList = new HashMap<Integer, it.polito.ezshop.model.ReturnTransaction>();
 					userId = 1;
 					productId = 1;
 					customerId = 1;
@@ -263,7 +263,7 @@ public class EZShop implements EZShopInterface {
 			}
 		}
 		// Create new user
-		User user = new it.polito.ezshop.model.User(username, password, role, userId);
+		it.polito.ezshop.model.User user = new it.polito.ezshop.model.User(username, password, role, userId);
 		userList.put(userId, user); // insert user inside the data structure
 		Integer id = user.getId();
 		userId = userId + 1; // prepare Id for next user
@@ -342,7 +342,7 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidPasswordException();
 		}
 
-		Collection<User> list = userList.values();
+		Collection<it.polito.ezshop.model.User> list = userList.values();
 		for (User u : list) {
 
 			if (u.getPassword().contentEquals(password) && u.getUsername().equals(username)) {
@@ -565,7 +565,7 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidQuantityException();
 		if (pricePerUnit <= 0)
 			throw new InvalidPricePerUnitException();
-		Order newOrder = new it.polito.ezshop.model.Order(productCode, quantity, pricePerUnit);
+		it.polito.ezshop.model.Order newOrder = new it.polito.ezshop.model.Order(productCode, quantity, pricePerUnit);
 		newOrder.setOrderId(this.orderId);
 		newOrder.setStatus("ISSUED");
 		this.orderList.put(this.orderId, newOrder);
@@ -646,9 +646,8 @@ public class EZShop implements EZShopInterface {
 		}
 		it.polito.ezshop.model.Customer c = new it.polito.ezshop.model.Customer(customerName);
 		c.setId(customerId);
-		if (customerList.put(customerId, c) != null) {
-			return -1;
-		}
+		customerList.put(customerId, c);
+		
 		boolean res = writeAppState();
 		if (res == false) {
 			return -1;
@@ -667,11 +666,11 @@ public class EZShop implements EZShopInterface {
 		if (newCustomerName == null || newCustomerName.length() == 0)
 			throw new InvalidCustomerNameException();
 		LoyaltyCard lc = this.loyaltyCardList.get(newCustomerCard);
-		if (lc != null || newCustomerCard.length() != 10) {
+		if (lc == null || newCustomerCard.length() != 10) {
 			throw new InvalidCustomerCardException();
 		}
 		try {
-			Integer.parseInt(newCustomerCard);
+			Long.parseLong(newCustomerCard);
 		} catch (NumberFormatException e) {
 			System.out.println(e.getMessage());
 			throw new InvalidCustomerCardException();
@@ -689,7 +688,7 @@ public class EZShop implements EZShopInterface {
 		if (newCustomerCard.length() == 0) {
 			c.setCustomerCard(null);
 		} else if (newCustomerCard != null) {
-			c.setCustomerCard(newCustomerCard);
+			this.attachCardToCustomer(newCustomerCard, id);
 		}
 		boolean ret = writeAppState();
 		if (ret == false)
@@ -754,6 +753,7 @@ public class EZShop implements EZShopInterface {
 			return "";
 		}
 		lc.setCode(code);
+		lc.setPoints(0);
 		loyaltyCardList.put(code, lc);
 		boolean ret = writeAppState();
 		if (ret == false)
@@ -774,26 +774,26 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidCustomerCardException();
 		}
 		try {
-			Integer.parseInt(customerCard);
+			Long.parseLong(customerCard);
 		} catch (NumberFormatException e) {
 			System.out.println(e.getMessage());
 			throw new InvalidCustomerCardException();
 		}
 
-		Customer c = customerList.get(customerId);
+		it.polito.ezshop.model.Customer c = customerList.get(customerId);
 		if (c == null) {
 			return false;
 		}
 		LoyaltyCard lc = loyaltyCardList.get(customerCard);
 
 		for (Customer cu : customerList.values()) {
-			if (cu.getCustomerCard().equals(customerCard)) {
+			if (cu.getCustomerCard()!= null && cu.getCustomerCard().equals(customerCard)) {
 				return false; // someone alreay has it
 			}
 		}
 
 		lc.setCustomer(c);
-		c.setCustomerCard(customerCard);
+		c.setLoyaltyCard(lc);
 		boolean ret = writeAppState();
 		if (ret == false) {
 			// rollback
@@ -816,7 +816,7 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidCustomerCardException();
 		}
 		try {
-			Integer.parseInt(customerCard);// check is composed by numbers
+			Long.parseLong(customerCard);// check is composed by numbers
 		} catch (NumberFormatException e) {
 			System.out.println(e.getMessage());
 			throw new InvalidCustomerCardException();
