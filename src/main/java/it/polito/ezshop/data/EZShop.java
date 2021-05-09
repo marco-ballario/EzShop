@@ -557,8 +557,8 @@ public class EZShop implements EZShopInterface {
 		if(toBeAdded<0){
 			p.decreaseQuantity(Math.abs(toBeAdded));
 			
-			if(p.getQuantity()<0) {
-				p.setQuantity(previousQuantity);    //if the final quantity is negative, the previous quantity is restored and it's not updated
+			if(p.getQuantity()<0) {			//if the final quantity is negative, the previous quantity is restored and it's not updated
+				p.setQuantity(previousQuantity);    
 				return false;
 			}
 		}
@@ -571,7 +571,31 @@ public class EZShop implements EZShopInterface {
 	@Override
 	public boolean updatePosition(Integer productId, String newPos)
 			throws InvalidProductIdException, InvalidLocationException, UnauthorizedException {
-		return false;
+		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator")
+				&& !this.loggedUser.getRole().equals("ShopManager")))
+			throw new UnauthorizedException();
+
+		if (productId <= 0 || productId == null)
+			throw new InvalidProductIdException();
+			
+		String[] pos = newPos.split("-");    
+		if(pos.length != 3)                         //invalid format
+			throw new InvalidLocationException();
+		
+		for(ProductType pt : productList.values()){   //if another product has the same position return false
+			if(pt.getLocation().equals(newPos))
+				return false;
+		}
+		
+		it.polito.ezshop.model.ProductType p = productList.get(productId);
+		if(p==null)
+			return false;
+		
+		if(newPos == null || newPos.isEmpty()) //if newPos is empty or null it resets the location of the given product
+			p.setLocation("");
+		else
+			p.setLocation(newPos);
+		return true;
 	}
 
 	@Override
