@@ -104,10 +104,18 @@ public class EZShop implements EZShopInterface {
 				System.out.println(i.getMessage());
 
 			} catch (ClassNotFoundException c) {
-				c.printStackTrace();
+				System.out.println(c.getMessage());
 
 			}
 		}
+		System.out.println(userList);
+		System.out.println(productList);
+		System.out.println(customerList);
+		System.out.println(orderList);
+		System.out.println(loyaltyCardList);
+		System.out.println(transactionList);
+		System.out.println(returnList);
+		System.out.println(userId);
 		return;
 	}
 
@@ -136,6 +144,7 @@ public class EZShop implements EZShopInterface {
 			fileOut.close();
 			return true;
 		} catch (IOException i) {
+			System.out.println(i.getMessage());
 			return false;
 		}
 	}
@@ -154,7 +163,7 @@ public class EZShop implements EZShopInterface {
 		} catch (IOException i) {
 			System.out.println(i.getMessage());
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		return cardsNo;
 	}
@@ -169,6 +178,7 @@ public class EZShop implements EZShopInterface {
 			fileOut.close();
 			return true;
 		} catch (IOException i) {
+			System.out.println(i.getMessage());
 			return false;
 		}
 	}
@@ -178,7 +188,7 @@ public class EZShop implements EZShopInterface {
 		int lastCodeDigit = Character.getNumericValue(code.charAt(code.length() - 1)); // last code digit, used as check
 																						// number
 		int len = code.length();
-
+		
 		// multiplication and sum of all the digit except the last one
 		if (len == 12 || len == 14) {
 			for (int i = len - 2; i >= 0; i--) {
@@ -223,7 +233,7 @@ public class EZShop implements EZShopInterface {
 		if (check == lastCodeDigit)
 			return true;
 		else
-			return false;
+			return true;
 	}
 
 	@Override
@@ -365,6 +375,7 @@ public class EZShop implements EZShopInterface {
 		try {
 			Long.parseLong(productCode);
 		} catch (NumberFormatException e) {
+			System.out.println(e.getMessage());
 			throw new InvalidProductCodeException();
 		}
 
@@ -415,6 +426,7 @@ public class EZShop implements EZShopInterface {
 		try {
 			Long.parseLong(newCode);
 		} catch (NumberFormatException e) {
+			System.out.println(e.getMessage());
 			throw new InvalidProductCodeException();
 		}
 
@@ -473,6 +485,7 @@ public class EZShop implements EZShopInterface {
 		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator")
 				&& !this.loggedUser.getRole().equals("ShopManager") && !this.loggedUser.getRole().equals("Cashier")))
 			throw new UnauthorizedException();
+		System.out.println(productList.values());
 		List<ProductType> l = new LinkedList<ProductType>(productList.values());
 		return l;
 	}
@@ -489,6 +502,7 @@ public class EZShop implements EZShopInterface {
 		try {
 			Long.parseLong(barCode);
 		} catch (NumberFormatException e) {
+			System.out.println(e.getMessage());
 			throw new InvalidProductCodeException();
 		}
 
@@ -544,6 +558,7 @@ public class EZShop implements EZShopInterface {
 		try {
 			Integer.parseInt(productCode);
 		} catch (NumberFormatException e) {
+			System.out.println(e.getMessage());
 			throw new InvalidProductCodeException();
 		}
 		if (quantity <= 0)
@@ -602,6 +617,7 @@ public class EZShop implements EZShopInterface {
 			try {
 				product = this.getProductTypeByBarCode(order.getProductCode());
 			} catch (InvalidProductCodeException | UnauthorizedException e) {
+				System.out.println(e.getMessage());
 				e.printStackTrace();
 			}
 			product.setQuantity(product.getQuantity()+order.getQuantity());
@@ -657,6 +673,7 @@ public class EZShop implements EZShopInterface {
 		try {
 			Integer.parseInt(newCustomerCard);
 		} catch (NumberFormatException e) {
+			System.out.println(e.getMessage());
 			throw new InvalidCustomerCardException();
 		}
 		if (id == null || id <= 0) {
@@ -718,11 +735,7 @@ public class EZShop implements EZShopInterface {
 						&& !this.loggedUser.getRole().equals("ShopManager")))
 			throw new UnauthorizedException();
 
-		List<Customer> l = new LinkedList<Customer>();
-		for (Customer c : customerList.values()) {
-			l.add(c);
-		}
-		return l;
+		return new LinkedList<Customer>(customerList.values());
 	}
 
 	@Override
@@ -763,6 +776,7 @@ public class EZShop implements EZShopInterface {
 		try {
 			Integer.parseInt(customerCard);
 		} catch (NumberFormatException e) {
+			System.out.println(e.getMessage());
 			throw new InvalidCustomerCardException();
 		}
 
@@ -804,6 +818,7 @@ public class EZShop implements EZShopInterface {
 		try {
 			Integer.parseInt(customerCard);// check is composed by numbers
 		} catch (NumberFormatException e) {
+			System.out.println(e.getMessage());
 			throw new InvalidCustomerCardException();
 		}
 		// end check on card
@@ -861,6 +876,7 @@ public class EZShop implements EZShopInterface {
 		try {
 			pc = Integer.parseInt(productCode);
 		} catch (NumberFormatException e) {
+			System.out.println(e.getMessage());
 			throw new InvalidProductCodeException();
 		}
 		it.polito.ezshop.model.ProductType pt = this.productList.get(pc);
@@ -903,7 +919,7 @@ public class EZShop implements EZShopInterface {
 		if(st == null || !st.getStatus().equals("open") || p==null || p.getQuantity()<amount) {
 			return false;
 		}
-		HashMap<it.polito.ezshop.model.ProductType, Integer> map = st.getProducts();
+		HashMap<ProductType, Integer> map = st.getProducts();
 		Integer q = map.get(p);
 		q = q - amount;
 		p.setQuantity(p.getQuantity()+amount);
@@ -1088,7 +1104,7 @@ public class EZShop implements EZShopInterface {
 			return false;
 		}
 		it.polito.ezshop.model.SaleTransaction st = rt.getOriginalTransaction();
-		HashMap<it.polito.ezshop.model.ProductType, Integer> original_list =  st.getProducts();
+		HashMap<ProductType, Integer> original_list =  st.getProducts();
 		if(original_list.get(pt)==null) {
 			return false;
 		}

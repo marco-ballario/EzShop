@@ -19,6 +19,8 @@ public class ProductType implements it.polito.ezshop.data.ProductType, Serializa
 		this.barCode = barCode;
 		this.note = note;
 		this.pricePerUnit = pricePerUnit;
+		this.location="";
+		this.quantity=0;
 	}
 
 	@Override
@@ -92,4 +94,15 @@ public class ProductType implements it.polito.ezshop.data.ProductType, Serializa
 		this.productID = id;	
 	}
 
+	@Override
+	public String toString() {
+		return "ProductType [description=" + description + ", barCode=" + barCode + ", note=" + note + ", productID="
+				+ productID + ", quantity=" + quantity + ", pricePerUnit=" + pricePerUnit + ", location=" + location
+				+ "]";
+	}
+
+	
+	
+
+	
 }

@@ -16,11 +16,8 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	 */
 	private static final long serialVersionUID = 2068771338240775445L;
 	// design properties
-<<<<<<< HEAD
 	private HashMap<ProductType,Integer> products;
-=======
-	private HashMap<ProductType, Integer> products;
->>>>>>> 0e0e579e1019ddfde102d845530757e01537fd21
+
 	private List<ReturnTransaction> returnTransactions;
 	private BalanceOperation payment;
 	private Integer TransactionId, transactionPoints;
@@ -82,11 +79,7 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 		this.price = price;		
 	}
 
-<<<<<<< HEAD
-	public void addProduct(ProductType product, int amount) {
-		this.products.put(product, this.products.get(product) + amount);
-		this.amount += product.getPricePerUnit() * amount;
-=======
+
 	public TicketEntry addProduct(ProductType pt, int amount) {
 		
 		TicketEntry found = this.entries.stream()
