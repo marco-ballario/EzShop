@@ -391,7 +391,7 @@ public class EZShop implements EZShopInterface {
 		if (this.productList.get(this.productId) != null)
 			return -1;
 
-		for (ProductType p : productList.values()) { // Check if a product with the same barcode is already present
+		for (it.polito.ezshop.model.ProductType p : productList.values()) { // Check if a product with the same barcode is already present
 			if (p.getBarCode().equals(productCode))
 				return -1;
 		}
@@ -467,8 +467,8 @@ public class EZShop implements EZShopInterface {
 		if (id <= 0 || id == null)
 			throw new InvalidProductIdException();
 
-		ProductType p = productList.remove(id);
-		;
+		it.polito.ezshop.model.ProductType p = productList.remove(id);
+		
 		if (p == null)
 			return false;
 
@@ -509,7 +509,7 @@ public class EZShop implements EZShopInterface {
 		if (checkDigit(barCode) == false)
 			throw new InvalidProductCodeException();
 
-		for (ProductType p : productList.values()) {
+		for (it.polito.ezshop.model.ProductType p : productList.values()) {
 			if (p.getBarCode().equals(barCode))
 				return p;
 		}
@@ -537,6 +537,34 @@ public class EZShop implements EZShopInterface {
 	@Override
 	public boolean updateQuantity(Integer productId, int toBeAdded)
 			throws InvalidProductIdException, UnauthorizedException {
+		
+		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator")
+				&& !this.loggedUser.getRole().equals("ShopManager")))
+			throw new UnauthorizedException();
+
+		if (productId <= 0 || productId == null)
+			throw new InvalidProductIdException();
+		
+		it.polito.ezshop.model.ProductType p = productList.get(productId);
+		
+		if(p==null)
+			return false;
+		if(p.getLocation()==null)
+			return false;
+		
+		Integer previousQuantity = p.getQuantity();
+		
+		if(toBeAdded<0){
+			p.decreaseQuantity(Math.abs(toBeAdded));
+			
+			if(p.getQuantity()<0) {
+				p.setQuantity(previousQuantity);    //if the final quantity is negative, the previous quantity is restored and it's not updated
+				return false;
+			}
+		}
+		else
+			p.increaseQuantity(toBeAdded);
+		
 		return true;
 	}
 
