@@ -14,6 +14,7 @@ public class BalanceOperation implements it.polito.ezshop.data.BalanceOperation,
 	private double money;
 	
 	
+
 	@Override
 	public int getBalanceId() {
 		return balanceId;

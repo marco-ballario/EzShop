@@ -19,11 +19,10 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	private HashMap<ProductType,Integer> products;
 
 	private List<ReturnTransaction> returnTransactions;
-	private BalanceOperation payment;
+	private it.polito.ezshop.model.BalanceOperation payment;
 	private Integer TransactionId, transactionPoints;
 	private String state;
 	private Double amount;
-	private Double paid;
 	private String status;
 
 	// interface properties
@@ -35,7 +34,7 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	public SaleTransaction() {
 		this.amount = 0.0;
 		this.setTransactionPoints(0);
-		this.state="open";
+		this.setState("open");
 		
 	}
 
@@ -143,6 +142,29 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	public void setTransactionPoints(Integer transactionPoints) {
 		this.transactionPoints = transactionPoints;
 	}
+
+	public void setProducts(HashMap<ProductType, Integer> products) {
+		this.products = products;
+	}
+
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public BalanceOperation getPayment() {
+		return payment;
+	}
+
+	public void setPayment(it.polito.ezshop.model.BalanceOperation b) {
+		this.payment = b;
+	}
+	
+	
 
 	
 	

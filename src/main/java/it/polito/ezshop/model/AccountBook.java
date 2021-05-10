@@ -40,8 +40,7 @@ public class AccountBook implements Serializable{
 		this.operationList = operationList;
 	}
 
-	public boolean isertBalanceOperation(double toBeAdded) {
-		BalanceOperation bo = new it.polito.ezshop.model.BalanceOperation();
+	public boolean insertBalanceOperation(BalanceOperation bo, double toBeAdded) {
 		if(toBeAdded + this.balance < 0) {
 			return false;
 		}
