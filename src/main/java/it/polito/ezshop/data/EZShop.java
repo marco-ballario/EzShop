@@ -1043,16 +1043,15 @@ public class EZShop implements EZShopInterface {
 		if (st == null)
 			return false;
 
-		if (productCode.isEmpty() == true || productCode == null)
+		if (productCode.isEmpty() == true || productCode == null || !checkDigit(productCode))
 			throw new InvalidProductCodeException();
-		int pc;
 		try {
-			pc = Integer.parseInt(productCode);
+			Long.parseLong(productCode);
 		} catch (NumberFormatException e) {
 			System.out.println(e.getMessage());
 			throw new InvalidProductCodeException();
 		}
-		it.polito.ezshop.model.ProductType pt = this.productList.get(pc);
+		ProductType pt = this.getProductTypeByBarCode(productCode);
 		if (pt == null)
 			return false;
 
