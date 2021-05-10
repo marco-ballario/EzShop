@@ -17,6 +17,7 @@ public class ReturnTransaction implements Serializable{
 	private boolean committed;
 	private BalanceOperation payment;
 	private double amount;
+
 	
 	public ReturnTransaction(Integer returnId, it.polito.ezshop.model.SaleTransaction s) {
 		this.returnId = returnId;

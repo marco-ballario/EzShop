@@ -624,7 +624,7 @@ public class EZShop implements EZShopInterface {
 		Integer previousQuantity = p.getQuantity();
 
 		if (toBeAdded < 0) {
-			p.decreaseQuantity(Math.abs(toBeAdded));
+			p.setQuantity(toBeAdded);
 
 			if (p.getQuantity() < 0) { // if the final quantity is negative, the previous quantity is restored and it's
 										// not updated
@@ -632,7 +632,7 @@ public class EZShop implements EZShopInterface {
 				return false;
 			}
 		} else
-			p.increaseQuantity(Math.abs(toBeAdded));
+			p.setQuantity(Math.abs(toBeAdded));
 
 		boolean ret = writeAppState();
 		if (ret == false)
@@ -724,12 +724,17 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidQuantityException();
 		if (pricePerUnit <= 0)
 			throw new InvalidPricePerUnitException();
+		if(quantity*pricePerUnit >= this.accounting.getBalance()) {
+			return -1;
+		}
 
 		it.polito.ezshop.model.Order newOrder = new it.polito.ezshop.model.Order(productCode, quantity, pricePerUnit);
 		newOrder.setOrderId(this.orderId);
 		it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
 		this.accounting.insertBalanceOperation(b,-pricePerUnit * quantity);
 		newOrder.setStatus("COMPLETED");
+		ProductType pt = this.getProductTypeByBarCode(productCode);
+		pt.setQuantity(pt.getQuantity()+quantity);
 		boolean res = writeAppState();
 		if (res == false) {
 			return -1;
@@ -750,6 +755,9 @@ public class EZShop implements EZShopInterface {
 		if (order == null || !order.getStatus().equals("ISSUED"))
 			return false;
 		
+		if(order.getPricePerUnit()*order.getQuantity() > this.accounting.getBalance()) {
+			return false;
+		}
 		order.setStatus("COMPLETED");
 		String pc = order.getProductCode();
 		ProductType pt;
@@ -908,7 +916,9 @@ public class EZShop implements EZShopInterface {
 				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
 						&& !this.loggedUser.getRole().equals("ShopManager")))
 			throw new UnauthorizedException();
-
+		if(customerList.values().size()==0) {
+			new LinkedList<Customer>();
+		}
 		return new LinkedList<Customer>(customerList.values());
 	}
 
@@ -1045,14 +1055,14 @@ public class EZShop implements EZShopInterface {
 
 		if (productCode.isEmpty() == true || productCode == null)
 			throw new InvalidProductCodeException();
-		int pc;
+		
 		try {
-			pc = Integer.parseInt(productCode);
+			Long.parseLong(productCode);
 		} catch (NumberFormatException e) {
 			System.out.println(e.getMessage());
 			throw new InvalidProductCodeException();
 		}
-		it.polito.ezshop.model.ProductType pt = this.productList.get(pc);
+		ProductType pt = getProductTypeByBarCode(productCode);
 		if (pt == null)
 			return false;
 
@@ -1087,15 +1097,13 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidQuantityException();
 		it.polito.ezshop.model.SaleTransaction st = this.transactionList.get(transactionId);
 		ProductType p = getProductTypeByBarCode(productCode);
-		if (st == null || !st.getStatus().equals("open") || p == null || p.getQuantity() < amount) {
+		if (st == null || !st.getStatus().equals("open") || p == null) {
 			return false;
 		}
-		HashMap<ProductType, Integer> map = st.getProducts();
-		Integer q = map.get(p);
-		q = q - amount;
-		p.setQuantity(p.getQuantity() + amount);
+		
+		boolean res = st.removeProducts(productCode,amount);
 
-		return true;
+		return res;
 	}
 
 	@Override
@@ -1270,14 +1278,14 @@ public class EZShop implements EZShopInterface {
 			return false;
 		}
 		it.polito.ezshop.model.SaleTransaction st = rt.getOriginalTransaction();
-		HashMap<ProductType, Integer> original_list = st.getProducts();
-		if (original_list.get(pt) == null) {
+		TicketEntry t = st.getTicketEntry(productCode);
+		if (t == null) {
 			return false;
 		}
-		if (original_list.get(pt) < amount) {
+		if (t.getAmount() < amount) {
 			return false;
 		}
-
+		
 		rt.setAmount(rt.getAmount() + pt.getPricePerUnit() * amount);
 		rt.setOriginalTransaction(st);
 		rt.setReturnId(returnId);
@@ -1301,7 +1309,6 @@ public class EZShop implements EZShopInterface {
 			return false;
 		}
 		it.polito.ezshop.model.SaleTransaction st = rt.getOriginalTransaction();
-		HashMap<ProductType, Integer> tranProds = st.getProducts();
 		HashMap<it.polito.ezshop.model.ProductType, Integer> retProds = rt.getReturnProducts();
 		if (commit) {
 			rt.setCommitted(true);
@@ -1313,12 +1320,9 @@ public class EZShop implements EZShopInterface {
 					return false;
 				}
 				st.setPrice(st.getPrice() - pt.getPricePerUnit() * retProds.get(pt));// update price
-				int qnt = tranProds.remove(pt);
-				qnt = qnt - retProds.get(pt);
-				tranProds.put(pt, qnt);// update original trans list
+				st.updateStatusMin(returnId);
 
 			}
-			st.setProducts(tranProds);
 			if (!writeAppState())
 				return false;
 		} else {
@@ -1343,7 +1347,6 @@ public class EZShop implements EZShopInterface {
 
 		ReturnTransaction rt = returnList.get(returnId);
 		it.polito.ezshop.model.SaleTransaction st = rt.getOriginalTransaction();
-		HashMap<ProductType, Integer> tranProds = st.getProducts();
 		HashMap<it.polito.ezshop.model.ProductType, Integer> retProds = rt.getReturnProducts();
 		if (rt == null || rt.getPayment() != null) {
 			return false;
@@ -1356,12 +1359,9 @@ public class EZShop implements EZShopInterface {
 				return false;
 			}
 			st.setPrice(st.getPrice() + p.getPricePerUnit() * retProds.get(p));// remove old price
-			int qnt = tranProds.remove(p);
-			qnt = qnt + retProds.get(p);
-			tranProds.put(p, qnt);// update original trans list
+			st.updateStatusPlus(returnId);
 
 		}
-		st.setProducts(tranProds);
 
 		returnList.remove(rt.getReturnId());
 
