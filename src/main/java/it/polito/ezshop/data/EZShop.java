@@ -1176,6 +1176,15 @@ public class EZShop implements EZShopInterface {
 	@Override
 	public boolean endReturnTransaction(Integer returnId, boolean commit)
 			throws InvalidTransactionIdException, UnauthorizedException {
+		if(returnId == null || returnId<=0) {
+			throw new InvalidTransactionIdException();
+		}
+		if (this.loggedUser == null
+				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
+						&& !this.loggedUser.getRole().equals("ShopManager")))
+			throw new UnauthorizedException();
+		
+		
 		return false;
 	}
 
