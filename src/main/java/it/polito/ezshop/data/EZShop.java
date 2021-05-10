@@ -240,13 +240,11 @@ public class EZShop implements EZShopInterface {
 		int len = code.length();
 		int lastCodeDigit = Character.getNumericValue(code.charAt(len - 1)); // last code digit, used as check
 																				// number
-		System.out.println(lastCodeDigit);
-
 		// multiplication and sum of all the digit except the last one
 		if (len == 12 || len == 14) {
 			for (int i = len - 2; i >= 0; i--) {
 				tmp = 1;
-				if (i % 2 != 0) { // if the position is odd the number must be multiplied by 3, if even by 1
+				if (i % 2 == 0) { // if the position is even the number must be multiplied by 3, if odd by 1
 					tmp = Character.getNumericValue(code.charAt(i));
 					tot += tmp * 3;
 				} else {
@@ -259,7 +257,7 @@ public class EZShop implements EZShopInterface {
 		if (len == 13) {
 			for (int i = len - 2; i >= 0; i--) {
 				tmp = 1;
-				if (i % 2 == 0) { // if the position is even the number must be multiplied by 3, if odd by 1
+				if (i % 2 != 0) { // if the position is odd the number must be multiplied by 3, if even by 1
 					tmp = Character.getNumericValue(code.charAt(i));
 					tot += tmp * 3;
 				} else {
@@ -280,7 +278,7 @@ public class EZShop implements EZShopInterface {
 
 		// calculate the last digit, which is the check digit of the barCode
 		int check = mul - tot;
-		System.out.println(check);
+		
 		// if check digit is equal to the last digit of the code, that's valid otherwise
 		// not
 		if (check == lastCodeDigit)
