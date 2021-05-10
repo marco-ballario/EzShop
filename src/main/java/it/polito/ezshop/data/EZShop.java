@@ -1053,16 +1053,18 @@ public class EZShop implements EZShopInterface {
 		if (st == null)
 			return false;
 
-		if (productCode.isEmpty() == true || productCode == null)
+		if (productCode.isEmpty() == true || productCode == null || !checkDigit(productCode))
 			throw new InvalidProductCodeException();
-		
+
 		try {
 			Long.parseLong(productCode);
 		} catch (NumberFormatException e) {
 			System.out.println(e.getMessage());
 			throw new InvalidProductCodeException();
 		}
+
 		ProductType pt = getProductTypeByBarCode(productCode);
+
 		if (pt == null)
 			return false;
 
