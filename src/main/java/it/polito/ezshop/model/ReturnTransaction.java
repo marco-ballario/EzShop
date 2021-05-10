@@ -22,6 +22,7 @@ public class ReturnTransaction implements Serializable{
 		this.returnId = returnId;
 		this.originalTransaction = s;
 		this.committed=false;
+		this.amount = 0.0;
 	}
 
 	public Integer getReturnId() {

@@ -1192,7 +1192,7 @@ public class EZShop implements EZShopInterface {
 			return false;
 		}
 
-		rt.setAmount(amount);
+		rt.setAmount(rt.getAmount() + pt.getPricePerUnit()*amount);
 		rt.setOriginalTransaction(st);
 		rt.setReturnId(returnId);
 
@@ -1319,7 +1319,23 @@ public class EZShop implements EZShopInterface {
 
 	@Override
 	public double returnCashPayment(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
-		return 0;
+		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
+                && !this.loggedUser.getRole().equals("ShopManager")))
+		throw new UnauthorizedException();
+		if(returnId <= 0)
+		throw new InvalidTransactionIdException();
+		
+		ReturnTransaction r = returnList.get(returnId);
+		if(r == null || !r.isCommitted())
+			return -1;
+		
+		double moneyReturned = r.getAmount();
+		
+		it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
+		this.accounting.insertBalanceOperation(b, -moneyReturned);
+		r.setPayment(b);
+		
+		return moneyReturned;
 	}
 
 	@Override
