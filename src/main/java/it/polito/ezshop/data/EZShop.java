@@ -186,9 +186,27 @@ public class EZShop implements EZShopInterface {
 			return false;
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	private HashMap<Long, Double> readCreditCard() {
+		HashMap<Long, Double> cards = null;
+		try {
+			String fName = "./src/main/java/it/polito/ezshop/creditCards.db/";
+			FileInputStream fileIn = new FileInputStream(fName);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			cards = (HashMap<Long, Double>) in.readObject();
+			in.close();
+			fileIn.close();
+		} catch (IOException i) {
+			System.out.println(i.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+		return cards;
+	}
 
-	private boolean updateCreditCards(ArrayList<String> creditCards) {
-		String fName = "./src/main/java/it/polito/ezshop/utils/CreditCards.txt/";
+	private boolean updateCreditCards(HashMap<Long, Double> creditCards) {
+		String fName = "./src/main/java/it/polito/ezshop/creditCards.db/";
 		try {
 			FileOutputStream fileOut = new FileOutputStream(fName);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -534,6 +552,9 @@ public class EZShop implements EZShopInterface {
 				&& !this.loggedUser.getRole().equals("ShopManager") && !this.loggedUser.getRole().equals("Cashier")))
 			throw new UnauthorizedException();
 		System.out.println(productList.values());
+		if(productList.values().size()==0) {
+			return new LinkedList<ProductType>();
+		}
 		List<ProductType> l = new LinkedList<ProductType>(productList.values());
 		return l;
 	}
@@ -706,7 +727,8 @@ public class EZShop implements EZShopInterface {
 
 		it.polito.ezshop.model.Order newOrder = new it.polito.ezshop.model.Order(productCode, quantity, pricePerUnit);
 		newOrder.setOrderId(this.orderId);
-		this.accounting.setBalance(this.accounting.getBalance() - pricePerUnit * quantity);
+		it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
+		this.accounting.insertBalanceOperation(b,-pricePerUnit * quantity);
 		newOrder.setStatus("COMPLETED");
 		boolean res = writeAppState();
 		if (res == false) {
@@ -727,8 +749,19 @@ public class EZShop implements EZShopInterface {
 		Order order = this.orderList.get(orderId);
 		if (order == null || !order.getStatus().equals("ISSUED"))
 			return false;
-		this.accounting.setBalance(this.accounting.getBalance() - order.getPricePerUnit() * order.getQuantity());
+		
 		order.setStatus("COMPLETED");
+		String pc = order.getProductCode();
+		ProductType pt;
+		try {
+			pt = this.getProductTypeByBarCode(pc);
+			pt.setQuantity(pt.getQuantity()+order.getQuantity());
+			it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
+			this.accounting.insertBalanceOperation(b,-pt.getPricePerUnit() * pt.getQuantity());		
+		} catch (InvalidProductCodeException | UnauthorizedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		boolean res = writeAppState();
 		if (res == false) {
 			return false;
@@ -1377,9 +1410,26 @@ public class EZShop implements EZShopInterface {
 		if (!creditCardExist(creditCard)) {
 			return false;
 		}
+		it.polito.ezshop.model.SaleTransaction s = transactionList.get(ticketNumber);
 
-		return false;
+		
+		HashMap<Long, Double> listCreditCards = readCreditCard();
+		
+		if(listCreditCards== null || s==null || listCreditCards.get(Long.parseLong(creditCard))==null || listCreditCards.get(Long.parseLong(creditCard)) < s.getPrice()) {
+			return false;
+		}
+		it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
+		this.accounting.insertBalanceOperation(b, s.getPrice());
+		s.setPayment(b);
+		s.setState("payed");
+		listCreditCards.put(Long.parseLong(creditCard), listCreditCards.get(Long.parseLong(creditCard))-s.getPrice());
+		if(! this.updateCreditCards(listCreditCards))
+			return false;
+		return true;
 	}
+
+
+
 
 	@Override
 	public double returnCashPayment(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
