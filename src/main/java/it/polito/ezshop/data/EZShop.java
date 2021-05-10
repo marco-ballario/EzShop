@@ -184,10 +184,11 @@ public class EZShop implements EZShopInterface {
 
 	private boolean checkDigit(String code) {
 		int tmp = 0, tot = 0;
-		int lastCodeDigit = Character.getNumericValue(code.charAt(code.length() - 1)); // last code digit, used as check
-																						// number
 		int len = code.length();
-
+		int lastCodeDigit = Character.getNumericValue(code.charAt(len - 1)); // last code digit, used as check
+																						// number
+		System.out.println(lastCodeDigit);
+		
 		// multiplication and sum of all the digit except the last one
 		if (len == 12 || len == 14) {
 			for (int i = len - 2; i >= 0; i--) {
@@ -226,13 +227,13 @@ public class EZShop implements EZShopInterface {
 
 		// calculate the last digit, which is the check digit of the barCode
 		int check = mul - tot;
-
+		System.out.println(check);
 		// if check digit is equal to the last digit of the code, that's valid otherwise
 		// not
 		if (check == lastCodeDigit)
 			return true;
 		else
-			return true;
+			return false;
 	}
 
 	@Override
@@ -369,7 +370,7 @@ public class EZShop implements EZShopInterface {
 		if (description == null || description.length() == 0)
 			throw new InvalidProductDescriptionException();
 
-		if (productCode == null || productCode.isEmpty())
+		if (productCode == null || productCode.isEmpty() || productCode.length() < 12 || productCode.length() > 14)
 			throw new InvalidProductCodeException();
 		try {
 			Long.parseLong(productCode);
@@ -421,7 +422,7 @@ public class EZShop implements EZShopInterface {
 		if (newDescription == null || newDescription.length() == 0)
 			throw new InvalidProductDescriptionException();
 
-		if (newCode == null || newCode.isEmpty())
+		if (newCode == null || newCode.isEmpty() || newCode.length() < 12 || newCode.length() > 14)
 			throw new InvalidProductCodeException();
 		try {
 			Long.parseLong(newCode);
@@ -435,11 +436,6 @@ public class EZShop implements EZShopInterface {
 
 		if (newPrice <= 0)
 			throw new InvalidPricePerUnitException();
-
-		for (ProductType pt : productList.values()) { // Check if a product with the same barcode is already present
-			if (pt.getBarCode().equals(newCode))
-				return false;
-		}
 
 		it.polito.ezshop.model.ProductType p = productList.get(id);
 		if (p == null)
@@ -497,7 +493,7 @@ public class EZShop implements EZShopInterface {
 				&& !this.loggedUser.getRole().equals("ShopManager")))
 			throw new UnauthorizedException();
 
-		if (barCode == null || barCode.isEmpty())
+		if (barCode == null || barCode.isEmpty() || barCode.length() < 12 || barCode.length() > 14)
 			throw new InvalidProductCodeException();
 		try {
 			Long.parseLong(barCode);
@@ -563,7 +559,11 @@ public class EZShop implements EZShopInterface {
 			}
 		}
 		else
-			p.increaseQuantity(toBeAdded);
+			p.increaseQuantity(Math.abs(toBeAdded));
+		
+		boolean ret = writeAppState();
+		if (ret == false)
+			return false;
 		
 		return true;
 	}
@@ -583,7 +583,7 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidLocationException();
 		
 		for(ProductType pt : productList.values()){   //if another product has the same position return false
-			if(pt.getLocation().equals(newPos))
+			if(pt.getId() != productId && pt.getLocation().equals(newPos))
 				return false;
 		}
 		
@@ -595,6 +595,11 @@ public class EZShop implements EZShopInterface {
 			p.setLocation("");
 		else
 			p.setLocation(newPos);
+		
+		boolean ret = writeAppState();
+		if (ret == false)
+			return false;
+		
 		return true;
 	}
 
