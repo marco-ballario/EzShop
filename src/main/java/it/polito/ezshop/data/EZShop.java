@@ -624,11 +624,11 @@ public class EZShop implements EZShopInterface {
 		Integer previousQuantity = p.getQuantity();
 
 		if (toBeAdded < 0) {
-			p.setQuantity(toBeAdded/2);
+			p.decreaseQuantity(toBeAdded);
 
 			if (p.getQuantity() < 0) { // if the final quantity is negative, the previous quantity is restored and it's
 										// not updated
-				p.setQuantity(previousQuantity/2);
+				p.setQuantity(previousQuantity);
 				return false;
 			}
 		} else
