@@ -30,8 +30,7 @@ public class ProductType implements it.polito.ezshop.data.ProductType, Serializa
 
 	@Override
 	public void setQuantity(Integer quantity) {
-		this.quantity=0;
-		this.quantity = quantity;
+		//this.quantity = quantity;
 	}
 
 	@Override
@@ -103,7 +102,7 @@ public class ProductType implements it.polito.ezshop.data.ProductType, Serializa
 	}
 	
 	public void increaseQuantity(int newQty){
-		this.quantity += newQty;
+		this.quantity = this.quantity + newQty;
 	}
 
 	public void decreaseQuantity(int newQty){

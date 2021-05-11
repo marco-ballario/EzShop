@@ -632,7 +632,7 @@ public class EZShop implements EZShopInterface {
 				return false;
 			}
 		} else
-			p.setQuantity(0);
+			p.increaseQuantity(toBeAdded);
 
 		boolean ret = writeAppState();
 		if (ret == false)
