@@ -106,7 +106,7 @@ public class ProductType implements it.polito.ezshop.data.ProductType, Serializa
 	}
 
 	public void decreaseQuantity(int newQty){
-		this.quantity -= newQty;
+		this.quantity = this.quantity - newQty;
 	}
 	
 }
