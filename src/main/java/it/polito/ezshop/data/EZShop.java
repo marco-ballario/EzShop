@@ -723,8 +723,8 @@ public class EZShop implements EZShopInterface {
 		it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
 		this.accounting.insertBalanceOperation(b, -pricePerUnit * quantity);
 		newOrder.setStatus("COMPLETED");
-		ProductType pt = this.getProductTypeByBarCode(productCode);
-		pt.setQuantity(pt.getQuantity() + quantity);
+		it.polito.ezshop.model.ProductType pt = (it.polito.ezshop.model.ProductType) this.getProductTypeByBarCode(productCode);
+		pt.increaseQuantity(quantity);
 		boolean res = writeAppState();
 		if (res == false) {
 			return -1;
@@ -750,10 +750,10 @@ public class EZShop implements EZShopInterface {
 		}
 		order.setStatus("COMPLETED");
 		String pc = order.getProductCode();
-		ProductType pt;
+		it.polito.ezshop.model.ProductType pt;
 		try {
-			pt = this.getProductTypeByBarCode(pc);
-			pt.setQuantity(pt.getQuantity() + order.getQuantity());
+			pt = (it.polito.ezshop.model.ProductType) this.getProductTypeByBarCode(pc);
+			pt.increaseQuantity(order.getQuantity());
 			it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
 			this.accounting.insertBalanceOperation(b, -order.getPricePerUnit() * order.getQuantity());
 		} catch (InvalidProductCodeException | UnauthorizedException e) {
@@ -781,14 +781,14 @@ public class EZShop implements EZShopInterface {
 			return false;
 		if (order.getStatus().equals("ISSUED")) {
 			order.setStatus("COMPLETED");
-			ProductType product = null;
+			it.polito.ezshop.model.ProductType product = null;
 			try {
-				product = this.getProductTypeByBarCode(order.getProductCode());
+				product = (it.polito.ezshop.model.ProductType) this.getProductTypeByBarCode(order.getProductCode());
 			} catch (InvalidProductCodeException | UnauthorizedException e) {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
 			}
-			product.setQuantity(product.getQuantity() + order.getQuantity());
+			product.increaseQuantity(order.getQuantity());
 			boolean res = writeAppState();
 			if (res == false) {
 				return false;
@@ -1053,7 +1053,7 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidProductCodeException();
 		}
 
-		ProductType pt = getProductTypeByBarCode(productCode);
+		it.polito.ezshop.model.ProductType pt = (it.polito.ezshop.model.ProductType) getProductTypeByBarCode(productCode);
 
 		if (pt == null)
 			return false;
@@ -1063,7 +1063,7 @@ public class EZShop implements EZShopInterface {
 		int oldQuantity = pt.getQuantity();
 		if (oldQuantity - amount < 0)
 			return false;
-		pt.setQuantity(oldQuantity - amount);
+		pt.decreaseQuantity(amount);
 
 		st.addProduct(pt, amount); // to be checked
 		
