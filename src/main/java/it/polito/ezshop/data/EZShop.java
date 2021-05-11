@@ -608,7 +608,7 @@ public class EZShop implements EZShopInterface {
 
 		if (p == null)
 			return false;
-		if (p.getLocation() == null)
+		if (p.getLocation() == null)   // || p.getLocation.isEmpty() ) add??
 			return false;
 
 		Integer previousQuantity = p.getQuantity();
@@ -624,7 +624,6 @@ public class EZShop implements EZShopInterface {
 			}
 		} else
 			p.increaseQuantity(toBeAdded);
-
 		boolean ret = writeAppState();
 		if (ret == false)
 			return false;
@@ -756,7 +755,7 @@ public class EZShop implements EZShopInterface {
 			pt = this.getProductTypeByBarCode(pc);
 			pt.setQuantity(pt.getQuantity() + order.getQuantity());
 			it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
-			this.accounting.insertBalanceOperation(b, -pt.getPricePerUnit() * pt.getQuantity());
+			this.accounting.insertBalanceOperation(b, -order.getPricePerUnit() * order.getQuantity());
 		} catch (InvalidProductCodeException | UnauthorizedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1067,7 +1066,7 @@ public class EZShop implements EZShopInterface {
 		pt.setQuantity(oldQuantity - amount);
 
 		st.addProduct(pt, amount); // to be checked
-
+		
 		if (this.writeAppState() == false)
 			return false;
 
@@ -1174,7 +1173,7 @@ public class EZShop implements EZShopInterface {
 		if (transactionId == null || transactionId <= 0)
 			throw new InvalidTransactionIdException();
 		it.polito.ezshop.model.SaleTransaction sl = this.transactionList.get(transactionId);
-		if (sl == null || !sl.getStatus().equals("closed")) {
+		if (sl == null || sl.getStatus().equals("closed")) {
 			return false;
 		}
 		sl.setStatus("closed");
@@ -1237,7 +1236,7 @@ public class EZShop implements EZShopInterface {
 		}
 		ReturnTransaction rt = new ReturnTransaction(returnId, s);
 		returnList.put(returnId, rt);
-		// add return tranaction to sale list
+		// add return transaction to sale list
 		List<ReturnTransaction> ret = s.getReturnTransactions();
 		ret.add(rt);
 		s.setReturnTransactions(ret);
@@ -1380,8 +1379,9 @@ public class EZShop implements EZShopInterface {
 		it.polito.ezshop.model.SaleTransaction s = transactionList.get(transactionId);
 		if (s == null || s.getPrice() > cash)
 			return -1;
+		
 		it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
-		this.accounting.insertBalanceOperation(b, cash);
+		this.accounting.insertBalanceOperation(b, s.getPrice());
 		s.setPayment(b);
 		s.setState("payed");
 		if (!writeAppState()) {

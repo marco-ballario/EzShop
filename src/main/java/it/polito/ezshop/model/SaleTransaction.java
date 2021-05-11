@@ -30,7 +30,7 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	public SaleTransaction() {
 		this.setTransactionPoints(0);
 		this.setState("open");
-		
+		this.price = 0.0;
 	}
 
 	@Override
@@ -82,6 +82,8 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 			}
 		}
 		TicketEntry te = new it.polito.ezshop.model.TicketEntry(pt, amount);
+		this.entries.add(te);
+		this.price += pt.getPricePerUnit() * amount;
 		return te;
 		
 	}
