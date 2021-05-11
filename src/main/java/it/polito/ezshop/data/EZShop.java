@@ -624,15 +624,15 @@ public class EZShop implements EZShopInterface {
 		Integer previousQuantity = p.getQuantity();
 
 		if (toBeAdded < 0) {
-			p.setQuantity(toBeAdded);
+			p.setQuantity(toBeAdded/2);
 
 			if (p.getQuantity() < 0) { // if the final quantity is negative, the previous quantity is restored and it's
 										// not updated
-				p.setQuantity(previousQuantity);
+				p.setQuantity(previousQuantity/2);
 				return false;
 			}
 		} else
-			p.setQuantity(Math.abs(toBeAdded));
+			p.setQuantity(0);
 
 		boolean ret = writeAppState();
 		if (ret == false)
@@ -1393,7 +1393,9 @@ public class EZShop implements EZShopInterface {
 		this.accounting.insertBalanceOperation(b, cash);
 		s.setPayment(b);
 		s.setState("payed");
-
+		if(!writeAppState()) {
+			return -1;
+		}
 		return cash - s.getPrice();
 	}
 
@@ -1427,6 +1429,9 @@ public class EZShop implements EZShopInterface {
 		listCreditCards.put(Long.parseLong(creditCard), listCreditCards.get(Long.parseLong(creditCard))-s.getPrice());
 		if(! this.updateCreditCards(listCreditCards))
 			return false;
+		if(!writeAppState()) {
+			return false;
+		}
 		return true;
 	}
 
@@ -1451,7 +1456,9 @@ public class EZShop implements EZShopInterface {
 		it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
 		this.accounting.insertBalanceOperation(b, -moneyReturned);
 		r.setPayment(b);
-
+		if(!writeAppState()) {
+			return -1;
+		}
 		return moneyReturned;
 	}
 
@@ -1469,7 +1476,9 @@ public class EZShop implements EZShopInterface {
 		}
 		BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
 		boolean res = accounting.insertBalanceOperation(b, toBeAdded);
-
+		if(!writeAppState()) {
+			return false;
+		}
 		return res;
 	}
 
@@ -1486,7 +1495,9 @@ public class EZShop implements EZShopInterface {
 			to = tmp;
 		}
 		List<BalanceOperation> result = new LinkedList<BalanceOperation>();
-		if (from == null) {
+		if (from == null && to == null) {
+			result = accounting.getOperationList();
+		} else if (from == null) {
 			for (BalanceOperation bo : accounting.getOperationList()) {
 				if (bo.getDate().compareTo(to) <= 0) {
 					result.add(bo);
@@ -1498,9 +1509,7 @@ public class EZShop implements EZShopInterface {
 					result.add(bo);
 				}
 			}
-		} else if (from == null || to == null) {
-			result = accounting.getOperationList();
-		} else {
+		}  else {
 			for (BalanceOperation bo : accounting.getOperationList()) {
 				if (bo.getDate().compareTo(from) >= 0 && bo.getDate().compareTo(to) <= 0) {
 					result.add(bo);

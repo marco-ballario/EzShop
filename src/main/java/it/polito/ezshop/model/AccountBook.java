@@ -55,6 +55,7 @@ public class AccountBook implements Serializable{
 		}
 		bo.setMoney(toBeAdded);
 		this.balance = this.balance + toBeAdded;
+		this.operationList.add(bo);
 		return true;
 		
 	}
