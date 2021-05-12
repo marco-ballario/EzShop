@@ -1102,6 +1102,7 @@ public class EZShop implements EZShopInterface {
 		}
 
 		boolean res = st.removeProducts(productCode, amount);
+		pt.increaseQuantity(amount);
 
 		return res;
 	}
@@ -1212,6 +1213,16 @@ public class EZShop implements EZShopInterface {
 			return false;
 		}
 		
+
+		List<it.polito.ezshop.data.TicketEntry> saleProducts = sl.getEntries();
+		
+		for(TicketEntry t : saleProducts) {
+			for(it.polito.ezshop.model.ProductType p : productList.values()) {
+				if(t.getBarCode().equals(p.getBarCode()))
+					p.increaseQuantity(t.getAmount());
+			}
+		}
+		
 		this.transactionList.remove(saleNumber);
 		
 		if (!writeAppState()) {
@@ -1302,10 +1313,10 @@ public class EZShop implements EZShopInterface {
 			return false;
 		}
 
-		rt.setAmount(rt.getAmount() + pt.getPricePerUnit() * amount);
+
 		rt.setOriginalTransaction(st);
 		rt.setReturnId(returnId);
-		rt.addProduct(pt, amount);
+		rt.addProduct(pt, amount,pt.getPricePerUnit() * amount* (1-t.getDiscountRate())*(1-st.getDiscountRate()) );
 
 		return true;
 	}
@@ -1336,7 +1347,7 @@ public class EZShop implements EZShopInterface {
 				} catch (InvalidProductIdException | UnauthorizedException e) {
 					return false;
 				}
-				st.setPrice(st.getPrice() - pt.getPricePerUnit() * retProds.get(pt));// update price
+				st.setPrice(st.getPrice() - rt.getAmount());// update price
 				st.updateStatusMin(returnId);
 
 			}

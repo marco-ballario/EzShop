@@ -78,14 +78,14 @@ public class ReturnTransaction implements Serializable{
 		return serialVersionUID;
 	}
 	
-	public void addProduct(ProductType product, int amount) {
+	public void addProduct(ProductType product, int amount, double money) {
 		if(this.returnProducts.get(product) != null) {
 			this.returnProducts.put(product, this.returnProducts.get(product) + amount);
-			this.amount += product.getPricePerUnit() * amount;
+			this.amount +=money;
 			return;
 		}
 		this.returnProducts.put(product, amount);
-		this.amount += product.getPricePerUnit() * amount;
+		this.amount += money;
 	}
 	
 	
