@@ -1102,6 +1102,7 @@ public class EZShop implements EZShopInterface {
 		}
 
 		boolean res = st.removeProducts(productCode, amount);
+		pt.increaseQuantity(amount);
 
 		return res;
 	}
@@ -1211,6 +1212,17 @@ public class EZShop implements EZShopInterface {
 		if (sl == null || sl.getStatus().equals("payed")) {
 			return false;
 		}
+		
+		List<it.polito.ezshop.data.TicketEntry> saleProducts = new LinkedList<it.polito.ezshop.data.TicketEntry>();
+		saleProducts = sl.getEntries();
+		
+		for(TicketEntry t : saleProducts) {
+			for(it.polito.ezshop.model.ProductType p : productList.values()) {
+				if(t.getBarCode().equals(p.getBarCode()))
+					p.increaseQuantity(t.getAmount());
+			}
+		}
+		
 		this.transactionList.remove(saleNumber);
 		if (!writeAppState()) {
 			return false;
