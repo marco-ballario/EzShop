@@ -105,8 +105,11 @@ public class Tools {
 	public boolean checkDigit(String code) {
 		int tmp = 0, tot = 0;
 		int len = code.length();
-		int lastCodeDigit = Character.getNumericValue(code.charAt(len - 1)); // last code digit, used as check
-																				// number
+		int lastCodeDigit = Character.getNumericValue(code.charAt(len - 1)); // last code digit, used as check number
+		
+		if(code.length() < 12 || code.length() > 14)
+			return false;
+		
 		// multiplication and sum of all the digit except the last one
 		if (len == 12 || len == 14) {
 			for (int i = len - 2; i >= 0; i--) {

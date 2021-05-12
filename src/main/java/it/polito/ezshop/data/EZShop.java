@@ -289,7 +289,7 @@ public class EZShop implements EZShopInterface {
 		if (description == null || description.length() == 0)
 			throw new InvalidProductDescriptionException();
 
-		if (productCode == null || productCode.isEmpty() || productCode.length() < 12 || productCode.length() > 14)
+		if (productCode == null || productCode.isEmpty())
 			throw new InvalidProductCodeException();
 		try {
 			Long.parseLong(productCode);
@@ -342,7 +342,7 @@ public class EZShop implements EZShopInterface {
 		if (newDescription == null || newDescription.length() == 0)
 			throw new InvalidProductDescriptionException();
 
-		if (newCode == null || newCode.isEmpty() || newCode.length() < 12 || newCode.length() > 14)
+		if (newCode == null || newCode.isEmpty())
 			throw new InvalidProductCodeException();
 		try {
 			Long.parseLong(newCode);
@@ -416,7 +416,7 @@ public class EZShop implements EZShopInterface {
 				&& !this.loggedUser.getRole().equals("ShopManager")))
 			throw new UnauthorizedException();
 
-		if (barCode == null || barCode.isEmpty() || barCode.length() < 12 || barCode.length() > 14)
+		if (barCode == null || barCode.isEmpty()) 
 			throw new InvalidProductCodeException();
 		try {
 			Long.parseLong(barCode);
@@ -563,7 +563,7 @@ public class EZShop implements EZShopInterface {
 		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator")
 				&& !this.loggedUser.getRole().equals("ShopManager")))
 			throw new UnauthorizedException();
-		if (productCode == null || productCode.isEmpty())
+		if (productCode == null || productCode.isEmpty() || !tool.checkDigit(productCode))
 			throw new InvalidProductCodeException();
 		try {
 			Long.parseLong(productCode);
