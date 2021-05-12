@@ -642,7 +642,7 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidProductIdException();
 
 		String[] pos = newPos.split("-");
-		if (pos.length != 3) // invalid format
+		if (!newPos.equals("") && pos.length<3) // invalid format
 			throw new InvalidLocationException();
 
 		for (ProductType pt : productList.values()) { // if another product has the same position return false
@@ -651,11 +651,11 @@ public class EZShop implements EZShopInterface {
 		}
 
 		it.polito.ezshop.model.ProductType p = productList.get(productId);
+		
 		if (p == null)
 			return false;
 
-		if (newPos == null || newPos.isEmpty()) // if newPos is empty or null it resets the location of the given
-												// product
+		if (newPos == null || newPos.isEmpty()) // if newPos is empty or null it resets the location of the given									// product
 			p.setLocation("");
 		else
 			p.setLocation(newPos);
@@ -776,6 +776,7 @@ public class EZShop implements EZShopInterface {
 		if (orderId == null || orderId <= 0) {
 			throw new InvalidOrderIdException();
 		}
+		
 		Order order = this.orderList.get(orderId);
 		if (order == null)
 			return false;
@@ -784,6 +785,9 @@ public class EZShop implements EZShopInterface {
 			it.polito.ezshop.model.ProductType product = null;
 			try {
 				product = (it.polito.ezshop.model.ProductType) this.getProductTypeByBarCode(order.getProductCode());
+				if(product.getLocation() == null || product.getLocation().equals("")) {
+					throw new InvalidLocationException();
+				}
 			} catch (InvalidProductCodeException | UnauthorizedException e) {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
