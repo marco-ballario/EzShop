@@ -1211,7 +1211,9 @@ public class EZShop implements EZShopInterface {
 		if (sl == null || sl.getStatus().equals("payed")) {
 			return false;
 		}
+		
 		this.transactionList.remove(saleNumber);
+		
 		if (!writeAppState()) {
 			return false;
 		}
