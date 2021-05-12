@@ -642,7 +642,7 @@ public class EZShop implements EZShopInterface {
 		if (order == null)
 			return false;
 		if (order.getStatus().equals("PAYED") ||  order.getStatus().equals("COMPLETED")) {
-			order.setStatus("COMPLETED");
+			
 			it.polito.ezshop.model.ProductType product = null;
 			try {
 				product = (it.polito.ezshop.model.ProductType) this.getProductTypeByBarCode(order.getProductCode());
@@ -653,6 +653,7 @@ public class EZShop implements EZShopInterface {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
 			}
+			order.setStatus("COMPLETED");
 			product.increaseQuantity(order.getQuantity());
 			boolean res = writeAppState();
 			if (res == false) {
@@ -670,6 +671,9 @@ public class EZShop implements EZShopInterface {
 		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator")
 				&& !this.loggedUser.getRole().equals("ShopManager")))
 			throw new UnauthorizedException();
+		if(orderList.values().size()==0) {
+			return new LinkedList<it.polito.ezshop.data.Order>();
+		}
 		return new LinkedList<it.polito.ezshop.data.Order>(orderList.values());
 	}
 
@@ -1284,7 +1288,7 @@ public class EZShop implements EZShopInterface {
 		it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
 		this.accounting.insertBalanceOperation(b, s.getPrice());
 		s.setPayment(b);
-		s.setState("payed");
+		s.setStatus("payed");
 		if (!writeAppState()) {
 			return -1;
 		}
@@ -1318,7 +1322,7 @@ public class EZShop implements EZShopInterface {
 		it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
 		this.accounting.insertBalanceOperation(b, s.getPrice());
 		s.setPayment(b);
-		s.setState("payed");
+		s.setStatus("payed");
 		listCreditCards.put(Long.parseLong(creditCard), listCreditCards.get(Long.parseLong(creditCard)) - s.getPrice());
 		System.out.println("After Credit Card "+ creditCard+ " -> "+ listCreditCards.get(Long.parseLong(creditCard)));
 		if (!tool.updateCreditCards(listCreditCards))

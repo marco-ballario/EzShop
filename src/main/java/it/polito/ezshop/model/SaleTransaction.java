@@ -18,7 +18,6 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	private List<ReturnTransaction> returnTransactions= new LinkedList<ReturnTransaction>();
 	private it.polito.ezshop.model.BalanceOperation payment;
 	private Integer TransactionId, transactionPoints;
-	private String state;
 	private String status;
 
 	// interface properties
@@ -29,7 +28,7 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	
 	public SaleTransaction() {
 		this.setTransactionPoints(0);
-		this.setState("open");
+		this.setStatus("open");
 		this.price = 0.0;
 	}
 
@@ -133,15 +132,6 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	}
 
 
-
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
 
 	public BalanceOperation getPayment() {
 		return payment;
