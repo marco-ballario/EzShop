@@ -119,7 +119,7 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 		double price = t.getPricePerUnit()*t.getAmount();
 		this.price = this.price - price;
 		
-		this.price = this.price + price*discountRate;
+		this.price = this.price + price*(1-discountRate);
 		
 		return;
 	}

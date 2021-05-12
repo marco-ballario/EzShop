@@ -1066,9 +1066,6 @@ public class EZShop implements EZShopInterface {
 		pt.decreaseQuantity(amount);
 
 		st.addProduct(pt, amount); // to be checked
-		
-		if (this.writeAppState() == false)
-			return false;
 
 		return true;
 	}
@@ -1139,7 +1136,8 @@ public class EZShop implements EZShopInterface {
 		if (st == null || st.getStatus().equals("payed")) {
 			return false;
 		}
-		st.setPrice(st.getPrice() * discountRate);
+		st.setPrice(st.getPrice() * (1-discountRate));
+		st.setDiscountRate(discountRate);
 
 		return true;
 	}
