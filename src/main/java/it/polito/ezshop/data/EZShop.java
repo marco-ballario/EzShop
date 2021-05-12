@@ -36,6 +36,7 @@ public class EZShop implements EZShopInterface {
 	private int returnId;
 	private AccountBook accounting = AccountBook.getIstance(); // SINGLETON PATTERN THAT AVOIDS MULTIPLE ACCOUNTS
 	private List<Object> appState = new ArrayList<Object>();
+	private Tools tool = new Tools();
 	File f = new File("./src/main/java/it/polito/ezshop/appState.db");
 
 	public EZShop() {
@@ -153,148 +154,7 @@ public class EZShop implements EZShopInterface {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private ArrayList<Long> readLoyalty() {
-
-		ArrayList<Long> cardsNo = null;
-		try {
-			String fName = "./src/main/java/it/polito/ezshop/cards.in/";
-			FileInputStream fileIn = new FileInputStream(fName);
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			cardsNo = (ArrayList<Long>) in.readObject();
-			in.close();
-			fileIn.close();
-		} catch (IOException i) {
-			System.out.println(i.getMessage());
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		return cardsNo;
-	}
-
-	private boolean updateLoyalty(ArrayList<Long> cardsNo) {
-		String fName = "./src/main/java/it/polito/ezshop/cards.in/";
-		try {
-			FileOutputStream fileOut = new FileOutputStream(fName);
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(cardsNo);
-			out.close();
-			fileOut.close();
-			return true;
-		} catch (IOException i) {
-			System.out.println(i.getMessage());
-			return false;
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private HashMap<Long, Double> readCreditCard() {
-		HashMap<Long, Double> cards = null;
-		try {
-			String fName = "./src/main/java/it/polito/ezshop/creditCards.db/";
-			FileInputStream fileIn = new FileInputStream(fName);
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			cards = (HashMap<Long, Double>) in.readObject();
-			in.close();
-			fileIn.close();
-		} catch (IOException i) {
-			System.out.println(i.getMessage());
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		return cards;
-	}
-
-	private boolean updateCreditCards(HashMap<Long, Double> creditCards) {
-		String fName = "./src/main/java/it/polito/ezshop/creditCards.db/";
-		try {
-			FileOutputStream fileOut = new FileOutputStream(fName);
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(creditCards);
-			out.close();
-			fileOut.close();
-			return true;
-		} catch (IOException i) {
-			System.out.println(i.getMessage());
-			return false;
-		}
-	}
-
-	private static boolean checkCardLuhn(String creditCardNo) {
-		int nDigits = creditCardNo.length();
-
-		int nSum = 0;
-		boolean isSecond = false;
-		for (int i = nDigits - 1; i >= 0; i--) {
-
-			int d = creditCardNo.charAt(i) - '0';
-
-			if (isSecond == true)
-				d = d * 2;
-
-			// We add two digits to handle
-			// cases that make two digits
-			// after doubling
-			nSum += d / 10;
-			nSum += d % 10;
-
-			isSecond = !isSecond;
-		}
-		return (nSum % 10 == 0);
-	}
-
-	private boolean checkDigit(String code) {
-		int tmp = 0, tot = 0;
-		int len = code.length();
-		int lastCodeDigit = Character.getNumericValue(code.charAt(len - 1)); // last code digit, used as check
-																				// number
-		// multiplication and sum of all the digit except the last one
-		if (len == 12 || len == 14) {
-			for (int i = len - 2; i >= 0; i--) {
-				tmp = 1;
-				if (i % 2 == 0) { // if the position is even the number must be multiplied by 3, if odd by 1
-					tmp = Character.getNumericValue(code.charAt(i));
-					tot += tmp * 3;
-				} else {
-					tmp = Character.getNumericValue(code.charAt(i));
-					tot += tmp;
-				}
-			}
-		}
-
-		if (len == 13) {
-			for (int i = len - 2; i >= 0; i--) {
-				tmp = 1;
-				if (i % 2 != 0) { // if the position is odd the number must be multiplied by 3, if even by 1
-					tmp = Character.getNumericValue(code.charAt(i));
-					tot += tmp * 3;
-				} else {
-					tmp = Character.getNumericValue(code.charAt(i));
-					tot += tmp;
-				}
-			}
-		}
-
-		// Subtract the sum from nearest equal or higher multiple of ten
-		int i = 1, mul = 0, flag = 0;
-		while (flag == 0) {
-			mul = 10 * i;
-			i++;
-			if (tot <= mul)
-				flag = 1;
-		}
-
-		// calculate the last digit, which is the check digit of the barCode
-		int check = mul - tot;
-
-		// if check digit is equal to the last digit of the code, that's valid otherwise
-		// not
-		if (check == lastCodeDigit)
-			return true;
-		else
-			return false;
-	}
-
+	
 	@Override
 	public void reset() {
 		readAppState();
@@ -438,7 +298,7 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidProductCodeException();
 		}
 
-		if (checkDigit(productCode) == false)
+		if (tool.checkDigit(productCode) == false)
 			throw new InvalidProductCodeException();
 
 		if (pricePerUnit <= 0)
@@ -491,7 +351,7 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidProductCodeException();
 		}
 
-		if (checkDigit(newCode) == false)
+		if (tool.checkDigit(newCode) == false)
 			throw new InvalidProductCodeException();
 
 		if (newPrice <= 0)
@@ -565,7 +425,7 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidProductCodeException();
 		}
 
-		if (checkDigit(barCode) == false)
+		if (tool.checkDigit(barCode) == false)
 			throw new InvalidProductCodeException();
 
 		for (it.polito.ezshop.model.ProductType p : productList.values()) {
@@ -655,7 +515,8 @@ public class EZShop implements EZShopInterface {
 		if (p == null)
 			return false;
 
-		if (newPos == null || newPos.isEmpty()) // if newPos is empty or null it resets the location of the given									// product
+		if (newPos == null || newPos.isEmpty()) // if newPos is empty or null it resets the location of the given
+												// product
 			p.setLocation("");
 		else
 			p.setLocation(newPos);
@@ -673,7 +534,7 @@ public class EZShop implements EZShopInterface {
 		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator")
 				&& !this.loggedUser.getRole().equals("ShopManager")))
 			throw new UnauthorizedException();
-		if (productCode == null || productCode.isEmpty() || !checkDigit(productCode))
+		if (productCode == null || productCode.isEmpty() || !tool.checkDigit(productCode))
 			throw new InvalidProductCodeException();
 		try {
 			Long.parseLong(productCode);
@@ -923,12 +784,12 @@ public class EZShop implements EZShopInterface {
 						&& !this.loggedUser.getRole().equals("ShopManager")))
 			throw new UnauthorizedException();
 		LoyaltyCard lc = new LoyaltyCard();
-		ArrayList<Long> cards = readLoyalty();
+		ArrayList<Long> cards = tool.readLoyalty();
 		if (cards == null) {
 			return "";
 		}
 		String code = cards.remove(0).toString();
-		if (!updateLoyalty(cards)) {
+		if (!tool.updateLoyalty(cards)) {
 			return "";
 		}
 		lc.setCode(code);
@@ -1047,7 +908,7 @@ public class EZShop implements EZShopInterface {
 		if (st == null)
 			return false;
 
-		if (productCode.isEmpty() == true || productCode == null || !checkDigit(productCode))
+		if (productCode.isEmpty() == true || productCode == null || !tool.checkDigit(productCode))
 			throw new InvalidProductCodeException();
 
 		try {
@@ -1089,7 +950,7 @@ public class EZShop implements EZShopInterface {
 			throw new UnauthorizedException();
 		if (transactionId == null || transactionId <= 0)
 			throw new InvalidTransactionIdException();
-		if (productCode == null || productCode.length() == 0 || !checkDigit(productCode))
+		if (productCode == null || productCode.length() == 0 || !tool.checkDigit(productCode))
 			throw new InvalidProductCodeException();
 		if (amount < 0)
 			throw new InvalidQuantityException();
@@ -1121,7 +982,7 @@ public class EZShop implements EZShopInterface {
 			throw new UnauthorizedException();
 		if (transactionId == null || transactionId <= 0)
 			throw new InvalidTransactionIdException();
-		if (productCode == null || productCode.length() == 0 || !checkDigit(productCode))
+		if (productCode == null || productCode.length() == 0 || !tool.checkDigit(productCode))
 			throw new InvalidProductCodeException();
 		if (discountRate > 1 || discountRate < 0)
 			throw new InvalidDiscountRateException();
@@ -1288,7 +1149,7 @@ public class EZShop implements EZShopInterface {
 		if (returnId == null || returnId <= 0) {
 			throw new InvalidTransactionIdException();
 		}
-		if (productCode == null || productCode.length() == 0 || this.checkDigit(productCode) == false) {
+		if (productCode == null || productCode.length() == 0 || tool.checkDigit(productCode) == false) {
 			throw new InvalidTransactionIdException();
 		}
 		if (amount <= 0) {
@@ -1440,14 +1301,14 @@ public class EZShop implements EZShopInterface {
 		if (ticketNumber <= 0)
 			throw new InvalidTransactionIdException();
 
-		if (creditCard == null || creditCard.length() == 0 || !checkCardLuhn(creditCard))
+		if (creditCard == null || creditCard.length() == 0 || !tool.checkCardLuhn(creditCard))
 			throw new InvalidCreditCardException();
 
 		it.polito.ezshop.model.SaleTransaction s = transactionList.get(ticketNumber);
 		if (s == null)
 			return false;
 
-		HashMap<Long, Double> listCreditCards = readCreditCard();
+		HashMap<Long, Double> listCreditCards = tool.readCreditCard();
 		
 		if (listCreditCards == null || !listCreditCards.containsKey(Long.parseLong(creditCard))
 				|| listCreditCards.get(Long.parseLong(creditCard)) < s.getPrice()) {
@@ -1460,7 +1321,7 @@ public class EZShop implements EZShopInterface {
 		s.setState("payed");
 		listCreditCards.put(Long.parseLong(creditCard), listCreditCards.get(Long.parseLong(creditCard)) - s.getPrice());
 		System.out.println("After Credit Card "+ creditCard+ " -> "+ listCreditCards.get(Long.parseLong(creditCard)));
-		if (!this.updateCreditCards(listCreditCards))
+		if (!tool.updateCreditCards(listCreditCards))
 			return false;
 		if (!writeAppState()) {
 			return false;
@@ -1501,13 +1362,13 @@ public class EZShop implements EZShopInterface {
 			throw new UnauthorizedException();
 		if (returnId <= 0)
 			throw new InvalidTransactionIdException();
-		if (creditCard == null || creditCard.length() == 0 || !checkCardLuhn(creditCard))
+		if (creditCard == null || creditCard.length() == 0 || !tool.checkCardLuhn(creditCard))
 			throw new InvalidCreditCardException();
 		ReturnTransaction r = returnList.get(returnId);
 		if (r == null || !r.isCommitted())
 			return -1;
 
-		HashMap<Long, Double> listCreditCards = readCreditCard();
+		HashMap<Long, Double> listCreditCards = tool.readCreditCard();
 
 		if (listCreditCards == null || !listCreditCards.containsKey(Long.parseLong(creditCard))) {
 			return -1;
