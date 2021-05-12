@@ -748,7 +748,7 @@ public class EZShop implements EZShopInterface {
 		if (order.getPricePerUnit() * order.getQuantity() > this.accounting.getBalance()) {
 			return false;
 		}
-		order.setStatus("COMPLETED");
+		order.setStatus("PAYED");
 		String pc = order.getProductCode();
 		it.polito.ezshop.model.ProductType pt;
 		try {
@@ -777,9 +777,9 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidOrderIdException();
 		}
 		Order order = this.orderList.get(orderId);
-		if (order == null || (!order.getStatus().equals("COMPLETED") && !order.getStatus().equals("ISSUED")))
+		if (order == null)
 			return false;
-		if (order.getStatus().equals("ISSUED")) {
+		if (order.getStatus().equals("PAYED") ||  order.getStatus().equals("COMPLETED")) {
 			order.setStatus("COMPLETED");
 			it.polito.ezshop.model.ProductType product = null;
 			try {
@@ -796,7 +796,7 @@ public class EZShop implements EZShopInterface {
 			return true;
 
 		} else {
-			return true;
+			return false;
 		}
 	}
 
