@@ -12,7 +12,7 @@ public class ReturnTransaction implements Serializable{
 	 */
 	private static final long serialVersionUID = -4414797098282122636L;
 	private Integer returnId;
-	private HashMap<ProductType, Integer> returnProducts;
+	private HashMap<ProductType, Integer> returnProducts = new HashMap<ProductType, Integer>();
 	private it.polito.ezshop.model.SaleTransaction originalTransaction;
 	private boolean committed;
 	private BalanceOperation payment;
@@ -79,9 +79,13 @@ public class ReturnTransaction implements Serializable{
 	}
 	
 	public void addProduct(ProductType product, int amount) {
-		this.returnProducts.put(product, this.returnProducts.get(product) + amount);
+		if(this.returnProducts.get(product) != null) {
+			this.returnProducts.put(product, this.returnProducts.get(product) + amount);
+			this.amount += product.getPricePerUnit() * amount;
+			return;
+		}
+		this.returnProducts.put(product, amount);
 		this.amount += product.getPricePerUnit() * amount;
-		// how to keep track of each product quantity here ?
 	}
 	
 	

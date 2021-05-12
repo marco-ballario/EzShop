@@ -1053,7 +1053,12 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidProductCodeException();
 		}
 
-		it.polito.ezshop.model.ProductType pt = (it.polito.ezshop.model.ProductType) getProductTypeByBarCode(productCode);
+		it.polito.ezshop.model.ProductType pt = null;
+		for(it.polito.ezshop.model.ProductType p: productList.values()) {
+			if(p.getBarCode().equals(productCode)) {
+				pt = p;
+			}
+		}
 
 		if (pt == null)
 			return false;
@@ -1085,8 +1090,14 @@ public class EZShop implements EZShopInterface {
 		if (amount < 0)
 			throw new InvalidQuantityException();
 		it.polito.ezshop.model.SaleTransaction st = this.transactionList.get(transactionId);
-		ProductType p = getProductTypeByBarCode(productCode);
-		if (st == null || !st.getStatus().equals("open") || p == null) {
+		it.polito.ezshop.model.ProductType pt = null;
+		for(it.polito.ezshop.model.ProductType p: productList.values()) {
+			if(p.getBarCode().equals(productCode)) {
+				pt = p;
+			}
+		}
+
+		if (st == null || !st.getStatus().equals("open") || pt == null) {
 			return false;
 		}
 
@@ -1111,11 +1122,17 @@ public class EZShop implements EZShopInterface {
 			throw new InvalidDiscountRateException();
 
 		it.polito.ezshop.model.SaleTransaction st = transactionList.get(transactionId);
-		ProductType p = getProductTypeByBarCode(productCode);
-		if (p == null || st == null || !st.getStatus().equals("open")) {
+		it.polito.ezshop.model.ProductType pt = null;
+		for(it.polito.ezshop.model.ProductType p: productList.values()) {
+			if(p.getBarCode().equals(productCode)) {
+				pt = p;
+			}
+		}
+
+		if (pt == null || st == null || !st.getStatus().equals("open")) {
 			return false;
 		}
-		st.applyProdDisc(p, discountRate);
+		st.applyProdDisc(pt, discountRate);
 
 		return true;
 	}
@@ -1260,9 +1277,16 @@ public class EZShop implements EZShopInterface {
 		if (amount <= 0) {
 			throw new InvalidQuantityException();
 		}
-		ProductType pt = this.getProductTypeByBarCode(productCode);
+		it.polito.ezshop.model.ProductType pt = null;
+		for(it.polito.ezshop.model.ProductType p: productList.values()) {
+			if(p.getBarCode().equals(productCode)) {
+				pt = p;
+			}
+		}
+
 		if (pt == null)
 			return false;
+
 		ReturnTransaction rt = returnList.get(returnId);
 		if (rt == null) {
 			return false;
@@ -1279,6 +1303,7 @@ public class EZShop implements EZShopInterface {
 		rt.setAmount(rt.getAmount() + pt.getPricePerUnit() * amount);
 		rt.setOriginalTransaction(st);
 		rt.setReturnId(returnId);
+		rt.addProduct(pt, amount);
 
 		return true;
 	}
@@ -1406,16 +1431,18 @@ public class EZShop implements EZShopInterface {
 			return false;
 
 		HashMap<Long, Double> listCreditCards = readCreditCard();
-
+		
 		if (listCreditCards == null || !listCreditCards.containsKey(Long.parseLong(creditCard))
 				|| listCreditCards.get(Long.parseLong(creditCard)) < s.getPrice()) {
 			return false;
 		}
+		System.out.println("Credit Card "+ creditCard+ " -> "+ listCreditCards.get(Long.parseLong(creditCard)));
 		it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
 		this.accounting.insertBalanceOperation(b, s.getPrice());
 		s.setPayment(b);
 		s.setState("payed");
 		listCreditCards.put(Long.parseLong(creditCard), listCreditCards.get(Long.parseLong(creditCard)) - s.getPrice());
+		System.out.println("After Credit Card "+ creditCard+ " -> "+ listCreditCards.get(Long.parseLong(creditCard)));
 		if (!this.updateCreditCards(listCreditCards))
 			return false;
 		if (!writeAppState()) {
@@ -1484,7 +1511,7 @@ public class EZShop implements EZShopInterface {
 
 	@Override
 	public boolean recordBalanceUpdate(double toBeAdded) throws UnauthorizedException {
-		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator")
+		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
 				&& !this.loggedUser.getRole().equals("ShopManager"))) {
 			throw new UnauthorizedException();
 		}
@@ -1535,7 +1562,7 @@ public class EZShop implements EZShopInterface {
 
 	@Override
 	public double computeBalance() throws UnauthorizedException {
-		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator")
+		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
 				&& !this.loggedUser.getRole().equals("ShopManager"))) {
 			throw new UnauthorizedException();
 		}
