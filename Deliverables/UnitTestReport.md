@@ -1,10 +1,10 @@
 # Unit Testing Documentation
 
-Authors:
+Authors: Marco Ballario, Pietro Macori, Cosimo Michelagnoli, Lucia Vencato
 
-Date:
+Date: 14/05/2021
 
-Version:
+Version: 1.0
 
 # Contents
 
@@ -26,17 +26,17 @@ Version:
     to start tests
     >
 
- ### **Class *class_name* - method *name***
+ ### **Class *Tools* - method *checkDigit***
 
 
 
 **Criteria for method *name*:**
 	
 
- - 
- - 
-
-
+ - String length
+ - Digits
+ - Correct code
+ - Value
 
 
 
@@ -44,10 +44,16 @@ Version:
 
 | Criteria | Predicate |
 | -------- | --------- |
-|          |           |
-|          |           |
-|          |           |
-|          |           |
+|    String lenght      |     >14      |
+|          |     <12      |
+|          |      =<14 && >=12     |
+|    Digits      |     String composed by digits       |
+|          |     String not composed by digits       |
+|    Value      |     Positive      |
+|          |     Negative     |
+|    Correct code      |     Valid code      |
+|          |     Wrong code     |
+
 
 
 
@@ -57,21 +63,28 @@ Version:
 
 | Criteria | Boundary values |
 | -------- | --------------- |
-|          |                 |
-|          |                 |
+|    String length      |          14       |
+|          |       12          |
+|     Digits     |         Positive        |
+|     Value     |         0        |
+|               |         MAXLONG          |
 
 
 
 **Combination of predicates**:
 
 
-| Criteria 1 | Criteria 2 | ... | Valid / Invalid | Description of the test case | JUnit test case |
-|-------|-------|-------|-------|-------|-------|
-|||||||
-|||||||
-|||||||
-|||||||
-|||||||
+| Criteria 1 | Criteria 2 | Criteria 3 | Criteria 4 | Valid / Invalid | Description of the test case | JUnit test case |
+|------------|------------|------------|------------|---------------- |------------------------------|-----------------|
+| >14 | * | * | * | Invalid | Input stirng is longer than 14 char\n T1("123456789012345"; false) | testMore14() |
+| <12 | * | * | * | Invalid | Input stirng is smaller than 12 char\n T2("123456789"; false) | testLess12() |
+| *| Alphabetic string|*|*| Invalid|Input string with alphabet char\n T3("123ABCDEFT322"; InvalidProductCodeException);|testAlphabetInput()|
+| * | * | Negative |*|Invalid| Input string composed by negative number\n T4("-12345678901234";false);|testNegative()|
+| *| *| * | Invalid Code | Invalid| Input string doesn't satisfy the algorith\n T5("12345678901232"; false) |testInvalidCode()|
+| 12 | Digits |Positive|Valid Code| Valid| Valid input with lenght 12\n T6("123456789012";true) |test12Digits()|
+| 13 | Digits |Positive|Valid Code| Valid| Valid input with lenght 13\n T7("1234567890111";true) |test13Digits()|
+| 14 | Digits |Positive|Valid Code| Valid| Valid input with lenght 14\n T8("12345678901231";true) |test14Digits()|
+
 
 
 
