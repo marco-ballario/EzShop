@@ -7,7 +7,6 @@ public class LoyaltyCard  implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1820432779123913921L;
-	private it.polito.ezshop.data.Customer customer;
 	private Integer points;
 	private String code;
 	
@@ -17,12 +16,7 @@ public class LoyaltyCard  implements Serializable{
 		this.points=0;
 	}
 	
-	public it.polito.ezshop.data.Customer getCustomer() {
-		return customer;
-	}
-	public void setCustomer(it.polito.ezshop.data.Customer c) {
-		this.customer = c;
-	}
+
 	public Integer getPoints() {
 		return points;
 	}
@@ -36,10 +30,7 @@ public class LoyaltyCard  implements Serializable{
 		this.code = code;
 	}
 
-	@Override
-	public String toString() {
-		return "LoyaltyCard [customer=" + customer + ", points=" + points + ", code=" + code + "]";
-	}
+
 	
 	
 

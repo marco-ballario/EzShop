@@ -98,12 +98,6 @@ public class ProductType implements it.polito.ezshop.data.ProductType, Serializa
 		this.productID = id;	
 	}
 
-	@Override
-	public String toString() {
-		return "ProductType [description=" + description + ", barCode=" + barCode + ", note=" + note + ", productID="
-				+ productID + ", quantity=" + quantity + ", pricePerUnit=" + pricePerUnit + ", location=" + location
-				+ "]";
-	}
 	
 	public void increaseQuantity(int newQty){
 		this.quantity = this.quantity + newQty;

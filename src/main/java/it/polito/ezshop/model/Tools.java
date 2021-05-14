@@ -1,23 +1,24 @@
 package it.polito.ezshop.model;
 
-
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 
 public class Tools {
-	
+
 	@SuppressWarnings("unchecked")
-	public ArrayList<Long> readLoyalty() {
+	public ArrayList<Long> readLoyalty(String fName) {
 
 		ArrayList<Long> cardsNo = null;
 		try {
-			String fName = "./src/main/java/it/polito/ezshop/cards.in/";
 			FileInputStream fileIn = new FileInputStream(fName);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			cardsNo = (ArrayList<Long>) in.readObject();
@@ -31,8 +32,8 @@ public class Tools {
 		return cardsNo;
 	}
 
-	public boolean updateLoyalty(ArrayList<Long> cardsNo) {
-		String fName = "./src/main/java/it/polito/ezshop/cards.in/";
+	public boolean updateLoyalty(ArrayList<Long> cardsNo, String fName) {
+
 		try {
 			FileOutputStream fileOut = new FileOutputStream(fName);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -46,40 +47,12 @@ public class Tools {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public HashMap<Long, Double> readCreditCard() {
-		HashMap<Long, Double> cards = null;
+	public boolean checkCardLuhn(String creditCardNo) {
 		try {
-			String fName = "./src/main/java/it/polito/ezshop/creditCards.db/";
-			FileInputStream fileIn = new FileInputStream(fName);
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			cards = (HashMap<Long, Double>) in.readObject();
-			in.close();
-			fileIn.close();
-		} catch (IOException i) {
-			System.out.println(i.getMessage());
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		return cards;
-	}
-
-	public boolean updateCreditCards(HashMap<Long, Double> creditCards) {
-		String fName = "./src/main/java/it/polito/ezshop/creditCards.db/";
-		try {
-			FileOutputStream fileOut = new FileOutputStream(fName);
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(creditCards);
-			out.close();
-			fileOut.close();
-			return true;
-		} catch (IOException i) {
-			System.out.println(i.getMessage());
+			Long.parseLong(creditCardNo);
+		} catch (NumberFormatException e) {
 			return false;
 		}
-	}
-
-	public boolean checkCardLuhn(String creditCardNo) {
 		int nDigits = creditCardNo.length();
 
 		int nSum = 0;
@@ -105,11 +78,16 @@ public class Tools {
 	public boolean checkDigit(String code) {
 		int tmp = 0, tot = 0;
 		int len = code.length();
-		int lastCodeDigit = Character.getNumericValue(code.charAt(len - 1)); // last code digit, used as check number
-		
-		if(code.length() < 12 || code.length() > 14)
+		try {
+			Long.parseLong(code);
+		} catch (NumberFormatException e) {
 			return false;
-		
+		}
+		int lastCodeDigit = Character.getNumericValue(code.charAt(len - 1)); // last code digit, used as check number
+
+		if (code.length() < 12 || code.length() > 14)
+			return false;
+
 		// multiplication and sum of all the digit except the last one
 		if (len == 12 || len == 14) {
 			for (int i = len - 2; i >= 0; i--) {
@@ -157,6 +135,66 @@ public class Tools {
 			return false;
 	}
 
+	public boolean paymentCreditCards(String creditCard, double price, String fileName)
+			throws IOException {
+		boolean found = false;
+		boolean updated = false;
 
+		File originalFile = new File(fileName);
+		BufferedReader br = new BufferedReader(new FileReader(originalFile));
+
+		// Construct the new file that will later be renamed to the original
+		// filename.
+		File tempFile = new File("tmp.txt");
+		PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+
+		String line = null;
+		// Read from the original file and write to the new
+		// unless content matches data to be removed.
+		Long number = (long) 0;
+		Double amount = (double) 0;
+		while ((line = br.readLine()) != null) {
+			if (line.charAt(0) != '#') {
+				String[] buff = line.split(";");
+				try{
+					number = Long.parseLong(buff[0]);
+					amount = Double.parseDouble(buff[1]);
+					if (number == Long.parseLong(creditCard)) {
+						found = true;
+						if ((price >= 0 && price > amount)) {
+							
+							
+						} else {
+							amount = amount - price;
+							updated = true;
+							line = number.toString() + ";" + amount.toString();
+
+						}
+
+					}
+				}
+				catch(NumberFormatException e) {
+					updated = false;
+				}
+				
+			}
+
+			pw.println(line);
+			pw.flush();
+		}
+		pw.close();
+		br.close();
+
+		// Delete the original file
+		if (!originalFile.delete()) {
+			return false;
+		}
+
+		// Rename the new file to the filename the original file had.
+		if (!tempFile.renameTo(originalFile))
+			return false;
+		
+		return (found && updated);
+	}
 
 }

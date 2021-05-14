@@ -73,17 +73,21 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	}
 
 
-	public TicketEntry addProduct(ProductType pt, int amount) {
+	public boolean addProduct(ProductType pt, int amount) {
+		if(pt == null) {
+			return false;
+		}
 		for(TicketEntry te: entries) {
 			if(te.getBarCode().equals(pt.getBarCode())) {
 				te.setAmount(te.getAmount()+amount);
-				return te;
+				return true;
 			}
 		}
 		TicketEntry te = new it.polito.ezshop.model.TicketEntry(pt, amount);
+		
 		this.entries.add(te);
 		this.price += pt.getPricePerUnit() * amount;
-		return te;
+		return true;
 		
 	}
 
@@ -104,7 +108,7 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 		this.status = status;
 	}
 
-	public void applyProdDisc(it.polito.ezshop.data.ProductType p, double discountRate) {
+	public boolean applyProdDisc(it.polito.ezshop.data.ProductType p, double discountRate) {
 		TicketEntry t=null;
 		for(TicketEntry te:entries) {
 			if(p.getBarCode().equals(te.getBarCode())) {
@@ -113,14 +117,14 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 			}
 		}
 		if(t==null) {
-			return;
+			return false;
 		}
 		double price = t.getPricePerUnit()*t.getAmount();
 		this.price = this.price - price;
 		
 		this.price = this.price + price*(1-discountRate);
 		
-		return;
+		return true;
 	}
 
 	public Integer getTransactionPoints() {
