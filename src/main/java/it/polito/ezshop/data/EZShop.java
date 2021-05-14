@@ -18,10 +18,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class EZShop implements EZShopInterface {
-	private LinkedHashMap<Integer, it.polito.ezshop.model.User> userList = null;
+	private HashMap<Integer, it.polito.ezshop.model.User> userList = null;
 	private User loggedUser;
 	private int userId;
-	private LinkedHashMap<Integer, it.polito.ezshop.model.ProductType> productList = null;
+	private HashMap<Integer, it.polito.ezshop.model.ProductType> productList = null;
 	private int productId;
 	private HashMap<Integer, it.polito.ezshop.model.Customer> customerList = null;
 	private int customerId;
@@ -46,8 +46,8 @@ public class EZShop implements EZShopInterface {
 	@SuppressWarnings("unchecked")
 	private void readAppState() {
 		if (!f.isFile() || !f.canRead()) {
-			userList = new LinkedHashMap<Integer, it.polito.ezshop.model.User>();
-			productList = new LinkedHashMap<Integer, it.polito.ezshop.model.ProductType>();
+			userList = new HashMap<Integer, it.polito.ezshop.model.User>();
+			productList = new HashMap<Integer, it.polito.ezshop.model.ProductType>();
 			customerList = new HashMap<Integer, it.polito.ezshop.model.Customer>();
 			orderList = new HashMap<Integer, it.polito.ezshop.model.Order>();
 			loyaltyCardList = new HashMap<String, it.polito.ezshop.model.LoyaltyCard>();
@@ -112,14 +112,7 @@ public class EZShop implements EZShopInterface {
 
 			}
 		}
-		System.out.println(userList);
-		System.out.println(productList);
-		System.out.println(customerList);
-		System.out.println(orderList);
-		System.out.println(loyaltyCardList);
-		System.out.println(transactionList);
-		System.out.println(returnList);
-		System.out.println(userId);
+
 		return;
 	}
 
@@ -213,7 +206,7 @@ public class EZShop implements EZShopInterface {
 		if (loggedUser == null || !loggedUser.getRole().equals("Administrator")) {
 			throw new UnauthorizedException();
 		}
-		return new LinkedList<User>(userList.values());
+		return new ArrayList<User>(userList.values());
 	}
 
 	@Override
@@ -401,11 +394,10 @@ public class EZShop implements EZShopInterface {
 		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator")
 				&& !this.loggedUser.getRole().equals("ShopManager") && !this.loggedUser.getRole().equals("Cashier")))
 			throw new UnauthorizedException();
-		System.out.println(productList.values());
 		if (productList.values().size() == 0) {
-			return new LinkedList<ProductType>();
+			return new ArrayList<ProductType>();
 		}
-		List<ProductType> l = new LinkedList<ProductType>(productList.values());
+		List<ProductType> l = new ArrayList<ProductType>(productList.values());
 		return l;
 	}
 
@@ -583,9 +575,10 @@ public class EZShop implements EZShopInterface {
 		newOrder.setOrderId(this.orderId);
 		it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
 		this.accounting.insertBalanceOperation(b, -pricePerUnit * quantity);
-		newOrder.setStatus("COMPLETED");
+		newOrder.setStatus("PAYED");
 		it.polito.ezshop.model.ProductType pt = (it.polito.ezshop.model.ProductType) this.getProductTypeByBarCode(productCode);
 		pt.increaseQuantity(quantity);
+		this.orderList.put(this.orderId, newOrder);
 		boolean res = writeAppState();
 		if (res == false) {
 			return -1;
@@ -614,6 +607,9 @@ public class EZShop implements EZShopInterface {
 		it.polito.ezshop.model.ProductType pt;
 		try {
 			pt = (it.polito.ezshop.model.ProductType) this.getProductTypeByBarCode(pc);
+			if(pt==null) {
+				return false;
+			}
 			pt.increaseQuantity(order.getQuantity());
 			it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
 			this.accounting.insertBalanceOperation(b, -order.getPricePerUnit() * order.getQuantity());
@@ -672,9 +668,9 @@ public class EZShop implements EZShopInterface {
 				&& !this.loggedUser.getRole().equals("ShopManager")))
 			throw new UnauthorizedException();
 		if(orderList.values().size()==0) {
-			return new LinkedList<it.polito.ezshop.data.Order>();
+			return new ArrayList<it.polito.ezshop.data.Order>();
 		}
-		return new LinkedList<it.polito.ezshop.data.Order>(orderList.values());
+		return new ArrayList<it.polito.ezshop.data.Order>(orderList.values());
 	}
 
 	@Override
@@ -776,9 +772,9 @@ public class EZShop implements EZShopInterface {
 						&& !this.loggedUser.getRole().equals("ShopManager")))
 			throw new UnauthorizedException();
 		if (customerList.values().size() == 0) {
-			new LinkedList<Customer>();
+			new ArrayList<Customer>();
 		}
-		return new LinkedList<Customer>(customerList.values());
+		return new ArrayList<Customer>(customerList.values());
 	}
 
 	@Override
@@ -1417,7 +1413,7 @@ public class EZShop implements EZShopInterface {
 			from = to;
 			to = tmp;
 		}
-		List<BalanceOperation> result = new LinkedList<BalanceOperation>();
+		List<BalanceOperation> result = new ArrayList<BalanceOperation>();
 		if (from == null && to == null) {
 			result = accounting.getOperationList();
 		} else if (from == null) {
