@@ -155,13 +155,13 @@ Version: 1.0
 | | Return ID = INT_MAX |
 
 **Combination of predicates**:
-| Criteria 1 | Criteria 2 | ... | Valid / Invalid | Description of the test case | JUnit test case |
-|-------|-------|-------|-------|-------|-------|
-|||||||
-|||||||
-|||||||
-|||||||
-|||||||
+| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|
+| Negative | * | Invalid | The Return ID is a negative integer<br/>T1(-10; false) | testReturnIdNegative() |
+| * | Return ID not present | Invalid | The input Return ID is not present<br/>T2(123; false) | testReturnIdNotPresent() |
+| Positive | Return ID present | Valid | The input Return ID is valid<br/>T3(1; true)| testReturnIdPresent() |
+| Positive | Return ID present and<br/>Return ID = 0 | Valid | The input Return ID is valid<br/>T4(0; true)| testReturnIdPresentAndZero() |
+| Positive | Return ID present and<br/>Return ID = INT_MAX | Valid | The input Return ID is valid<br/>T5(INT_MAX; true)| testReturnIdPresentAndMax() |
 
 ### **Class *SaleTransaction* - method *updateStatusPlus***
 
