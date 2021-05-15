@@ -95,7 +95,9 @@ public class TestEzShops {
 	@Test
 	public void testNoBarcode() {
 		SaleTransaction st = new SaleTransaction();
-		assertFalse(st.removeProducts("", 5));
+		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
+		st.addProduct(pt, 10);
+		assertFalse(st.removeProducts("1234567890111", 5));
 	}
 	
 	@Test
