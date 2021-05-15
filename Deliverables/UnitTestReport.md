@@ -131,7 +131,7 @@ Version: 1.0
 | * | Amount < 0 or<br/>Amount > Current quantity | Invalid | The amount provided is not removable<br/>T2a(barcode, -5; false)<br/>T2b(barcode, current quantity +1; false) | testNoAmount() |
 | Barcode present | Amount >= 0 and<br/>Amount <= Current quantity | Valid | Valid amount to be removed<br/>T3(barcode, 5; true) | testValidAmount() |
 | Barcode present | Amount = 0 | Valid | No amount to be removed<br/>T4(barcode, 0; true) | testZeroAmount() |
-| Barcode present | Amount = Current quantity | Valid | Valid amount to be removed<br/>T5(barcode, 0; true) | testCurrentQuantityAmount() |
+| Barcode present | Amount = Current quantity | Valid | Valid amount to be removed<br/>T5(barcode, current quantity; true) | testCurrentQuantityAmount() |
 
 ### **Class *SaleTransaction* - method *updateStatusPlus***
 
