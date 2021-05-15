@@ -106,6 +106,7 @@ public class TestEzShops {
 		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
 		st.addProduct(pt, 10);
 		assertFalse(st.removeProducts("123456789012", -5));
+		assertFalse(st.removeProducts("123456789012", 11));
 	}
 	
 	@Test
