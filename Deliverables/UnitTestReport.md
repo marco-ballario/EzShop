@@ -104,41 +104,34 @@ Version: 1.0
 | File present | Card present | price == 0  |Valid | Zero money are returned<br/>T7("485370086510891", 0.0,".../utils/creditcards.txt") | testZeroMoney() |
 | File present | Card present | price == DBL_MAX  |Valid | Max money are returned<br/>T8("485370086510891", DBL_MAX,".../utils/creditcards.txt") | testMaxMoney() |
 
-### **Class *SaleTransaction* - method *addProduct***
+### **Class *SaleTransaction* - method *removeProducts***
 
-**Criteria for method *addProduct*:**
- - Product existance
+**Criteria for method *removeProducts*:**
  - Barcode presence
  - Amount
 
-**Predicates for method *addProduct*:**
+**Predicates for method *removeProducts*:**
 | Criteria | Predicate |
 | -------- | --------- |
-| Product existance | Product exists |
-| | Product doesn't exist|
 | Barcode presence | Barcode present |
 | | Barcode not present|
-| Amount  | Amount >= 0 and<br/>Amount <= INT_MAX and<br/>(Amount + Current quantity) <= INT_MAX |
-| | Amount < 0 or<br/>Amount > INT_MAX or<br/>(Amount + Current quantity) > INT_MAX |
+| Amount  | Amount >= 0 and<br/>Amount <= Current quantity |
+| | Amount < 0 or<br/>Amount > Current quantity |
 
 **Boundaries**:
 | Criteria | Boundary values |
 | -------- | --------------- |
 | Amount | 0 |
-| | INT_MAX |
-| | INT_MAX - Current quantity |
+| | Current quantity |
 
 **Combination of predicates**:
-| Criteria 1 | Criteria 2 | ... | Valid / Invalid | Description of the test case | JUnit test case |
-|-------|-------|-------|-------|-------|-------|
-| Product doesn't exist | * | * | Invalid | The given product doesn't exist<br/>T1(null, 5; false) | testNoProduct() |
-| * | Barcode not present | * | Invalid | The input barcode card is not present in the list of products<br/>T2(product with missing barcode, 5; false)| testNoBarcode() |
-| * | * | Amount < 0 or<br/>Amount > INT_MAX or<br/>(Amount + Current quantity) > INT_MAX | Invalid | The amount provided is not summable<br/>T3a(product, -5; false)<br/>T3b(product, INT_MAX+1; false)<br/>T3c(product, INT_MAX - Current quantity + 1; false) | testNoAmount() |
-| Product exists | Barcode present | Amount >= 0 and<br/>Amount <= INT_MAX and<br/>(Amount + Current quantity) <= INT_MAX | Valid | Valid amount to be added<br/>T4(product, Amount; true) | testValidAmount() |
-| Product exists | Barcode present | Amount = 0 | Valid | No amount to be added<br/>T5(product, 0; true) | testZeroAmount() |
-| Product exists | Barcode present | Amount = INT_MAX and<br/>Current quantity = 0 | Valid | Valid amount to be added<br/>T6(product, INT_MAX; true) | testGlobalMaxAmount() |
-| Product exists | Barcode present | Amount = (INT_MAX - Current quantity) | Valid | Valid amount to be added<br/>T7(product, INT_MAX - Current quantity; true) | testRelativeMaxAmount() |
-
+| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|
+| Barcode not present | * | Invalid | The input barcode is not present in the list<br/>T1(missing barcode, 5; false)| testNoBarcode() |
+| * | Amount < 0 or<br/>Amount > Current quantity | Invalid | The amount provided is not removable<br/>T2a(barcode, -5; false)<br/>T2b(barcode, current quantity +1; false) | testNoAmount() |
+| Barcode present | Amount >= 0 and<br/>Amount <= Current quantity | Valid | Valid amount to be removed<br/>T3(barcode, 5; true) | testValidAmount() |
+| Barcode present | Amount = 0 | Valid | No amount to be removed<br/>T4(barcode, 0; true) | testZeroAmount() |
+| Barcode present | Amount = Current quantity | Valid | Valid amount to be removed<br/>T5(barcode, 0; true) | testCurrentQuantityAmount() |
 
 ### **Class *SaleTransaction* - method *updateStatusPlus***
 
@@ -160,9 +153,9 @@ Version: 1.0
 **Combination of predicates**:
 | Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | JUnit test case |
 |------------|------------|-----------------|------------------------------|-----------------|
-|Negative| * |Invalid|The return id is negative integer\nT1(-10;false)|testNegativeReturnId()|
-|*|id doesn't exit|Valid| The input return id is not present\nT2(123, false)|testNonExistReturnId()|
-|Positive|id exists|Valid|The input is valid\nT3(1,true)|testCorrectReturnId()|
+|Negative| * |Invalid|The return id is negative integer<br/>T1(-10;false)|testNegativeReturnId()|
+|*|id doesn't exit|Valid| The input return id is not present<br/>T2(123, false)|testNonExistReturnId()|
+|Positive|id exists|Valid|The input is valid<br/>T3(1,true)|testCorrectReturnId()|
 
 
 ### **Class *class_name* - method *name***
