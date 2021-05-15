@@ -53,25 +53,27 @@ public class Tools {
 		} catch (NumberFormatException e) {
 			return false;
 		}
-		int nDigits = creditCardNo.length();
-
+		if( creditCardNo.length()!=16)
+			return false;
+		
+		
 		int nSum = 0;
 		boolean isSecond = false;
-		for (int i = nDigits - 1; i >= 0; i--) {
+		for (int i = creditCardNo.length() - 1; i >= 0; i--) {
 
 			int d = creditCardNo.charAt(i) - '0';
-
-			if (isSecond == true)
-				d = d * 2;
-
-			// We add two digits to handle
-			// cases that make two digits
-			// after doubling
-			nSum += d / 10;
-			nSum += d % 10;
+			Integer.parseInt(creditCardNo.substring(i, i + 1));
+			if (isSecond) {
+				d *= 2;
+				if(d > 9)
+					d = (d % 10) +1;
+			}
+			
+			nSum += d;
 
 			isSecond = !isSecond;
 		}
+		
 		return (nSum % 10 == 0);
 	}
 
