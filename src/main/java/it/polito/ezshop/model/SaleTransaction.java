@@ -199,16 +199,18 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	}
 
 	public boolean removeProducts(String productCode, int amount) {
+		if(amount < 0)
+			return false;
 		for (TicketEntry t: entries){
 			if(t.getBarCode().equals(productCode)) {
 				if(t.getAmount()<amount) {
 					return false;
 				}
 				t.setAmount(t.getAmount()-amount);
-				break;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	public TicketEntry getTicketEntry(String productCode) {
