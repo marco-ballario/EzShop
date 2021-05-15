@@ -28,20 +28,13 @@ Version: 1.0
 
  ### **Class *Tools* - method *checkDigit***
 
-
-
-**Criteria for method *name*:**
-	
-
+**Criteria for method *checkDigit*:**
  - String length
  - Digits
  - Correct code
  - Value
 
-
-
-**Predicates for method *name*:**
-
+**Predicates for method *checkDigit*:**
 | Criteria | Predicate |
 | -------- | --------- |
 |    String lenght      |     >14      |
@@ -54,13 +47,7 @@ Version: 1.0
 |    Correct code      |     Valid code      |
 |          |     Wrong code     |
 
-
-
-
-
-
 **Boundaries**:
-
 | Criteria | Boundary values |
 | -------- | --------------- |
 |    String length      |          14       |
@@ -69,42 +56,26 @@ Version: 1.0
 |     Value     |         0        |
 |               |         MAXLONG          |
 
-
-
 **Combination of predicates**:
-
-
 | Criteria 1 | Criteria 2 | Criteria 3 | Criteria 4 | Valid / Invalid | Description of the test case | JUnit test case |
 |------------|------------|------------|------------|---------------- |------------------------------|-----------------|
-| >14 | * | * | * | Valid | Input stirng is longer than 14 char\n T1("123456789012345"; false) | testMore14() |
-| <12 | * | * | * | Valid | Input stirng is smaller than 12 char\n T2("123456789"; false) | testLess12() |
-| *| Alphabetic string|*|*| Valid|Input string with alphabet char\n T3("123ABCDEFT322"; InvalidProductCodeException);|testAlphabetInput()|
-| * | * | Negative |*|Invalid| Input string composed by negative number\n T4("-12345678901234";false);|testNegative()|
-| *| *| * | Invalid Code | Valid| Input string doesn't satisfy the algorith\n T5("12345678901232"; false) |testInvalidCode()|
-| 12 | Digits |Positive|Valid Code| Valid| Valid input with lenght 12\n T6("123456789012";true) |test12Digits()|
-| 13 | Digits |Positive|Valid Code| Valid| Valid input with lenght 13\n T7("1234567890111";true) |test13Digits()|
-| 14 | Digits |Positive|Valid Code| Valid| Valid input with lenght 14\n T8("12345678901231";true) |test14Digits()|
-
-
-
-
-
+| >14 | * | * | * | Valid | Input string is longer than 14 char<br/>T1("123456789012345"; false) | testMore14() |
+| <12 | * | * | * | Valid | Input stirng is smaller than 12 char<br/>T2("123456789"; false) | testLess12() |
+| *| Alphabetic string|*|*| Valid|Input string with alphabet char<br/>T3("123ABCDEFT322"; InvalidProductCodeException);|testAlphabetInput()|
+| * | * | Negative |*|Invalid| Input string composed by negative number<br/>T4("-12345678901234";false);|testNegative()|
+| *| *| * | Invalid Code | Valid| Input string doesn't satisfy the algorith<br/>T5("12345678901232"; false) |testInvalidCode()|
+| 12 | Digits |Positive|Valid Code| Valid| Valid input with lenght 12<br/>T6("123456789012";true) |test12Digits()|
+| 13 | Digits |Positive|Valid Code| Valid| Valid input with lenght 13<br/>T7("1234567890111";true) |test13Digits()|
+| 14 | Digits |Positive|Valid Code| Valid| Valid input with lenght 14<br/>T8("12345678901231";true) |test14Digits()|
 
 ### **Class *Tools* - method *paymentCreditCards***
 
-
-
-**Criteria for method *name*:**
-	
-
+**Criteria for method *paymentCreditCards*:**
  - File existance
  - Credit card presence
  - Money
 
-
-
-**Predicates for method *name*:**
-
+**Predicates for method *paymentCreditCards*:**
 | Criteria | Predicate |
 | -------- | --------- |
 | File existance | File exists |
@@ -114,37 +85,85 @@ Version: 1.0
 | Money  | price > 0 && price > money avaiable|
 | | price < 0 (return) |
 
-
-
-
-
-
 **Boundaries**:
-
 | Criteria | Boundary values |
 | -------- | --------------- |
 | Money| 0 |
 ||DBL_MAX|
 || price == money avaiable|
 
-
-
 **Combination of predicates**:
-
-
 | Criteria 1 | Criteria 2 | Criteria 3 | Valid / Invalid | Description of the test case | JUnit test case |
 |------------|------------|------------|---------------- |------------------------------|-----------------|
-| No file| * | * | Valid | The given file doesn't exist\n T1("4485370086510891", 12.2, "./wrong"; false) | testNoFile() |
-| * | Card not present | * | Valid | The input credit card is not present in the file\n T2("0085370086510891", 21.2, ".../utils/creditcards.txt"; false)| testNoCard() |
-| * | * | price < avaiable && price>0 | Valid | The money to be payed are not enough on the card\n T3("485370086510891", 1200.0,".../utils/creditcards.txt") | testNoMoney() |
-| File present | Card present | price > 0 && price < avaiable |Valid | The money to be payed are enough\nT4("485370086510891", 10.0,".../utils/creditcards.txt") | testMoneyAvaiable() |
-| File present | Card present | price > 0 && price == avaiable |Valid | The money to be payed are equal to avaiable\nT5("485370086510891", 150.0,".../utils/creditcards.txt") | testMoneyEqual() |
-| File present | Card present | price < 0  |Valid | The money are returned\nT5("485370086510891", 10.0,".../utils/creditcards.txt") | testReturnMoney() |
-| File present | Card present | price == 0  |Valid | Zero money are returned\nT5("485370086510891", 0.0,".../utils/creditcards.txt") | testZeroMoney() |
-| File present | Card present | price == DBL_MAX  |Valid | Max money are returned\nT5("485370086510891", DBL_MAX,".../utils/creditcards.txt") | testMaxMoney() |
+| No file| * | * | Valid | The given file doesn't exist<br/>T1("4485370086510891", 12.2, "./wrong"; false) | testNoFile() |
+| * | Card not present | * | Valid | The input credit card is not present in the file<br/>T2("0085370086510891", 21.2, ".../utils/creditcards.txt"; false)| testNoCard() |
+| * | * | price < avaiable && price>0 | Valid | The money to be payed are not enough on the card<br/>T3("485370086510891", 1200.0,".../utils/creditcards.txt") | testNoMoney() |
+| File present | Card present | price > 0 && price < avaiable |Valid | The money to be payed are enough<br/>T4("485370086510891", 10.0,".../utils/creditcards.txt") | testMoneyAvaiable() |
+| File present | Card present | price > 0 && price == avaiable |Valid | The money to be payed are equal to avaiable<br/>T5("485370086510891", 150.0,".../utils/creditcards.txt") | testMoneyEqual() |
+| File present | Card present | price < 0  |Valid | The money are returned<br/>T6("485370086510891", 10.0,".../utils/creditcards.txt") | testReturnMoney() |
+| File present | Card present | price == 0  |Valid | Zero money are returned<br/>T7("485370086510891", 0.0,".../utils/creditcards.txt") | testZeroMoney() |
+| File present | Card present | price == DBL_MAX  |Valid | Max money are returned<br/>T8("485370086510891", DBL_MAX,".../utils/creditcards.txt") | testMaxMoney() |
 
+### **Class *SaleTransaction* - method *addProduct***
 
+**Criteria for method *addProduct*:**
+ - Product existance
+ - Barcode presence
+ - Amount
 
+**Predicates for method *addProduct*:**
+| Criteria | Predicate |
+| -------- | --------- |
+| Product existance | Product exists |
+| | Product doesn't exist|
+| Barcode presence | Barcode present |
+| | Barcode present|
+| Amount  | Amount >= 0 && Amount <= INT_MAX |
+| | Amount < 0 || Amount > INT_MAX |
+
+**Boundaries**:
+| Criteria | Boundary values |
+| -------- | --------------- |
+| Amount | 0 |
+| | INT_MAX |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | ... | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|-------|
+|||||||
+|||||||
+|||||||
+|||||||
+|||||||
+
+### **Class *class_name* - method *name***
+
+**Criteria for method *name*:**
+ - 
+ - 
+
+**Predicates for method *name*:**
+| Criteria | Predicate |
+| -------- | --------- |
+|          |           |
+|          |           |
+|          |           |
+|          |           |
+
+**Boundaries**:
+| Criteria | Boundary values |
+| -------- | --------------- |
+|          |                 |
+|          |                 |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | ... | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|-------|
+|||||||
+|||||||
+|||||||
+|||||||
+|||||||
 
 # White Box Unit Tests
 
