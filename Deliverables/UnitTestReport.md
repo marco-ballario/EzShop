@@ -9,10 +9,11 @@ Version: 1.0
 # Contents
 
 - [Black Box Unit Tests](#black-box-unit-tests)
-
-
-
-
+    + [Class Tools - method checkDigit](#class-tools-method-checkdigit)
+    + [Class Tools - method paymentCreditCards](#class-tools-method-paymentcreditcards)
+    + [Class SaleTransaction - method removeProducts](#class-saletransaction-method-removeproducts)
+    + [Class SaleTransaction - method updateStatusMin](#class-saletransaction-method-updatestatusmin)
+    + [Class SaleTransaction - method updateStatusPlus](#class-saletransaction-method-updatestatusplus)
 - [White Box Unit Tests](#white-box-unit-tests)
 
 
