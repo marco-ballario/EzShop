@@ -117,22 +117,29 @@ Version: 1.0
 | Product existance | Product exists |
 | | Product doesn't exist|
 | Barcode presence | Barcode present |
-| | Barcode present|
-| Amount  | Amount >= 0 && Amount <= INT_MAX |
-| | Amount < 0 || Amount > INT_MAX |
+| | Barcode not present|
+| Amount  | Amount >= 0 and<br/>Amount <= INT_MAX and<br/>(Amount + Current quantity) <= INT_MAX |
+| | Amount < 0 or<br/>Amount > INT_MAX or<br/>(Amount + Current quantity) > INT_MAX |
 
 **Boundaries**:
 | Criteria | Boundary values |
 | -------- | --------------- |
 | Amount | 0 |
 | | INT_MAX |
+| | INT_MAX - Current quantity |
 
 **Combination of predicates**:
 | Criteria 1 | Criteria 2 | ... | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|-------|-------|
-|||||||
-|||||||
-|||||||
+| No product | * | * | Invalid | The given product doesn't exist<br/>T1(null, 5; false) | testNoProduct() |
+| * | Barcode not present | * | Invalid | The input barcode card is not present in the list of products<br/>T2(product with missing barcode, 5; false)| testNoBarcode() |
+| * | * | Amount < 0 or<br/>Amount > INT_MAX | Invalid | The amount provided is not summable<br/>T3a(product, -5; false)<br/>T3a(product, INT_MAX+1; false) | testNoAmount() |
+
+| Product exists | Card present | price > 0 && price < avaiable |Valid | The money to be payed are enough<br/>T4("485370086510891", 10.0,".../utils/creditcards.txt") | testMoneyAvaiable() |
+| File present | Card present | price > 0 && price == avaiable |Valid | The money to be payed are equal to avaiable<br/>T5("485370086510891", 150.0,".../utils/creditcards.txt") | testMoneyEqual() |
+| File present | Card present | price < 0  |Valid | The money are returned<br/>T6("485370086510891", 10.0,".../utils/creditcards.txt") | testReturnMoney() |
+| File present | Card present | price == 0  |Valid | Zero money are returned<br/>T7("485370086510891", 0.0,".../utils/creditcards.txt") | testZeroMoney() |
+| File present | Card present | price == DBL_MAX  |Valid | Max money are returned<br/>T8("485370086510891", DBL_MAX,".../utils/creditcards.txt") | testMaxMoney() |
 |||||||
 |||||||
 
