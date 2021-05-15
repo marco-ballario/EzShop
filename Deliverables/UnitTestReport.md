@@ -133,15 +133,44 @@ Version: 1.0
 | Barcode present | Amount = 0 | Valid | No amount to be removed<br/>T4(barcode, 0; true) | testZeroAmount() |
 | Barcode present | Amount = Current quantity | Valid | Valid amount to be removed<br/>T5(barcode, current quantity; true) | testCurrentQuantityAmount() |
 
+### **Class *SaleTransaction* - method *updateStatusMin***
+
+**Criteria for method *updateStatusMin*:**
+ - Return ID sign
+ - Return ID exists
+
+**Predicates for method *updateStatusMin*:**
+| Criteria | Predicate |
+| -------- | --------- |
+| Return ID sign | Positive |
+| | Negative |
+| Return ID presence | Return ID present |
+| | Return ID not present |
+
+**Boundaries**:
+| Criteria | Boundary values |
+| -------- | --------------- |
+| Return ID sign | Return ID = 0 |
+| | Return ID = INT_MAX |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | ... | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|-------|
+|||||||
+|||||||
+|||||||
+|||||||
+|||||||
+
 ### **Class *SaleTransaction* - method *updateStatusPlus***
 
-**Criteria for method *name*:**
+**Criteria for method *updateStatusPlus*:**
  - ReturnId sign
  - ReturnId exists
 
 
 
-**Predicates for method *name*:**
+**Predicates for method *updateStatusPlus*:**
 | Criteria | Predicate |
 | -------- | --------- |
 |     ReturnId sign     |      Positive     |
