@@ -131,17 +131,13 @@ Version: 1.0
 **Combination of predicates**:
 | Criteria 1 | Criteria 2 | ... | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|-------|-------|
-| No product | * | * | Invalid | The given product doesn't exist<br/>T1(null, 5; false) | testNoProduct() |
+| Product doesn't exist | * | * | Invalid | The given product doesn't exist<br/>T1(null, 5; false) | testNoProduct() |
 | * | Barcode not present | * | Invalid | The input barcode card is not present in the list of products<br/>T2(product with missing barcode, 5; false)| testNoBarcode() |
-| * | * | Amount < 0 or<br/>Amount > INT_MAX | Invalid | The amount provided is not summable<br/>T3a(product, -5; false)<br/>T3a(product, INT_MAX+1; false) | testNoAmount() |
-
-| Product exists | Card present | price > 0 && price < avaiable |Valid | The money to be payed are enough<br/>T4("485370086510891", 10.0,".../utils/creditcards.txt") | testMoneyAvaiable() |
-| File present | Card present | price > 0 && price == avaiable |Valid | The money to be payed are equal to avaiable<br/>T5("485370086510891", 150.0,".../utils/creditcards.txt") | testMoneyEqual() |
-| File present | Card present | price < 0  |Valid | The money are returned<br/>T6("485370086510891", 10.0,".../utils/creditcards.txt") | testReturnMoney() |
-| File present | Card present | price == 0  |Valid | Zero money are returned<br/>T7("485370086510891", 0.0,".../utils/creditcards.txt") | testZeroMoney() |
-| File present | Card present | price == DBL_MAX  |Valid | Max money are returned<br/>T8("485370086510891", DBL_MAX,".../utils/creditcards.txt") | testMaxMoney() |
-|||||||
-|||||||
+| * | * | Amount < 0 or<br/>Amount > INT_MAX or<br/>(Amount + Current quantity) > INT_MAX | Invalid | The amount provided is not summable<br/>T3a(product, -5; false)<br/>T3b(product, INT_MAX+1; false)<br/>T3c(product, INT_MAX - Current quantity + 1; false) | testNoAmount() |
+| Product exists | Barcode present | Amount >= 0 and<br/>Amount <= INT_MAX and<br/>(Amount + Current quantity) <= INT_MAX | Valid | Valid amount to be added<br/>T4(product, Amount; true) | testValidAmount() |
+| Product exists | Barcode present | Amount = 0 | Valid | No amount to be added<br/>T5(product, 0; true) | testZeroAmount() |
+| Product exists | Barcode present | Amount = INT_MAX and<br/>Current quantity = 0 | Valid | Valid amount to be added<br/>T6(product, INT_MAX; true) | testGlobalMaxAmount() |
+| Product exists | Barcode present | Amount = (INT_MAX - Current quantity) | Valid | Valid amount to be added<br/>T7(product, INT_MAX - Current quantity; true) | testRelativeMaxAmount() |
 
 ### **Class *class_name* - method *name***
 
