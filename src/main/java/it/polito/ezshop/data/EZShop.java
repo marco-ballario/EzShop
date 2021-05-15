@@ -206,7 +206,11 @@ public class EZShop implements EZShopInterface {
 		if (loggedUser == null || !loggedUser.getRole().equals("Administrator")) {
 			throw new UnauthorizedException();
 		}
-		return new ArrayList<User>(userList.values());
+		if(userList.values().size()==0) {
+			return new ArrayList<User>();
+		}
+		List<User> lu = new ArrayList<User>(userList.values());
+		return lu;
 	}
 
 	@Override
@@ -552,6 +556,9 @@ public class EZShop implements EZShopInterface {
 		this.accounting.insertBalanceOperation(b, -pricePerUnit * quantity);
 		newOrder.setStatus("PAYED");
 		it.polito.ezshop.model.ProductType pt = (it.polito.ezshop.model.ProductType) this.getProductTypeByBarCode(productCode);
+		if(pt==null) {
+			return -1;
+		}
 		pt.increaseQuantity(quantity);
 		this.orderList.put(this.orderId, newOrder);
 		boolean res = writeAppState();
@@ -645,7 +652,8 @@ public class EZShop implements EZShopInterface {
 		if(orderList.values().size()==0) {
 			return new ArrayList<it.polito.ezshop.data.Order>();
 		}
-		return new ArrayList<it.polito.ezshop.data.Order>(orderList.values());
+		List <Order> lo = new ArrayList<it.polito.ezshop.data.Order>(orderList.values());
+		return lo;
 	}
 
 	@Override
@@ -1183,6 +1191,8 @@ public class EZShop implements EZShopInterface {
 				st.setPrice(st.getPrice() - rt.getAmount());// update price
 				st.updateStatusMin(returnId);
 
+				
+
 			}
 			if (!writeAppState())
 				return false;
@@ -1252,7 +1262,7 @@ public class EZShop implements EZShopInterface {
 		it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
 		this.accounting.insertBalanceOperation(b, s.getPrice());
 		s.setPayment(b);
-		s.setStatus("payed");
+		//s.setStatus("payed");
 		if (!writeAppState()) {
 			return -1;
 		}
@@ -1288,7 +1298,7 @@ public class EZShop implements EZShopInterface {
 			return false;
 		}
 		s.setPayment(b);
-		s.setStatus("payed");
+		//s.setStatus("payed");
 		
 		if (!writeAppState()) {
 			return false;
@@ -1312,7 +1322,7 @@ public class EZShop implements EZShopInterface {
 		double moneyReturned = r.getAmount();
 
 		it.polito.ezshop.model.BalanceOperation b = new it.polito.ezshop.model.BalanceOperation();
-		if(this.accounting.insertBalanceOperation(b, -moneyReturned)) {
+		if(!this.accounting.insertBalanceOperation(b, -moneyReturned)) {
 			return -1;
 		}
 		r.setPayment(b);

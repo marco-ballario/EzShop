@@ -25,6 +25,7 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	private double discountRate;
 	private List<TicketEntry> entries= new LinkedList<TicketEntry>();
 	private Integer ticketNumber;
+
 	
 	public SaleTransaction() {
 		this.setTransactionPoints(0);
@@ -219,10 +220,6 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 		return null;
 	}
 
-
-	
-
-	
 	
 	
 	

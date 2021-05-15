@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import it.polito.ezshop.model.*;
@@ -87,9 +88,8 @@ public class TestEzShops {
 	
 	@Test
 	public void testMaxMoney() throws IOException {
-		System.out.println("equal ");
 		assertTrue(t.paymentCreditCards("4485370086510891", -Double.MAX_VALUE, creditCardFile));
-		assertTrue(t.paymentCreditCards("4485370086510891", Double.MAX_VALUE, creditCardFile));
+		assertTrue(t.paymentCreditCards("4485370086510891", Double.MAX_VALUE-150.0, creditCardFile));
 	}
 	
 

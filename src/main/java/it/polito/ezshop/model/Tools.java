@@ -161,14 +161,13 @@ public class Tools {
 					amount = Double.parseDouble(buff[1]);
 					if (number == Long.parseLong(creditCard)) {
 						found = true;
-						if ((price >= 0 && price > amount)) {
-							
-							
-						} else {
+						if ((price >= 0 && price <= amount) || price<0) {
 							amount = amount - price;
+							System.out.println("Update " + creditCard+"  "+amount);
+
 							updated = true;
 							line = number.toString() + ";" + amount.toString();
-
+							
 						}
 
 					}
