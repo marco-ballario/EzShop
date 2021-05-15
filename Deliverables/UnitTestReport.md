@@ -139,6 +139,32 @@ Version: 1.0
 | Product exists | Barcode present | Amount = INT_MAX and<br/>Current quantity = 0 | Valid | Valid amount to be added<br/>T6(product, INT_MAX; true) | testGlobalMaxAmount() |
 | Product exists | Barcode present | Amount = (INT_MAX - Current quantity) | Valid | Valid amount to be added<br/>T7(product, INT_MAX - Current quantity; true) | testRelativeMaxAmount() |
 
+
+### **Class *SaleTransaction* - method *updateStatusPlus***
+
+**Criteria for method *name*:**
+ - ReturnId sign
+ - ReturnId exists
+
+
+
+**Predicates for method *name*:**
+| Criteria | Predicate |
+| -------- | --------- |
+|     ReturnId sign     |      Positive     |
+|          |    Negative       |
+|     ReturnId exists     |     Yes      |
+|          |     No      |
+
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | JUnit test case |
+|------------|------------|-----------------|------------------------------|-----------------|
+|Negative| * |Invalid|The return id is negative integer\nT1(-10;false)|testNegativeReturnId()|
+|*|id doesn't exit|Valid| The input return id is not present\nT2(123, false)|testNonExistReturnId()|
+|Positive|id exists|Valid|The input is valid\nT3(1,true)|testCorrectReturnId()|
+
+
 ### **Class *class_name* - method *name***
 
 **Criteria for method *name*:**
