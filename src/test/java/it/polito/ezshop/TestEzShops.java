@@ -92,7 +92,43 @@ public class TestEzShops {
 		assertTrue(t.paymentCreditCards("4485370086510891", Double.MAX_VALUE-150.0, creditCardFile));
 	}
 	
-
+	@Test
+	public void testNoBarcode() {
+		SaleTransaction st = new SaleTransaction();
+		assertFalse(st.removeProducts("", 5));
+	}
+	
+	@Test
+	public void testNoAmount() {
+		SaleTransaction st = new SaleTransaction();
+		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
+		st.addProduct(pt, 10);
+		assertFalse(st.removeProducts("123456789012", -5));
+	}
+	
+	@Test
+	public void testValidAmount() {
+		SaleTransaction st = new SaleTransaction();
+		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
+		st.addProduct(pt, 10);
+		assertTrue(st.removeProducts("123456789012", 5));
+	}
+	
+	@Test
+	public void testZeroAmount() {
+		SaleTransaction st = new SaleTransaction();
+		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
+		st.addProduct(pt, 10);
+		assertTrue(st.removeProducts("123456789012", 0));
+	}
+	
+	@Test
+	public void testCurrentQuantityAmount() {
+		SaleTransaction st = new SaleTransaction();
+		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
+		st.addProduct(pt, 10);
+		assertTrue(st.removeProducts("123456789012", 10));
+	}
 	
 	
 	

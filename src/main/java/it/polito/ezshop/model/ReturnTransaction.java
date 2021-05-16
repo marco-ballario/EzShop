@@ -3,7 +3,6 @@ package it.polito.ezshop.model;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import it.polito.ezshop.data.SaleTransaction;
 
 public class ReturnTransaction implements Serializable{
 
