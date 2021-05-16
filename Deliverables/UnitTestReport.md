@@ -187,6 +187,42 @@ Version: 1.0
 |*|id doesn't exit|Valid| The input return id is not present<br/>T2(123, false)|testNonExistReturnId()|
 |Positive|id exists|Valid|The input is valid<br/>T3(1,true)|testCorrectReturnId()|
 
+ ### **Class *Tools* - method *checkCardLuhn***
+
+**Criteria for method *checkDigit*:**
+ - String length
+ - Digits
+ - Correct code
+ - Value
+
+**Predicates for method *checkDigit*:**
+| Criteria | Predicate |
+| -------- | --------- |
+|    String lenght      |     !=16      |
+|          |     ==16      |
+|    Digits      |     String composed by digits       |
+|          |     String not composed by digits       |
+|    Value      |     Positive      |
+|          |     Negative     |
+|    Correct code      |     Valid code      |
+|          |     Wrong code     |
+
+**Boundaries**:
+| Criteria | Boundary values |
+| -------- | --------------- |
+|    String length      |          16       |
+|     Digits     |         Positive        |
+|     Value     |         0        |
+|               |         MAXLONG          |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Criteria 3 | Criteria 4 | Valid / Invalid | Description of the test case | JUnit test case |
+|------------|------------|------------|------------|---------------- |------------------------------|-----------------|
+| !=16 | * | * | * | Valid | Input string is not equal to 16 char<br/>T1("44853700865108919"; false) | testSizeNot16() |
+| *| Alphabetic string|*|*| Valid|Input string with alphabet char<br/>T3("44853A0086B10891"; false)|testAlphabetInputCard()|
+| * | * | Negative |*|Invalid| Input string composed by negative number<br/>T4("-4485370086510891";false);|testNegativeCard()|
+| *| *| * | Invalid Code | Valid| Input string doesn't satisfy the algorith<br/>T5("1485370086510891"; false) |testInvalidCard()|
+| 16 | Digits |Positive|Valid Code| Valid| Valid input with lenght 16<br/>T6("4485370086510891";true) |test16Digits()|
 
 ### **Class *class_name* - method *name***
 
