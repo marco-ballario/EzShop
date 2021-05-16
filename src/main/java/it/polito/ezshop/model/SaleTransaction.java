@@ -177,15 +177,17 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 		return true;
 	}
 	
-	public void updateStatusPlus(Integer returnId) {
+	public boolean updateStatusPlus(Integer returnId) {
+		if(returnId < 0)
+			return false;
 		ReturnTransaction r = null;
 		for(ReturnTransaction rt : returnTransactions) {
-			if(rt.getReturnId()==returnId) {
+			if(rt.getReturnId().intValue()==returnId.intValue()) {
 				r=rt;
 			}
 		}
 		if(r==null) {
-			return;
+			return false;
 		}
 		
 		this.price = this.price + r.getAmount();
@@ -196,7 +198,7 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 				}
 			}
 		}
-		
+		return true;
 	}
 
 	public boolean removeProducts(String productCode, int amount) {
