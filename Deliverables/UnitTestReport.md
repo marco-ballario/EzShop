@@ -9,10 +9,11 @@ Version: 1.0
 # Contents
 
 - [Black Box Unit Tests](#black-box-unit-tests)
-
-
-
-
+    + [Class Tools - method checkDigit](#class-tools-method-checkdigit)
+    + [Class Tools - method paymentCreditCards](#class-tools-method-paymentcreditcards)
+    + [Class SaleTransaction - method removeProducts](#class-saletransaction-method-removeproducts)
+    + [Class SaleTransaction - method updateStatusMin](#class-saletransaction-method-updatestatusmin)
+    + [Class SaleTransaction - method updateStatusPlus](#class-saletransaction-method-updatestatusplus)
 - [White Box Unit Tests](#white-box-unit-tests)
 
 
@@ -131,17 +132,46 @@ Version: 1.0
 | * | Amount < 0 or<br/>Amount > Current quantity | Invalid | The amount provided is not removable<br/>T2a(barcode, -5; false)<br/>T2b(barcode, current quantity +1; false) | testNoAmount() |
 | Barcode present | Amount >= 0 and<br/>Amount <= Current quantity | Valid | Valid amount to be removed<br/>T3(barcode, 5; true) | testValidAmount() |
 | Barcode present | Amount = 0 | Valid | No amount to be removed<br/>T4(barcode, 0; true) | testZeroAmount() |
-| Barcode present | Amount = Current quantity | Valid | Valid amount to be removed<br/>T5(barcode, 0; true) | testCurrentQuantityAmount() |
+| Barcode present | Amount = Current quantity | Valid | Valid amount to be removed<br/>T5(barcode, current quantity; true) | testCurrentQuantityAmount() |
+
+### **Class *SaleTransaction* - method *updateStatusMin***
+
+**Criteria for method *updateStatusMin*:**
+ - Return ID sign
+ - Return ID exists
+
+**Predicates for method *updateStatusMin*:**
+| Criteria | Predicate |
+| -------- | --------- |
+| Return ID sign | Positive |
+| | Negative |
+| Return ID presence | Return ID present |
+| | Return ID not present |
+
+**Boundaries**:
+| Criteria | Boundary values |
+| -------- | --------------- |
+| Return ID sign | Return ID = 0 |
+| | Return ID = INT_MAX |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|
+| Negative | * | Invalid | The Return ID is a negative integer<br/>T1(-10; false) | testReturnIdNegative() |
+| * | Return ID not present | Invalid | The input Return ID is not present<br/>T2(123; false) | testReturnIdNotPresent() |
+| Positive | Return ID present | Valid | The input Return ID is valid<br/>T3(1; true)| testReturnIdPresent() |
+| Positive | Return ID present and<br/>Return ID = 0 | Valid | The input Return ID is valid<br/>T4(0; true)| testReturnIdPresentAndZero() |
+| Positive | Return ID present and<br/>Return ID = INT_MAX | Valid | The input Return ID is valid<br/>T5(INT_MAX; true)| testReturnIdPresentAndMax() |
 
 ### **Class *SaleTransaction* - method *updateStatusPlus***
 
-**Criteria for method *name*:**
+**Criteria for method *updateStatusPlus*:**
  - ReturnId sign
  - ReturnId exists
 
 
 
-**Predicates for method *name*:**
+**Predicates for method *updateStatusPlus*:**
 | Criteria | Predicate |
 | -------- | --------- |
 |     ReturnId sign     |      Positive     |
@@ -157,6 +187,42 @@ Version: 1.0
 |*|id doesn't exit|Valid| The input return id is not present<br/>T2(123, false)|testNonExistReturnId()|
 |Positive|id exists|Valid|The input is valid<br/>T3(1,true)|testCorrectReturnId()|
 
+ ### **Class *Tools* - method *checkCardLuhn***
+
+**Criteria for method *checkDigit*:**
+ - String length
+ - Digits
+ - Correct code
+ - Value
+
+**Predicates for method *checkDigit*:**
+| Criteria | Predicate |
+| -------- | --------- |
+|    String lenght      |     !=16      |
+|          |     ==16      |
+|    Digits      |     String composed by digits       |
+|          |     String not composed by digits       |
+|    Value      |     Positive      |
+|          |     Negative     |
+|    Correct code      |     Valid code      |
+|          |     Wrong code     |
+
+**Boundaries**:
+| Criteria | Boundary values |
+| -------- | --------------- |
+|    String length      |          16       |
+|     Digits     |         Positive        |
+|     Value     |         0        |
+|               |         MAXLONG          |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Criteria 3 | Criteria 4 | Valid / Invalid | Description of the test case | JUnit test case |
+|------------|------------|------------|------------|---------------- |------------------------------|-----------------|
+| !=16 | * | * | * | Valid | Input string is not equal to 16 char<br/>T1("44853700865108919"; false) | testSizeNot16() |
+| *| Alphabetic string|*|*| Valid|Input string with alphabet char<br/>T3("44853A0086B10891"; false)|testAlphabetInputCard()|
+| * | * | Negative |*|Invalid| Input string composed by negative number<br/>T4("-4485370086510891";false);|testNegativeCard()|
+| *| *| * | Invalid Code | Valid| Input string doesn't satisfy the algorith<br/>T5("1485370086510891"; false) |testInvalidCard()|
+| 16 | Digits |Positive|Valid Code| Valid| Valid input with lenght 16<br/>T6("4485370086510891";true) |test16Digits()|
 
 ### **Class *class_name* - method *name***
 

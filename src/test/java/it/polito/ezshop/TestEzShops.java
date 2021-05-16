@@ -3,7 +3,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import java.awt.List;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -95,7 +98,9 @@ public class TestEzShops {
 	@Test
 	public void testNoBarcode() {
 		SaleTransaction st = new SaleTransaction();
-		assertFalse(st.removeProducts("", 5));
+		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
+		st.addProduct(pt, 10);
+		assertFalse(st.removeProducts("1234567890111", 5));
 	}
 	
 	@Test
@@ -104,6 +109,7 @@ public class TestEzShops {
 		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
 		st.addProduct(pt, 10);
 		assertFalse(st.removeProducts("123456789012", -5));
+		assertFalse(st.removeProducts("123456789012", 11));
 	}
 	
 	@Test
@@ -131,8 +137,176 @@ public class TestEzShops {
 	}
 	
 	
+	@Test
+	public void testReturnIdNegative() {
+		SaleTransaction st = new SaleTransaction();
+		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
+		st.addProduct(pt, 10);
+		
+		ReturnTransaction rt = new ReturnTransaction(1, st);
+		HashMap<ProductType, Integer> returnProducts = new HashMap<ProductType, Integer>();
+		returnProducts.put(pt, 5);
+		rt.setReturnProducts(returnProducts);
+		
+		LinkedList<ReturnTransaction> lst = new LinkedList<ReturnTransaction>();
+		lst.add(rt);
+		st.setReturnTransactions(lst);
+		
+		assertFalse(st.updateStatusMin(-10));
+	}
 	
+	@Test
+	public void testReturnIdNotPresent() {
+		SaleTransaction st = new SaleTransaction();
+		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
+		st.addProduct(pt, 10);
+		
+		ReturnTransaction rt = new ReturnTransaction(1, st);
+		HashMap<ProductType, Integer> returnProducts = new HashMap<ProductType, Integer>();
+		returnProducts.put(pt, 5);
+		rt.setReturnProducts(returnProducts);
+		
+		LinkedList<ReturnTransaction> lst = new LinkedList<ReturnTransaction>();
+		lst.add(rt);
+		st.setReturnTransactions(lst);
+		
+		assertFalse(st.updateStatusMin(2));
+	}
+	
+	@Test
+	public void testReturnIdPresent() {
+		SaleTransaction st = new SaleTransaction();
+		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
+		st.addProduct(pt, 10);
+		
+		ReturnTransaction rt = new ReturnTransaction(1, st);
+		HashMap<ProductType, Integer> returnProducts = new HashMap<ProductType, Integer>();
+		returnProducts.put(pt, 5);
+		rt.setReturnProducts(returnProducts);
+		
+		LinkedList<ReturnTransaction> lst = new LinkedList<ReturnTransaction>();
+		lst.add(rt);
+		st.setReturnTransactions(lst);
+		
+		assertTrue(st.updateStatusMin(1));
+	}
+	
+	@Test
+	public void testReturnIdPresentAndZero() {
+		SaleTransaction st = new SaleTransaction();
+		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
+		st.addProduct(pt, 10);
+		
+		ReturnTransaction rt = new ReturnTransaction(0, st);
+		HashMap<ProductType, Integer> returnProducts = new HashMap<ProductType, Integer>();
+		returnProducts.put(pt, 5);
+		rt.setReturnProducts(returnProducts);
+		
+		LinkedList<ReturnTransaction> lst = new LinkedList<ReturnTransaction>();
+		lst.add(rt);
+		st.setReturnTransactions(lst);
+		
+		assertTrue(st.updateStatusMin(0));
+	}
+	
+	@Test
+	public void testReturnIdPresentAndMax() {
+		SaleTransaction st = new SaleTransaction();
+		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
+		st.addProduct(pt, 10);
+		
+		ReturnTransaction rt = new ReturnTransaction(Integer.MAX_VALUE, st);
+		HashMap<ProductType, Integer> returnProducts = new HashMap<ProductType, Integer>();
+		returnProducts.put(pt, 5);
+		rt.setReturnProducts(returnProducts);
 
+		LinkedList<ReturnTransaction> lst = new LinkedList<ReturnTransaction>();
+		lst.add(rt);
+		st.setReturnTransactions(lst);
+		
+		assertTrue(st.updateStatusMin(Integer.MAX_VALUE));
+	}
+	
+	@Test
+	public void testSizeNot16()  {
+		assertFalse(t.checkCardLuhn("44853700865108919"));
+	}
+	
+	
+	@Test
+	public void testAlphabetInputCard()  {
+		assertFalse(t.checkCardLuhn("44853A0086B10891") );
+	}
+	
+	@Test
+	public void testNegativeCard()  {
+		assertFalse(t.checkCardLuhn("-4485370086510891"));
+	}
+
+	
+	@Test
+	public void testInvalidCard()  {
+		assertFalse(t.checkCardLuhn("1485370086510891"));
+	}
+		
+	@Test
+	public void test16Digits()  {
+		assertTrue(t.checkCardLuhn("4485370086510891"));
+	}
+	
+	@Test
+	public void testNegativeReturnId() {
+		SaleTransaction st = new SaleTransaction();
+		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
+		st.addProduct(pt, 10);
+		
+		ReturnTransaction rt = new ReturnTransaction(1, st);
+		HashMap<ProductType, Integer> returnProducts = new HashMap<ProductType, Integer>();
+		returnProducts.put(pt, 5);
+		rt.setReturnProducts(returnProducts);
+		
+		LinkedList<ReturnTransaction> lst = new LinkedList<ReturnTransaction>();
+		lst.add(rt);
+		st.setReturnTransactions(lst);
+		
+		assertFalse(st.updateStatusPlus(-10));
+	}
+	
+	@Test
+	public void testNonExistReturnId() {
+		SaleTransaction st = new SaleTransaction();
+		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
+		st.addProduct(pt, 10);
+		
+		ReturnTransaction rt = new ReturnTransaction(1, st);
+		HashMap<ProductType, Integer> returnProducts = new HashMap<ProductType, Integer>();
+		returnProducts.put(pt, 5);
+		rt.setReturnProducts(returnProducts);
+		
+		LinkedList<ReturnTransaction> lst = new LinkedList<ReturnTransaction>();
+		lst.add(rt);
+		st.setReturnTransactions(lst);
+		
+		assertFalse(st.updateStatusPlus(2));
+	}
+	
+	@Test
+	public void testCorrectReturnId() {
+		SaleTransaction st = new SaleTransaction();
+		ProductType pt = new ProductType("Description", "123456789012", 1.0, "Note");
+		st.addProduct(pt, 10);
+		
+		ReturnTransaction rt = new ReturnTransaction(1, st);
+		HashMap<ProductType, Integer> returnProducts = new HashMap<ProductType, Integer>();
+		returnProducts.put(pt, 5);
+		rt.setReturnProducts(returnProducts);
+		
+		LinkedList<ReturnTransaction> lst = new LinkedList<ReturnTransaction>();
+		lst.add(rt);
+		st.setReturnTransactions(lst);
+		
+		assertTrue(st.updateStatusPlus(1));
+	}
 	
 
 }
