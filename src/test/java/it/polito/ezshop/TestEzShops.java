@@ -18,8 +18,6 @@ import it.polito.ezshop.model.*;
 public class TestEzShops {
 	Tools t = new Tools();
 	String creditCardFile="./src/main/java/it/polito/ezshop/utils/creditcards.txt";
-	String loyaltyCardFile="./src/main/java/it/polito/ezshop/utils/cards.in";
-
 	
 	@Test
 	public void testMore14()  {
@@ -310,32 +308,6 @@ public class TestEzShops {
 		
 		assertTrue(st.updateStatusPlus(1));
 	}
-	
-	@Test    
-	public void testWrongtUpdate() throws IOException {  
-		assertFalse(t.updateLoyalty(null, loyaltyCardFile));
-	}
-	
-	@Test
-	public void testUpdateNoFile() throws IOException {   
-		ArrayList<Long> cards = new ArrayList<Long>();
-		String c = "5125933930";
-		Long c1;
-		c1 = Long.parseLong(c);
-		
-		cards.add(c1);
-		assertFalse(t.updateLoyalty(cards, ""));
-	}
-	
-	@Test
-	public void testCorrectUpdate() throws IOException {
-		ArrayList<Long> cards = new ArrayList<Long>();
-		String c = "5125933930";
-		Long c1;
-		c1 = Long.parseLong(c);
-		
-		cards.add(c1);
-		assertTrue(t.updateLoyalty(cards, loyaltyCardFile));
-	}
+
 
 }

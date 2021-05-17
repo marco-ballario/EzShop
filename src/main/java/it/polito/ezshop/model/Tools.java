@@ -26,7 +26,6 @@ public class Tools {
 			fileIn.close();
 		} catch (IOException i) {
 			System.out.println(i.getMessage());
-			return null;
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
@@ -35,9 +34,6 @@ public class Tools {
 
 	public boolean updateLoyalty(ArrayList<Long> cardsNo, String fName) {
 
-		if(cardsNo == null)
-			return false;
-		
 		try {
 			FileOutputStream fileOut = new FileOutputStream(fName);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
