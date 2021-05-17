@@ -247,7 +247,7 @@ Version: 1.0
 
 **Combination of predicates**:
 | Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | JUnit test case |
-|-------|-------|-------|-------|-------|-------|
+|-------|-------|-------|-------|-------|
 |No File|*|Valid|Given file name is not valid<br/>T1(cards, "")|testUpdateNoFile()|
 |File exists|Invalid card list|Invalid|Given list is not valid<br/>T2(null, loyaltyCardFile)|testWrongUpdate()|
 |File exists|Valid card list|Valid|Given list is valid<br/>T3(cards, loyaltyCardFile)|testCorrectUpdate()|
