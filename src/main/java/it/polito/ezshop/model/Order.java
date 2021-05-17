@@ -89,11 +89,4 @@ public class Order implements it.polito.ezshop.data.Order, Serializable{
 		
 	}
 
-	@Override
-	public String toString() {
-		return "Order [productCode=" + productCode + ", state=" + state + "]";
-	}
-	
-	
-
 }
