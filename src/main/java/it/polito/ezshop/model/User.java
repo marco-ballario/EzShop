@@ -28,7 +28,6 @@ public class User implements it.polito.ezshop.data.User, Serializable{
 	@Override
 	public void setId(Integer id) {
 		this.userId = id;
-		
 	}
 
 	@Override
@@ -61,9 +60,6 @@ public class User implements it.polito.ezshop.data.User, Serializable{
 	public void setRole(String role) {
 		this.role = role;
 		
-	}
-
-	
-
+	}	
 
 }

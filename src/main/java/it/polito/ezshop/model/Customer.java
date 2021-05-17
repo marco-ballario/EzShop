@@ -70,11 +70,6 @@ public class Customer implements it.polito.ezshop.data.Customer, Serializable{
 		
 	}
 
-	@Override
-	public String toString() {
-		return "Customer [name=" + name + ", customerId=" + customerId + ", card=" + card  +" ]";
-	}
-
 	public LoyaltyCard getLoyaltyCard() {
 		return lc;
 	}
