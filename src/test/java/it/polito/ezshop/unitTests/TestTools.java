@@ -1,21 +1,17 @@
-package it.polito.ezshop;
+package it.polito.ezshop.unitTests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
 
-import java.awt.List;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import org.junit.AfterClass;
 import org.junit.Test;
 
 import it.polito.ezshop.model.*;
 
-public class TestEzShops {
+public class TestTools {
 	Tools t = new Tools();
 	String creditCardFile="./src/main/java/it/polito/ezshop/utils/creditcards.txt";
 	
