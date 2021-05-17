@@ -14,7 +14,6 @@ Version: 1.0
     + [Class SaleTransaction - method removeProducts](#class-saletransaction-method-removeproducts)
     + [Class SaleTransaction - method updateStatusMin](#class-saletransaction-method-updatestatusmin)
     + [Class SaleTransaction - method updateStatusPlus](#class-saletransaction-method-updatestatusplus)
-    + [Class Tools - method updateLoyalty](#class-tools-method-updateLoyalty)
 - [White Box Unit Tests](#white-box-unit-tests)
 
 
