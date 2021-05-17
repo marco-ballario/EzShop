@@ -14,7 +14,6 @@ Version: 1.0
     + [Class SaleTransaction - method removeProducts](#class-saletransaction-method-removeproducts)
     + [Class SaleTransaction - method updateStatusMin](#class-saletransaction-method-updatestatusmin)
     + [Class SaleTransaction - method updateStatusPlus](#class-saletransaction-method-updatestatusplus)
-    + [Class Tools - method updateLoyalty](#class-tools-method-updateLoyalty)
 - [White Box Unit Tests](#white-box-unit-tests)
 
 
@@ -225,19 +224,19 @@ Version: 1.0
 | *| *| * | Invalid Code | Valid| Input string doesn't satisfy the algorith<br/>T5("1485370086510891"; false) |testInvalidCard()|
 | 16 | Digits |Positive|Valid Code| Valid| Valid input with lenght 16<br/>T6("4485370086510891";true) |test16Digits()|
 
-### **Class *Tools* - method *updateLoyalty***
+### **Class *class_name* - method *name***
 
-**Criteria for method *updateLoyalty*:**
- - File existance
- - Card list existance
+**Criteria for method *name*:**
+ - 
+ - 
 
 **Predicates for method *name*:**
 | Criteria | Predicate |
 | -------- | --------- |
-|   File existance      |   File exists        |
-|          |    File doesn't exist       |
-|   Card list existance   |   Card list exists        |
-|          |     Card list doesn't exist      |
+|          |           |
+|          |           |
+|          |           |
+|          |           |
 
 **Boundaries**:
 | Criteria | Boundary values |
@@ -248,9 +247,9 @@ Version: 1.0
 **Combination of predicates**:
 | Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|-------|
-|No File|*|Valid|Given file name is not valid<br/>T1(cards, "")|testUpdateNoFile()|
-|File exists|Invalid card list|Invalid|Given list is not valid<br/>T2(null, loyaltyCardFile)|testWrongUpdate()|
-|File exists|Valid card list|Valid|Given list is valid<br/>T3(cards, loyaltyCardFile)|testCorrectUpdate()|
+||||||
+||||||
+||||||
 
 
 # White Box Unit Tests
