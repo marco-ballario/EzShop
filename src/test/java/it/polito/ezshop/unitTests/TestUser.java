@@ -20,18 +20,27 @@ public class TestUser {
 	}
 	
 	@Test
-	public void testSetterUser() {
+	public void testSetId() {
 		u.setId(2);
 		assertEquals(u.getId(), (Integer)2);
-		
-		u.setPassword("new");
-		assertEquals(u.getPassword(), "new");
-		
-		u.setRole("Cashier");
-		assertEquals(u.getRole(), "Cashier");
-		
+	}
+	
+	@Test
+	public void testSetUsername() {
 		u.setUsername("andrea");
 		assertEquals(u.getUsername(), "andrea");
+	}
+	
+	@Test
+	public void testSetPassword() {
+		u.setPassword("new");
+		assertEquals(u.getPassword(), "new");
+	}
+	
+	@Test
+	public void testSetRole() {
+		u.setRole("Cashier");
+		assertEquals(u.getRole(), "Cashier");
 	}
 
 }
