@@ -13,7 +13,7 @@ public class TicketEntry implements it.polito.ezshop.data.TicketEntry, Serializa
 	private String barCode, productDescription;
 	private double discountRate, pricePerUnit;
 	private int amount;
-	private double price = amount * pricePerUnit;
+	private double price;
 	
 	public TicketEntry(ProductType p, int amount) {
 		this.barCode = p.getBarCode();
@@ -21,6 +21,7 @@ public class TicketEntry implements it.polito.ezshop.data.TicketEntry, Serializa
 		this.pricePerUnit = p.getPricePerUnit();
 		this.amount = amount;
 		this.discountRate = 0;
+		this.price = amount * pricePerUnit;
 	}
 	
 	@Override
