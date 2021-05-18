@@ -10,6 +10,7 @@ Version: 1.0
 
 - [Black Box Unit Tests](#black-box-unit-tests)
     + [Class Tools - method checkDigit](#class-tools-method-checkdigit)
+    + [Class Tools - method checkCardLuhn](#class-tools-method-checkcardluhn)
     + [Class Tools - method paymentCreditCards](#class-tools-method-paymentcreditcards)
     + [Class SaleTransaction - method removeProducts](#class-saletransaction-method-removeproducts)
     + [Class SaleTransaction - method updateStatusMin](#class-saletransaction-method-updatestatusmin)
@@ -68,6 +69,43 @@ Version: 1.0
 | 12 | Digits |Positive|Valid Code| Valid| Valid input with lenght 12<br/>T6("123456789012";true) |test12Digits()|
 | 13 | Digits |Positive|Valid Code| Valid| Valid input with lenght 13<br/>T7("1234567890111";true) |test13Digits()|
 | 14 | Digits |Positive|Valid Code| Valid| Valid input with lenght 14<br/>T8("12345678901231";true) |test14Digits()|
+
+ ### **Class *Tools* - method *checkCardLuhn***
+
+**Criteria for method *checkDigit*:**
+ - String length
+ - Digits
+ - Correct code
+ - Value
+
+**Predicates for method *checkDigit*:**
+| Criteria | Predicate |
+| -------- | --------- |
+|    String lenght      |     !=16      |
+|          |     ==16      |
+|    Digits      |     String composed by digits       |
+|          |     String not composed by digits       |
+|    Value      |     Positive      |
+|          |     Negative     |
+|    Correct code      |     Valid code      |
+|          |     Wrong code     |
+
+**Boundaries**:
+| Criteria | Boundary values |
+| -------- | --------------- |
+|    String length      |          16       |
+|     Digits     |         Positive        |
+|     Value     |         0        |
+|               |         MAXLONG          |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Criteria 3 | Criteria 4 | Valid / Invalid | Description of the test case | JUnit test case |
+|------------|------------|------------|------------|---------------- |------------------------------|-----------------|
+| !=16 | * | * | * | Valid | Input string is not equal to 16 char<br/>T1("44853700865108919"; false) | testSizeNot16() |
+| *| Alphabetic string|*|*| Valid|Input string with alphabet char<br/>T3("44853A0086B10891"; false)|testAlphabetInputCard()|
+| * | * | Negative |*|Invalid| Input string composed by negative number<br/>T4("-4485370086510891";false);|testNegativeCard()|
+| *| *| * | Invalid Code | Valid| Input string doesn't satisfy the algorith<br/>T5("1485370086510891"; false) |testInvalidCard()|
+| 16 | Digits |Positive|Valid Code| Valid| Valid input with lenght 16<br/>T6("4485370086510891";true) |test16Digits()|
 
 ### **Class *Tools* - method *paymentCreditCards***
 
@@ -186,71 +224,6 @@ Version: 1.0
 |Negative| * |Invalid|The return id is negative integer<br/>T1(-10;false)|testNegativeReturnId()|
 |*|id doesn't exit|Valid| The input return id is not present<br/>T2(123, false)|testNonExistReturnId()|
 |Positive|id exists|Valid|The input is valid<br/>T3(1,true)|testCorrectReturnId()|
-
- ### **Class *Tools* - method *checkCardLuhn***
-
-**Criteria for method *checkDigit*:**
- - String length
- - Digits
- - Correct code
- - Value
-
-**Predicates for method *checkDigit*:**
-| Criteria | Predicate |
-| -------- | --------- |
-|    String lenght      |     !=16      |
-|          |     ==16      |
-|    Digits      |     String composed by digits       |
-|          |     String not composed by digits       |
-|    Value      |     Positive      |
-|          |     Negative     |
-|    Correct code      |     Valid code      |
-|          |     Wrong code     |
-
-**Boundaries**:
-| Criteria | Boundary values |
-| -------- | --------------- |
-|    String length      |          16       |
-|     Digits     |         Positive        |
-|     Value     |         0        |
-|               |         MAXLONG          |
-
-**Combination of predicates**:
-| Criteria 1 | Criteria 2 | Criteria 3 | Criteria 4 | Valid / Invalid | Description of the test case | JUnit test case |
-|------------|------------|------------|------------|---------------- |------------------------------|-----------------|
-| !=16 | * | * | * | Valid | Input string is not equal to 16 char<br/>T1("44853700865108919"; false) | testSizeNot16() |
-| *| Alphabetic string|*|*| Valid|Input string with alphabet char<br/>T3("44853A0086B10891"; false)|testAlphabetInputCard()|
-| * | * | Negative |*|Invalid| Input string composed by negative number<br/>T4("-4485370086510891";false);|testNegativeCard()|
-| *| *| * | Invalid Code | Valid| Input string doesn't satisfy the algorith<br/>T5("1485370086510891"; false) |testInvalidCard()|
-| 16 | Digits |Positive|Valid Code| Valid| Valid input with lenght 16<br/>T6("4485370086510891";true) |test16Digits()|
-
-### **Class *class_name* - method *name***
-
-**Criteria for method *name*:**
- - 
- - 
-
-**Predicates for method *name*:**
-| Criteria | Predicate |
-| -------- | --------- |
-|          |           |
-|          |           |
-|          |           |
-|          |           |
-
-**Boundaries**:
-| Criteria | Boundary values |
-| -------- | --------------- |
-|          |                 |
-|          |                 |
-
-**Combination of predicates**:
-| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | JUnit test case |
-|-------|-------|-------|-------|-------|
-||||||
-||||||
-||||||
-
 
 # White Box Unit Tests
 
