@@ -7,7 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 
 @RunWith(Suite.class)
-@SuiteClasses({TestOrder.class,TestCustomer.class,TestProductType.class, TestLoyaltyCard.class, TestBalanceOperation.class, TestUser.class, TestAddRemoveProduct.class,TestCheckDigits.class,TestCreditCardPayment.class,TestLuhn.class,TestUpdateStatus.class, TestAccountBook.class, TestSaleTransaction.class, TestTicketEntry.class})
+@SuiteClasses({TestOrder.class,TestCustomer.class,TestProductType.class, TestLoyaltyCard.class, TestBalanceOperation.class, TestUser.class, TestAddRemoveProduct.class,TestCheckDigits.class,TestCreditCardPayment.class,TestLuhn.class,TestUpdateStatus.class, TestAccountBook.class, TestSaleTransaction.class, TestTicketEntry.class, TestReturnTransaction.class})
 
 public class UnitTests {
 
