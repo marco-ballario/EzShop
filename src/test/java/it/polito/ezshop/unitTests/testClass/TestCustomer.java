@@ -36,10 +36,15 @@ public class TestCustomer {
 	}
 	
 	@Test
+	public void testSetCardNull() {
+		c.setCustomerCard(null);
+		assertEquals(c.getCustomerCard(), null);
+	}
+	
+	@Test
 	public void testSetCard() {
 		c.setCustomerCard("1234567890");
 		assertEquals(c.getCustomerCard(), "1234567890");
 	}
-	
 
 }

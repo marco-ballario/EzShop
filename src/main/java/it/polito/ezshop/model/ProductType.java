@@ -22,10 +22,6 @@ public class ProductType implements it.polito.ezshop.data.ProductType, Serializa
 		this.location="";
 		this.quantity=0;
 	}
-	
-	public ProductType() {
-		this.quantity = 0;
-	}
 
 	@Override
 	public Integer getQuantity() {

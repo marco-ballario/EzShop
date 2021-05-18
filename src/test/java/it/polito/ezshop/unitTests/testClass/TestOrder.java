@@ -16,8 +16,6 @@ public class TestOrder {
 		assertEquals(o.getQuantity(), (int)40);
 	}
 	
-
-	
 	@Test
 	public void testSetPriceUnit() {
 		o.setPricePerUnit(120.0);
@@ -35,6 +33,18 @@ public class TestOrder {
 	public void testSetStatus() {
 		o.setStatus("ISSUED");
 		assertEquals(o.getStatus(), "ISSUED");
+	}
+
+	@Test
+	public void testSetQuantity() {
+		o.setQuantity(5);
+		assertEquals(o.getQuantity(), 5);
+	}
+	
+	@Test
+	public void testSetOrderId() {
+		o.setOrderId(2);
+		assertEquals(o.getOrderId(), (Integer)2);
 	}
 
 }

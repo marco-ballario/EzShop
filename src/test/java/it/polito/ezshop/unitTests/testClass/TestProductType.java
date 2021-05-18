@@ -21,14 +21,6 @@ public class TestProductType {
 	}
 	
 	@Test
-	public void testProductConstructor2() {
-		ProductType p = new ProductType("Cereali", "12345678901231", 12.2, "molto buoni");
-		assertEquals(p.getQuantity(), (Integer)0);
-	}
-		
-	
-	
-	@Test
 	public void testSetBarCode() {
 		pt.setBarCode("12345678901231");
 		assertEquals(pt.getBarCode(), "12345678901231");
@@ -78,6 +70,12 @@ public class TestProductType {
 	public void testSetDescription() {
 		pt.setProductDescription("carne");
 		assertEquals(pt.getProductDescription(), "carne");
+	}
+	
+	@Test
+	public void testSetLocation() {
+		pt.setLocation("12-aa-1");
+		assertEquals(pt.getLocation(), "12-aa-1");
 	}
 
 }
