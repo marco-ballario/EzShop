@@ -72,13 +72,13 @@ Version: 1.0
 
  ### **Class *Tools* - method *checkCardLuhn***
 
-**Criteria for method *checkDigit*:**
+**Criteria for method *checkCardLuhn*:**
  - String length
  - Digits
  - Correct code
  - Value
 
-**Predicates for method *checkDigit*:**
+**Predicates for method *checkCardLuhn*:**
 | Criteria | Predicate |
 | -------- | --------- |
 |    String lenght      |     !=16      |
