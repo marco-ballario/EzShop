@@ -1,4 +1,4 @@
-package it.polito.ezshop.unitTests.ToolsTests;
+package it.polito.ezshop.unitTests.testClass.ToolsTests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

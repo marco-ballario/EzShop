@@ -1,4 +1,4 @@
-package it.polito.ezshop.unitTests;
+package it.polito.ezshop.unitTests.testClass;
 
 import org.junit.Test;
 

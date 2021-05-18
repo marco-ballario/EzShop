@@ -1,4 +1,4 @@
-package it.polito.ezshop.unitTests;
+package it.polito.ezshop.unitTests.testClass;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
