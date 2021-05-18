@@ -66,8 +66,9 @@ public class Customer implements it.polito.ezshop.data.Customer, Serializable{
 
 	@Override
 	public void setPoints(Integer points) {
-		this.lc.setPoints(points);
-		
+		if(this.lc != null) {
+			this.lc.setPoints(points);
+		}
 	}
 
 	public LoyaltyCard getLoyaltyCard() {

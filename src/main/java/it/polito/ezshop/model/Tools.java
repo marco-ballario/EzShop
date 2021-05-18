@@ -165,10 +165,8 @@ public class Tools {
 						found = true;
 						if ((price >= 0 && price <= amount) || price<0) {
 							amount = amount - price;
-							System.out.println("Update " + creditCard+"  "+amount);
-
 							updated = true;
-							line = number.toString() + ";" + amount.toString();
+							
 							
 						}
 
