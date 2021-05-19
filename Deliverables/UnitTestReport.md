@@ -300,14 +300,12 @@ Version: 1.0
     
 ### Loop coverage analysis
 
-    <Identify significant loops in the units and reports the test cases
-    developed to cover zero, one or multiple iterations >
 
 |Unit name | Loop rows | Number of iterations | JUnit test case |
 |---|---|---|---|
-|||||
-|||||
-||||||
+|Tools|122-127|1|testWhileOnce()|
+|||Multiple|testWhileMultiple()|
+
 
 
 
