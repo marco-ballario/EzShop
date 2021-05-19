@@ -298,6 +298,8 @@ Version: 1.0
     <Add here the screenshot report of the statement and branch coverage obtained using
     the Eclemma tool. >
 
+    ![Use case diagram](./Images/coverage.png)
+
 
 ### Loop coverage analysis
 
