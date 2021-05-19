@@ -236,26 +236,76 @@ Version: 1.0
 
 | Unit name | JUnit test case |
 |--|--|
-|||
-|||
-||||
+| AccountBook |testAccountConstructor() |
+||testSetBalance()|
+|TestLoyaltyCard|testSetCode()|
+||testSetPoints|
+|TestOrder|testOrderConstructor()|
+||testSetPriceUnit()|
+||testSetProductCode()|
+||testSetStatus()|
+||testSetQuantity()|
+||testSetOrderId()|
+|User|testUserConstructor()|
+||testSetId()|
+||testSetUsername()|
+||testSetPassword()|
+||testSetRole()|
+| TestBalanceOperation | testSetBalanceId() |
+|| testSetDate() |
+|| testSetType()  |
+|| testSetMoney()  |
+| TestCustomer | testCustomerConstructor() |
+|| testSetName() |
+|| testSetId() |
+|| testSetPoints() |
+|| testSetCardNull() |
+|| testSetCard() |
+|ProductType|TestProductType|
+||testProductConstructor()|
+||testProductConstructor2()|
+||testSetBarCode()|
+||testSetQuantity()|
+||testSetId()|
+||testSetNote()|
+||testIncreaseQuantity()|
+||testDecreaseQuantity())|
+||testSetPriceUnit())|
+||testSetDescription()|
+|ReturnTransaction|TestReturnTransaction|
+||testReturnConstructor()|
+||testSetReturnId()|
+||testSetCommitted())|
+||testSetPayment()|
+||testSetAmount()|
+|SaleTransaction|testSaleConstructor()|
+|| testSetTicketNum() |
+|| testSetDiscount() |
+|| testSetPrice() |
+|| testSetStatus |
+|| testSetPoints() |
+|| testSetTransactionId() |
+|TicketEntry| testTicketEntryConstructor()|
+||testSetBarCode()|
+|| testSetPriceUnit() |
+|| testSetDescription() |
+|| testSetAmount() |
+|| testSetDiscountRate() |
+|| testSetPrice() |	
 
 ### Code coverage report
 
-    <Add here the screenshot report of the statement and branch coverage obtained using
-    the Eclemma tool. >
+![Use case diagram](./Images/coverage.png)
 
-
+    
 ### Loop coverage analysis
 
-    <Identify significant loops in the units and reports the test cases
-    developed to cover zero, one or multiple iterations >
 
 |Unit name | Loop rows | Number of iterations | JUnit test case |
 |---|---|---|---|
-|||||
-|||||
-||||||
+|Tools|122-127|1|testWhileOnce()|
+|||Multiple|testWhileMultiple()|
+
 
 
 
