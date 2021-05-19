@@ -1375,7 +1375,7 @@ public class EZShop implements EZShopInterface {
 
 	@Override
 	public boolean recordBalanceUpdate(double toBeAdded) throws UnauthorizedException {
-		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
+		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator")
 				&& !this.loggedUser.getRole().equals("ShopManager"))) {
 			throw new UnauthorizedException();
 		}
