@@ -295,7 +295,7 @@ Version: 1.0
 
 ### Code coverage report
 
-    ![Use case diagram](./Images/coverage.png)
+![Use case diagram](./Images/coverage.png)
 
     
 ### Loop coverage analysis
