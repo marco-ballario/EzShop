@@ -236,9 +236,62 @@ Version: 1.0
 
 | Unit name | JUnit test case |
 |--|--|
-|||
-|||
-||||
+| AccountBook |testAccountConstructor() |
+||testSetBalance()|
+|TestLoyaltyCard|testSetCode()|
+||testSetPoints|
+|TestOrder|testOrderConstructor()|
+||testSetPriceUnit()|
+||testSetProductCode()|
+||testSetStatus()|
+||testSetQuantity()|
+||testSetOrderId()|
+|User|testUserConstructor()|
+||testSetId()|
+||testSetUsername()|
+||testSetPassword()|
+||testSetRole()|
+| TestBalanceOperation | testSetBalanceId() |
+|| testSetDate() |
+|| testSetType()  |
+|| testSetMoney()  |
+| TestCustomer | testCustomerConstructor() |
+|| testSetName() |
+|| testSetId() |
+|| testSetPoints() |
+|| testSetCardNull() |
+|| testSetCard() |
+|ProductType|TestProductType|
+||testProductConstructor()|
+||testProductConstructor2()|
+||testSetBarCode()|
+||testSetQuantity()|
+||testSetId()|
+||testSetNote()|
+||testIncreaseQuantity()|
+||testDecreaseQuantity())|
+||testSetPriceUnit())|
+||testSetDescription()|
+|ReturnTransaction|TestReturnTransaction|
+||testReturnConstructor()|
+||testSetReturnId()|
+||testSetCommitted())|
+||testSetPayment()|
+||testSetAmount()|
+|SaleTransaction|testSaleConstructor()|
+|| testSetTicketNum() |
+|| testSetDiscount() |
+|| testSetPrice() |
+|| testSetStatus |
+|| testSetPoints() |
+|| testSetTransactionId() |
+|TicketEntry| testTicketEntryConstructor()|
+||testSetBarCode()|
+|| testSetPriceUnit() |
+|| testSetDescription() |
+|| testSetAmount() |
+|| testSetDiscountRate() |
+|| testSetPrice() |	
 
 ### Code coverage report
 
