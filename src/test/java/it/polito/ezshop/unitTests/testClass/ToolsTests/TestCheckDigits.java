@@ -51,4 +51,14 @@ public class TestCheckDigits {
 	public void test12Digits()  {
 		assertTrue(t.checkDigit("123456789012"));
 	}
+	
+	@Test
+	public void testWhileOnce()  {
+		assertFalse(t.checkDigit("00000000000001"));
+	}
+	
+	@Test
+	public void testWhileMultiple()  {
+		assertTrue(t.checkDigit("12345678901231"));
+	}
 }

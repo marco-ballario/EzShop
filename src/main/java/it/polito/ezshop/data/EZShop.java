@@ -151,6 +151,9 @@ public class EZShop implements EZShopInterface {
 	@Override
 	public void reset() {
 		readAppState();
+		this.accounting.setBalance(0);
+		this.productList = new HashMap<Integer,it.polito.ezshop.model.ProductType>();
+		this.transactionList = new HashMap<Integer, it.polito.ezshop.model.SaleTransaction>();
 		this.loggedUser = null;
 
 	}
@@ -1270,19 +1273,19 @@ public class EZShop implements EZShopInterface {
 	}
 
 	@Override
-	public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard)
+	public boolean receiveCreditCardPayment(Integer transactionID, String creditCard)
 			throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
 		if (this.loggedUser == null
 				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
 						&& !this.loggedUser.getRole().equals("ShopManager")))
 			throw new UnauthorizedException();
-		if (ticketNumber <= 0)
+		if (transactionID <= 0)
 			throw new InvalidTransactionIdException();
 
 		if (creditCard == null || creditCard.length() == 0 || !tool.checkCardLuhn(creditCard))
 			throw new InvalidCreditCardException();
 
-		it.polito.ezshop.model.SaleTransaction s = transactionList.get(ticketNumber);
+		it.polito.ezshop.model.SaleTransaction s = transactionList.get(transactionID);
 		if (s == null)
 			return false;
 
@@ -1423,7 +1426,7 @@ public class EZShop implements EZShopInterface {
 
 	@Override
 	public double computeBalance() throws UnauthorizedException {
-		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
+		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator")
 				&& !this.loggedUser.getRole().equals("ShopManager"))) {
 			throw new UnauthorizedException();
 		}
