@@ -2,7 +2,7 @@ package it.polito.ezshop.data;
 
 import java.util.List;
 
-public interface SaleTransaction {
+public interface SaleTransaction{
 
     Integer getTicketNumber();
 
@@ -19,4 +19,6 @@ public interface SaleTransaction {
     double getPrice();
 
     void setPrice(double price);
+
+	
 }

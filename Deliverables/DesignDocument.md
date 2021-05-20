@@ -137,8 +137,7 @@ class User{
     -userId: Integer
     -username: String
     -password: String
-    -role: String
-    -logged: boolean  
+    -role: String 
 }
 
 class ProductType{
@@ -148,7 +147,6 @@ class ProductType{
 -note: String
 -productId: Integer
 -quantity: int
--position: Position
 -increaseQnt(in int quantity): boolean
 -decreaseQnt(in int quantity): boolean
 }
@@ -162,30 +160,30 @@ class Order{
 -payment: BalanceOperation
 }
 
-class Position{
--aisleId: Sting
--rackId: String
--levelId: String
-}
-
 class LoyaltyCard{
 -code: String
--customer: Customer
 -points: int
--addPoints()
--removePoints()
 }
 
 class Customer{
 -name: String
 -customerId: Integer
--card: LoyaltyCard
+-lc: LoyaltyCard
+-card: String
 }
 
 class AccountBook{
 -balance: double
 -operationList: LinkedList<BalanceOperation>
--createBalanceOperation(): BalanceOperation
+-insertBalanceOperation(): boolean
+}
+
+class Tools{
+-readLoyalty(): ArrayList<Long>
+-updateLoyalty(): boolean
+-checkCardLuhn(): boolean
+-checkDigits(): boolean
+-paymentCreditCards(): boolean
 }
 
 class BalanceOperation{
@@ -194,19 +192,32 @@ class BalanceOperation{
 -date: LocalDate
 }
 
+class TicketEntry{
+-description: String
+-barCode: String
+-pricePerUnit: double
+-productId: Integer
+-amount: int
+-price: double
+-discountRate: double
+}
+
 class SaleTransaction{
 -TransactionId: Integer
 -products: HashMap<ProductType Integer>
--amount: double
+-price: double
 -state: String
 -payment: BalanceOperation
 -paid: boolean
+-ticketEntryList: List<TicketEntry>
 -returnTransactions: List<ReturnTransaction>
 -transactionPoints: Integer
--applyDiscountSingle(in String productCode, in double discount): boolean
--applyDiscountAll(in double discount): boolean
--updateProductQuantity(in ProductType product, in Integer quantity): boolean
--checkCreditCard(in String cardno, in double amount): boolean
+-discountRate: double
+-addProduct(): boolean
+-applyProdDisc(): boolean
+-updateStatusMin(): boolean
+-updateStatusPlus(): boolean
+-removeProducts(): boolean
 }
 
 class ReturnTransaction{
@@ -216,9 +227,7 @@ class ReturnTransaction{
 -committed: boolean
 -payment: BalanceOperation
 -amount: double
--checkReturnProduct(in String productCode, in int amount): boolean
--updateOriginalTransaction(in SaleTransaction sale, in ProductType product, in Integer amount): boolean
-checkCreditCard(in String cardno): boolean
+-addProduct(): void
 }
 
 EZShop -u->"*"User
@@ -235,11 +244,11 @@ EZShop --> "*"ProductType
 SaleTransaction  -->"*" ProductType
 ReturnTransaction  -->"*" ProductType
 Order --> ProductType
-ProductType --> Position
 Order --> BalanceOperation
 SaleTransaction --> BalanceOperation
 ReturnTransaction--> BalanceOperation
-
+Tools --> EZShop
+TicketEntry "*"<-- SaleTransaction
 
 
 note "Persistency on this class is provided \nby methods saveAppState() and \nreadAppState() which serialize\na list of object that in our case \nare the list of user, customer, productType,\norders, sales, returns and \nthe Account Book class" as N1
@@ -247,35 +256,38 @@ note "Persistency on this class is provided \nby methods saveAppState() and \nre
 
 note "Persistency assured by methods\nsaveAppState() and \nreadAppState() of EZShop class" as N2
 
+note "Singleton pattern" as Singleton
+
 EZShop .r. N1
 AccountBook .u. N2
+AccountBook .l. Singleton
 @enduml
 ```
 
 # Verification traceability matrix
 
-| |User|EZShop|ProductType|Position|Order|Customer|LoyaltyCard|SaleTransaction|ReturnTransaction|BalanceOperation|AccountBook|
-|-|----|------|-----------|--------|-----|--------|-----------|---------------|-----------------|----------------|-----------|
-|FR1|X|X||||||||||
-|FR3||X|X|||||||||
-|FR4.1||X|X|||||||||
-|FR4.2||X|X|X||||||||
-|FR4.3||X|X|||||||||
-|FR4.4||X|||X|||||X|X|
-|FR4.5||X|||X|||||X|X|
-|FR4.6||X|X|X||||||||
-|FR4.7||X||X||||||||
-|FR5.1-FR5.4||X|||X|||||||
-|FR5.5||X|||||X|||||
-|FR5.6||X||||X|X|||||
-|FR5.7||X|||||X|||||
-|FR6.1-FR6.11||X||||||X||||
-|FR6.12||X|||||||X|||
-|FR6.13||X|X||||||X|||
-|FR6.14||X|||||||X|||
-|FR7.1-FR7.2||X||||||X||X|X|
-|FR7.3-FR7.4||X|||||||X|X|X|
-|FR8||X||||||||X|X|
+| |User|EZShop|ProductType|TicketEntry|Order|Customer|LoyaltyCard|SaleTransaction|ReturnTransaction|BalanceOperation|AccountBook|Tools
+|-|----|------|-----------|--------   |-----|--------|-----------|---------------|-----------------|----------------|-----------|-----
+|FR1|X|X|||||||||||
+|FR3||X|X|||||||||X|
+|FR4.1||X|X|||||||||X|
+|FR4.2||X|X|||||||||X|
+|FR4.3||X|X|||||||||X|
+|FR4.4||X|||X|||||X|X|X|
+|FR4.5||X|||X|||||X|X|X|
+|FR4.6||X|X|||||||||X|
+|FR4.7||X||X||||||||X|
+|FR5.1-FR5.4||X|||X|||||||X|
+|FR5.5||X|||||X|||||X|
+|FR5.6||X||||X|X|||||X|
+|FR5.7||X|||||X|||||X|
+|FR6.1-FR6.11||X||X||||X||||X|
+|FR6.12||X||X|||||X|||X|
+|FR6.13||X|X|X|||||X|||X|
+|FR6.14||X|||||||X|||X|
+|FR7.1-FR7.2||X||||||X||X|X|X|
+|FR7.3-FR7.4||X|||||||X|X|X|X|
+|FR8||X||||||||X|X||
 
 # Verification sequence diagrams 
 
