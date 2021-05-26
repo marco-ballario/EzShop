@@ -14,7 +14,6 @@ public class ReturnTransaction implements Serializable{
 	private HashMap<ProductType, Integer> returnProducts = new HashMap<ProductType, Integer>();
 	private it.polito.ezshop.model.SaleTransaction originalTransaction;
 	private boolean committed;
-	private BalanceOperation payment;
 	private double amount;
 
 	
@@ -57,13 +56,7 @@ public class ReturnTransaction implements Serializable{
 		this.committed = committed;
 	}
 
-	public BalanceOperation getPayment() {
-		return payment;
-	}
 
-	public void setPayment(BalanceOperation payment) {
-		this.payment = payment;
-	}
 
 	public double getAmount() {
 		return amount;
@@ -73,10 +66,6 @@ public class ReturnTransaction implements Serializable{
 		this.amount = amount;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
 	public void addProduct(ProductType product, int amount, double money) {
 		if(this.returnProducts.get(product) != null) {
 			this.returnProducts.put(product, this.returnProducts.get(product) + amount);

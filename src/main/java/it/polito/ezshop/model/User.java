@@ -60,6 +60,6 @@ public class User implements it.polito.ezshop.data.User, Serializable{
 	public void setRole(String role) {
 		this.role = role;
 		
-	}	
+	}
 
 }

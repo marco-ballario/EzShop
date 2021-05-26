@@ -11,7 +11,7 @@ public class Order implements it.polito.ezshop.data.Order, Serializable{
 	private double pricePerUnit;
 	private Integer orderId;
 	private String state;
-	private BalanceOperation payment;
+	private Integer balanceId;
 	
 	
 
@@ -23,13 +23,12 @@ public class Order implements it.polito.ezshop.data.Order, Serializable{
 
 	@Override
 	public Integer getBalanceId() {
-		return payment.getBalanceId();
+		return balanceId;
 	}
 
 	@Override
 	public void setBalanceId(Integer balanceId) {
-		this.payment.setBalanceId(balanceId);
-		
+		this.balanceId = balanceId;
 	}
 
 	@Override

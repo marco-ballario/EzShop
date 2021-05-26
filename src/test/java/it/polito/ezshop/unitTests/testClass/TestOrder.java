@@ -46,5 +46,11 @@ public class TestOrder {
 		o.setOrderId(2);
 		assertEquals(o.getOrderId(), (Integer)2);
 	}
+	
+	@Test
+	public void testSetBalanceId() {
+		o.setBalanceId(4);
+		assertEquals(o.getBalanceId(), (Integer)4);
+	}
 
 }
