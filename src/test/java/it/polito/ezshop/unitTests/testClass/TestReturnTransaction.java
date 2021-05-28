@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import it.polito.ezshop.model.BalanceOperation;
 import it.polito.ezshop.model.ReturnTransaction;
 import it.polito.ezshop.model.SaleTransaction;
 
@@ -35,12 +34,6 @@ public class TestReturnTransaction {
 		assertEquals(rt.isCommitted(), true);
 	}
 	
-	@Test
-	public void testSetPayment() {
-		BalanceOperation b = new BalanceOperation();
-		rt.setPayment(b);
-		assertEquals(rt.getPayment(), b);
-	}
 	
 	@Test
 	public void testSetAmount() {		

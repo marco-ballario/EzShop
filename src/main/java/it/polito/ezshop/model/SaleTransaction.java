@@ -16,7 +16,6 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	// design properties
 
 	private List<ReturnTransaction> returnTransactions= new LinkedList<ReturnTransaction>();
-	private it.polito.ezshop.model.BalanceOperation payment;
 	private Integer TransactionId, transactionPoints;
 	private String status;
 
@@ -44,12 +43,12 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 	}
 
 	@Override
-	public List<it.polito.ezshop.data.TicketEntry> getEntries() {
+	public List<TicketEntry> getEntries() {
 		return this.entries;
 	}
 
 	@Override
-	public void setEntries(List<it.polito.ezshop.data.TicketEntry> entries) {
+	public void setEntries(List<TicketEntry> entries) {
 		this.entries = entries;		
 	}
 
@@ -138,13 +137,7 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 
 
 
-	public BalanceOperation getPayment() {
-		return payment;
-	}
-
-	public void setPayment(it.polito.ezshop.model.BalanceOperation b) {
-		this.payment = b;
-	}
+	
 
 	public Integer getTransactionId() {
 		return TransactionId;
@@ -210,6 +203,7 @@ public class SaleTransaction implements it.polito.ezshop.data.SaleTransaction,  
 					return false;
 				}
 				t.setAmount(t.getAmount()-amount);
+				this.price = this.price - amount* t.getPricePerUnit();
 				return true;
 			}
 		}
