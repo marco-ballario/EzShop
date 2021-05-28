@@ -152,11 +152,11 @@ public class EZShop implements EZShopInterface {
 		this.productId=1;
 		this.saleId=1;
 		this.returnId=1;
-		this.accounting.setBalance(0);
 		this.productList = new HashMap<Integer, it.polito.ezshop.model.ProductType>();
 		this.transactionList = new HashMap<Integer, it.polito.ezshop.model.SaleTransaction>();
 		this.loggedUser = null;
 		this.orderList = new HashMap<Integer, it.polito.ezshop.model.Order>();
+		this.accounting.resetBalance();
 		this.returnList = new HashMap<Integer, it.polito.ezshop.model.ReturnTransaction>();
 		this.customerList = new HashMap<Integer, it.polito.ezshop.model.Customer>();
 		this.userList = new HashMap<Integer, it.polito.ezshop.model.User>();
