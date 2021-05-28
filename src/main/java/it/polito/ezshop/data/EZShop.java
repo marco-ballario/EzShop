@@ -144,10 +144,20 @@ public class EZShop implements EZShopInterface {
 	@Override
 	public void reset() {
 		readAppState();
+		this.customerId=1;
+		this.orderId=1;
+		this.loyaltyCardId=1;
+		this.userId=1;
+		this.orderId=1;
+		this.productId=1;
+		this.saleId=1;
+		this.returnId=1;
 		this.accounting.setBalance(0);
 		this.productList = new HashMap<Integer, it.polito.ezshop.model.ProductType>();
 		this.transactionList = new HashMap<Integer, it.polito.ezshop.model.SaleTransaction>();
 		this.loggedUser = null;
+		this.orderList = new HashMap<Integer, it.polito.ezshop.model.Order>();
+		this.returnList = new HashMap<Integer, it.polito.ezshop.model.ReturnTransaction>();
 		this.customerList = new HashMap<Integer, it.polito.ezshop.model.Customer>();
 		this.userList = new HashMap<Integer, it.polito.ezshop.model.User>();
 
@@ -479,7 +489,9 @@ public class EZShop implements EZShopInterface {
 			Integer.parseInt(pos[0]);
 			Integer.parseInt(pos[2]);
 		}catch(NumberFormatException e) {
-			throw new InvalidLocationException();
+			if(! newPos.equals("")) {
+				throw new InvalidLocationException();
+			}
 		}
 		
 		for (ProductType pt : productList.values()) { // if another product has the same position return false
