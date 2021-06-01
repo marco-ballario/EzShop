@@ -50,8 +50,9 @@ with all elements explosed, all dependencies, NO tangles; and report it here as 
 
 | Item | Tangled | Fat  | Size | XS   |
 | ---- | ------- | ---- | ---- | ---- |
-|      |         |      |      |      |
-|      |         |      |      |      |
+| ezshop.it.polito.ezshop.data.EZShop |         |  242  |  4163  |  2098  |
+| ezshop.it.polito.ezshop |    9%    |   4   |   6096   |   553   |
+| ezshop.it.polito.ezshop.data.EZShop.modifyCustomer(java.lang.Integer, java.lang.String, java.lang.String):boolean | | 18 | 157 | 26 |
 
 
 
