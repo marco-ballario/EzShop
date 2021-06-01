@@ -11,7 +11,7 @@ on April 30, discuss whether the design could be improved>
 <Applying Structure 101 to your project, version to be delivered on june 4, produce the Levelized structure map,
 with all elements explosed, all dependencies, NO tangles; and report it here as a picture>
 ```
-[Image](./Images/LevelizedStructureMap.png)
+![Image](./Images/LevelizedStructureMap.png)
 
 # Structural over complexity chart
 ```
