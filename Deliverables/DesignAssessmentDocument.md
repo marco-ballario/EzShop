@@ -1,6 +1,10 @@
 # Design assessment
 
+Authors: Marco Ballario, Pietro Macori, Cosimo Michelagnoli, Lucia Vencato
 
+Date: 01/06/2021
+
+Version: 1.0
 ```
 <The goal of this document is to analyse the structure of your project, compare it with the design delivered
 on April 30, discuss whether the design could be improved>
