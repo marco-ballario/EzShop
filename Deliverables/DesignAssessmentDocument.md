@@ -17,7 +17,7 @@ with all elements explosed, all dependencies, NO tangles; and report it here as 
 ```
 <Applying Structure 101 to your project, version to be delivered on june 4, produce the structural over complexity chart; and report it here as a picture>
 ```
-
+![Image](./Images/StructuralOverComplexity.png)
 
 
 # Size metrics
