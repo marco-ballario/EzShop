@@ -42,7 +42,15 @@ Version: 1.0
 ![Image](./Images/PackageLevelTangle.png)
 
 # Summary analysis
-```
-<Discuss here main differences of the current structure of your project vs the design delivered on April 30>
-<Discuss if the current structure shows weaknesses that should be fixed>
-```
+
+The main changes have been:
+- the removal of the class Position
+- the addition of the class Tools
+- the addition of the class TicketEntry
+- the removal of the reference between the classes BalanceOperation and Order, SaleTransaction, ReturnTransaction
+- changes of some methods name in the classes
+
+The weakness of our code is the tangle of 2 cyclically-dependet classes, that are SaleTransaction and ReturnTransaction. 
+We could fix it by saving the id of the SaleTransaction in the ReturnTranscation, without having the reference to the object.
+We also have a fat class, EZShop, and we could improve it by spreading the code in the other classes.
+
