@@ -10,21 +10,59 @@ import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import it.polito.ezshop.data.Customer;
 import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.exceptions.*;
+import it.polito.ezshop.model.ProductType;
 import it.polito.ezshop.model.User;
 
 public class TestEZShopIntegration {
 
-	EZShop ezShop = new it.polito.ezshop.data.EZShop();
-	User wrongUser = new User("Beppe", "1234", "adminnn", 120);
+	static EZShop ezShop;
+	static User wrongUser;
+	@BeforeClass
+	public static void setUp() throws InvalidProductDescriptionException, InvalidProductCodeException, InvalidPricePerUnitException, UnauthorizedException, InvalidProductIdException, InvalidLocationException, InvalidUsernameException, InvalidPasswordException, InvalidRoleException, InvalidCustomerNameException, InvalidCustomerIdException {
+		ezShop = new it.polito.ezshop.data.EZShop();
+		ezShop.reset();
+		wrongUser = new User("Beppe", "1234", "adminnn", 120);
+		ezShop.createUser("admin", "admin", "Administrator");
+		ezShop.createUser("ciao", "ciao", "Cashier");
+		ezShop.login("admin", "admin");
+		ezShop.createProductType("pane", "12345678901231", 10.0, "ciao");
+		ezShop.createProductType("acqua", "1234567890005", 20.0, "cane");
+		ezShop.createProductType("polenta", "98765432109879", 10.1, "cocnia");
+		ezShop.createProductType("chchchc", "98765432100005", 32.1, "cmid");
+		ezShop.updatePosition(1, "11-aa-11");
+		ezShop.updatePosition(3, "12-s-1");
+		ezShop.updatePosition(4, "11-s-11");
+		ezShop.updateQuantity(1, 50);
+		ezShop.updateQuantity(4, 46);
+
+		ezShop.defineCustomer("laura");
+		ezShop.defineCustomer("luigi");
+		Customer c1 = ezShop.getCustomer(1);
+		Customer c2 = ezShop.getCustomer(2);
+		c1.setCustomerCard("7094947694");
+		c2.setCustomerCard("2183175269");
+		c1.setPoints(142);
+		c2.setPoints(52);
+		ezShop.recordBalanceUpdate(12000);
+		ezShop.logout();
+
+	}
+	@AfterClass
+	public static void reset() {
+		ezShop.reset();
+	}
 
 	@Test
 	public void testUserAPI() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException,
 			InvalidUserIdException, UnauthorizedException {
-
+		ezShop.logout();
 		ezShop.login("Beppe", "1234");
 		assertThrows(UnauthorizedException.class, () -> ezShop.deleteUser(1));
 		assertThrows(UnauthorizedException.class, () -> ezShop.getUser(1));
@@ -47,7 +85,7 @@ public class TestEZShopIntegration {
 	@Test
 	public void testWrongCreateUser() throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException,
 			InvalidUserIdException, UnauthorizedException {
-
+		ezShop.logout();
 		ezShop.login("admin", "admin");
 		assertThrows(InvalidUsernameException.class, () -> ezShop.createUser("", "pass", "Cashier"));
 		assertThrows(InvalidPasswordException.class, () -> ezShop.createUser("mario", "", "Cashier"));
@@ -59,7 +97,7 @@ public class TestEZShopIntegration {
 	@Test
 	public void testWrongIdAndRoleUser() throws InvalidUsernameException, InvalidPasswordException,
 			InvalidRoleException, InvalidUserIdException, UnauthorizedException {
-
+		ezShop.logout();
 		ezShop.login("admin", "admin");
 		assertThrows(InvalidUserIdException.class, () -> ezShop.deleteUser(-1));
 		assertThrows(InvalidUserIdException.class, () -> ezShop.getUser(-1));
@@ -73,6 +111,7 @@ public class TestEZShopIntegration {
 
 	@Test
 	public void testLogin() throws InvalidUsernameException, InvalidPasswordException {
+		ezShop.logout();
 		assertThrows(InvalidUsernameException.class, () -> ezShop.login(null, "pass"));
 
 		assertThrows(InvalidPasswordException.class, () -> ezShop.login("mario", ""));
@@ -90,6 +129,7 @@ public class TestEZShopIntegration {
 			InvalidUserIdException, UnauthorizedException, InvalidProductDescriptionException,
 			InvalidProductCodeException, InvalidPricePerUnitException, InvalidProductIdException {
 		int productId = ezShop.getProductId();
+		ezShop.logout();
 		ezShop.login("Beppe", "1234");
 		assertThrows(UnauthorizedException.class, () -> ezShop.createProductType("eke", "12345678901231", 1.0, "ede"));
 		assertThrows(UnauthorizedException.class, () -> ezShop.deleteProductType(1));
@@ -135,6 +175,7 @@ public class TestEZShopIntegration {
 	@Test
 	public void testGetAllProducts() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException,
 			InvalidProductCodeException {
+		ezShop.logout();
 		ezShop.login("Beppe", "1234");
 		assertThrows(UnauthorizedException.class, () -> ezShop.getAllProductTypes());
 		assertThrows(UnauthorizedException.class, () -> ezShop.getProductTypeByBarCode("12345678901231"));
@@ -164,6 +205,7 @@ public class TestEZShopIntegration {
 	@Test
 	public void testUpdateProduct() throws InvalidUsernameException, InvalidPasswordException,
 			InvalidProductIdException, UnauthorizedException, InvalidLocationException {
+		ezShop.logout();
 		ezShop.login("Beppe", "1234");
 		assertThrows(UnauthorizedException.class, () -> ezShop.updateQuantity(1, 1));
 		assertThrows(UnauthorizedException.class, () -> ezShop.updatePosition(1, "1-a-1"));
@@ -183,7 +225,7 @@ public class TestEZShopIntegration {
 		assertTrue(ezShop.updateQuantity(1, 1));
 
 		assertThrows(InvalidLocationException.class, () -> ezShop.updatePosition(1, "11"));
-		assertFalse(ezShop.updatePosition(1, "11-aa-11"));
+		assertTrue(ezShop.updatePosition(1, "11-aa-11"));
 
 		assertTrue(ezShop.updatePosition(1, ""));
 		assertTrue(ezShop.updatePosition(1, "22-bb-22"));
@@ -195,6 +237,7 @@ public class TestEZShopIntegration {
 	@Test
 	public void testOrdersAPI() throws InvalidUsernameException, InvalidPasswordException, InvalidProductCodeException,
 			InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException, InvalidOrderIdException {
+		ezShop.logout();
 		ezShop.login("Beppe", "1234");
 		assertThrows(UnauthorizedException.class, () -> ezShop.issueOrder("12345678901231", 1, 1.0));
 		assertThrows(UnauthorizedException.class, () -> ezShop.payOrder(1));
@@ -227,6 +270,7 @@ public class TestEZShopIntegration {
 	@Test
 	public void testIssueAndPayOrder() throws InvalidUsernameException, InvalidPasswordException,
 			InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException {
+		ezShop.logout();
 		ezShop.login("Beppe", "1234");
 		assertThrows(UnauthorizedException.class, () -> ezShop.payOrderFor("12345678901231", 1, 1.0));
 		assertThrows(UnauthorizedException.class, () -> ezShop.recordBalanceUpdate(1));
@@ -256,6 +300,7 @@ public class TestEZShopIntegration {
 	public void testArrivalOrder() throws InvalidUsernameException, InvalidPasswordException, InvalidOrderIdException,
 			UnauthorizedException, InvalidLocationException, InvalidProductCodeException, InvalidQuantityException,
 			InvalidPricePerUnitException {
+		ezShop.logout();
 		ezShop.login("Beppe", "1234");
 		Integer id = ezShop.getOrderId() - 1;
 		assertThrows(UnauthorizedException.class, () -> ezShop.recordOrderArrival(id));
@@ -269,7 +314,10 @@ public class TestEZShopIntegration {
 		assertThrows(InvalidOrderIdException.class, () -> ezShop.recordOrderArrival(null));
 		assertThrows(InvalidOrderIdException.class, () -> ezShop.recordOrderArrival(-1));
 		assertFalse(ezShop.recordOrderArrival(999999));
-
+		
+		ezShop.payOrderFor("12345678901231", 1, 1.0);
+		assertTrue(ezShop.recordOrderArrival(1));
+		
 		assertFalse(ezShop.recordOrderArrival(1));
 		Integer ret = ezShop.payOrderFor("12345678901231", 1, 1.0);
 		assertTrue(ezShop.recordOrderArrival(ret));
@@ -282,6 +330,7 @@ public class TestEZShopIntegration {
 
 	@Test
 	public void testAllOrders() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException {
+		ezShop.logout();
 		ezShop.login("Beppe", "1234");
 		assertThrows(UnauthorizedException.class, () -> ezShop.getAllOrders());
 		ezShop.logout();
@@ -359,6 +408,7 @@ public class TestEZShopIntegration {
 	@Test
 	public void testCustomersAPI() throws InvalidUsernameException, InvalidPasswordException,
 			InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
+		ezShop.logout();
 		ezShop.login("Beppe", "1234");
 		assertThrows(UnauthorizedException.class, () -> ezShop.defineCustomer("FakeCustomer"));
 		assertThrows(UnauthorizedException.class, () -> ezShop.deleteCustomer(1));
@@ -382,6 +432,7 @@ public class TestEZShopIntegration {
 	@Test
 	public void testSearchCustomer() throws InvalidUsernameException, InvalidPasswordException,
 			InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
+		ezShop.logout();
 		ezShop.login("Beppe", "1234");
 		assertThrows(UnauthorizedException.class, () -> ezShop.getCustomer(1));
 		ezShop.logout();
@@ -398,6 +449,7 @@ public class TestEZShopIntegration {
 
 	@Test
 	public void testAllCustomers() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException {
+		ezShop.logout();
 		ezShop.login("Beppe", "1234");
 		assertThrows(UnauthorizedException.class, () -> ezShop.getAllCustomers());
 		ezShop.logout();
@@ -411,7 +463,7 @@ public class TestEZShopIntegration {
 	public void testSaleTransactionAPI() throws InvalidUsernameException, InvalidPasswordException,
 			UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,
 			InvalidDiscountRateException, InvalidPaymentException, InvalidCreditCardException {
-
+		ezShop.logout();
 		ezShop.login("WrongUsername", "WrongPassword");
 
 		assertThrows(UnauthorizedException.class, () -> ezShop.startSaleTransaction());
@@ -477,7 +529,7 @@ public class TestEZShopIntegration {
 	
 	@Test
 	public void testManageSaleTransactionCancelled() throws InvalidTransactionIdException, UnauthorizedException, InvalidProductCodeException, InvalidQuantityException, InvalidUsernameException, InvalidPasswordException  {
-
+		ezShop.logout();
 		ezShop.login("admin", "admin");
 		double balance = ezShop.computeBalance();
 		it.polito.ezshop.data.ProductType pt = ezShop.getProductTypeByBarCode("12345678901231");
@@ -504,7 +556,7 @@ public class TestEZShopIntegration {
 	public void testManageSaleTransaction() throws InvalidUsernameException, InvalidPasswordException,
 			UnauthorizedException, InvalidProductCodeException, InvalidTransactionIdException, InvalidQuantityException,
 			InvalidPaymentException {
-
+		ezShop.logout();
 		ezShop.login("admin", "admin");
 		double balance = ezShop.computeBalance();
 		it.polito.ezshop.data.ProductType pt = ezShop.getProductTypeByBarCode("12345678901231");
@@ -531,7 +583,7 @@ public class TestEZShopIntegration {
 	public void testManageSaleTransactionProductDiscount() throws InvalidUsernameException, InvalidPasswordException,
 			UnauthorizedException, InvalidProductCodeException, InvalidTransactionIdException, InvalidQuantityException,
 			InvalidPaymentException, InvalidDiscountRateException {
-
+		ezShop.logout();
 		ezShop.login("admin", "admin");
 		double balance = ezShop.computeBalance();
 		it.polito.ezshop.data.ProductType pt = ezShop.getProductTypeByBarCode("12345678901231");
@@ -561,7 +613,7 @@ public class TestEZShopIntegration {
 	public void testManageSaleTransactionDiscount() throws InvalidUsernameException, InvalidPasswordException,
 			UnauthorizedException, InvalidProductCodeException, InvalidTransactionIdException, InvalidQuantityException,
 			InvalidPaymentException, InvalidDiscountRateException {
-
+		ezShop.logout();
 		ezShop.login("admin", "admin");
 		double balance = ezShop.computeBalance();
 		it.polito.ezshop.data.ProductType pt = ezShop.getProductTypeByBarCode("12345678901231");
@@ -591,7 +643,7 @@ public class TestEZShopIntegration {
 	public void testReturnTransactionAPI() throws InvalidUsernameException, InvalidPasswordException,
 			UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,
 			InvalidCreditCardException {
-
+		ezShop.logout();
 		ezShop.login("WrongUsername", "WrongPassword");
 
 		assertThrows(UnauthorizedException.class, () -> ezShop.startReturnTransaction(3));
@@ -651,7 +703,7 @@ public class TestEZShopIntegration {
 	public void testManageReturnTransactionCreditCard() throws InvalidUsernameException, InvalidPasswordException,
 			UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,
 			InvalidCreditCardException {
-
+		ezShop.logout();
 		ezShop.login("admin", "admin");
 		double balance = ezShop.computeBalance();
 		ezShop.logout();
@@ -682,7 +734,7 @@ public class TestEZShopIntegration {
 	public void testManageReturnTransactionCash() throws InvalidUsernameException, InvalidPasswordException,
 			UnauthorizedException, InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException,
 			InvalidCreditCardException {
-
+		ezShop.logout();
 		ezShop.login("admin", "admin");
 		double balance = ezShop.computeBalance();
 
@@ -713,7 +765,7 @@ public class TestEZShopIntegration {
 	@Test
 	public void testGetCreditsAndDebits()
 			throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException {
-
+		ezShop.logout();
 		ezShop.login("WrongUsername", "WrongPassword");
 
 		assertThrows(UnauthorizedException.class,
@@ -737,7 +789,7 @@ public class TestEZShopIntegration {
 
 	@Test
 	public void testComputeBalance() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException {
-
+		ezShop.logout();
 		ezShop.login("WrongUsername", "WrongPassword");
 
 		assertThrows(UnauthorizedException.class, () -> ezShop.computeBalance());

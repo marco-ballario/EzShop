@@ -37,6 +37,11 @@ public class AccountBook implements Serializable{
 		return operationList;
 	}
 	
+	public void resetBalance() {
+		this.balance=0;
+		this.operationList = new LinkedList<BalanceOperation>();
+	}
+	
 
 	public boolean insertBalanceOperation(BalanceOperation bo, double toBeAdded) {
 		if(toBeAdded + this.balance < 0) {
