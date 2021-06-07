@@ -1518,7 +1518,41 @@ InvalidLocationException, InvalidRFIDException {
 
     @Override
     public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException{
-        return false;
+    	if (this.loggedUser == null
+				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")))
+			throw new UnauthorizedException();
+    	
+		if (transactionId == null || transactionId <= 0)
+			throw new InvalidTransactionIdException();
+		
+		if(RFID==null || RFID.length() != 10) {
+    		throw new InvalidRFIDException();
+    	}
+    	Long rfid_from = null;
+    	try {
+    		rfid_from = Long.parseLong(RFID);    	
+    	} catch(NumberFormatException e) {
+    		throw new InvalidRFIDException();
+    	}
+    	
+		it.polito.ezshop.model.SaleTransaction st = this.transactionList.get(transactionId);
+		
+		Product p = listRFID.get(rfid_from);
+    	
+    	if(p==null) {
+    		return false;
+    	}
+
+		it.polito.ezshop.model.ProductType pt = p.getProductType();
+		
+		if (st == null || !st.getStatus().equals("open") || pt == null) {
+			return false;
+		}
+
+		boolean res = st.removeProducts(pt.getBarCode(), 1);
+		pt.increaseQuantity(1);
+
+    	return res;
     }
 
     
