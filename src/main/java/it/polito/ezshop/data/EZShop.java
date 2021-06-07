@@ -1,6 +1,5 @@
 package it.polito.ezshop.data;
 
-import it.polito.ezshop.data.User;
 import it.polito.ezshop.exceptions.*;
 import it.polito.ezshop.model.*;
 
@@ -36,6 +35,7 @@ public class EZShop implements EZShopInterface {
 	private int returnId=1;
 	private AccountBook accounting = AccountBook.getIstance(); // SINGLETON PATTERN THAT AVOIDS MULTIPLE ACCOUNTS
 	private List<Object> appState = new ArrayList<Object>();
+	private HashMap<Long, it.polito.ezshop.model.Product> listRFID = new HashMap<Long, it.polito.ezshop.model.Product>();
 	private Tools tool = new Tools();
 	File f = new File("./src/main/java/it/polito/ezshop/utils/appState.db");
 	String fileLoyalty = "./src/main/java/it/polito/ezshop/utils/cards.in";
@@ -97,6 +97,8 @@ public class EZShop implements EZShopInterface {
 				accounting = (AccountBook) e.get(13);
 				orderList = (HashMap<Integer, it.polito.ezshop.model.Order>) e.get(14);
 				orderId = (Integer) e.get(15);
+				listRFID = (HashMap<Long, it.polito.ezshop.model.Product>) e.get(16);;
+
 			}
 			in.close();
 			fileIn.close();
@@ -126,7 +128,7 @@ public class EZShop implements EZShopInterface {
 		appState.add(13, accounting);
 		appState.add(14, orderList);
 		appState.add(15, orderId);
-		
+		appState.add(16, listRFID);
 		
 		try {
 			
@@ -160,7 +162,7 @@ public class EZShop implements EZShopInterface {
 		this.returnList = new HashMap<Integer, it.polito.ezshop.model.ReturnTransaction>();
 		this.customerList = new HashMap<Integer, it.polito.ezshop.model.Customer>();
 		this.userList = new HashMap<Integer, it.polito.ezshop.model.User>();
-
+		this.listRFID = new HashMap<Long, it.polito.ezshop.model.Product>();
 		writeAppState();
 	}
 
@@ -1401,6 +1403,7 @@ public class EZShop implements EZShopInterface {
 		if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager"))) {
 			throw new UnauthorizedException();
 		}
+		
 		return accounting.getBalance();
 	}
 	
@@ -1409,12 +1412,106 @@ public class EZShop implements EZShopInterface {
     @Override
     public boolean recordOrderArrivalRFID(Integer orderId, String RFIDfrom) throws InvalidOrderIdException, UnauthorizedException, 
 InvalidLocationException, InvalidRFIDException {
-        return false;
+    	if (this.loggedUser == null || (!this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager"))) {
+			throw new UnauthorizedException();
+		}
+    	if(orderId == null || orderId <= 0) {
+    		throw new InvalidOrderIdException();
+    		
+    	}
+    	
+    	if(RFIDfrom==null ||  RFIDfrom.length() != 10) {
+    		throw new InvalidRFIDException();
+    	}
+    	Long rfid_from = null;
+    	try {
+    		rfid_from = Long.parseLong(RFIDfrom);    	
+    	} catch(NumberFormatException e) {
+    		throw new InvalidRFIDException();
+    	}
+    	
+    	
+    	Order order = this.orderList.get(orderId);
+		if (order == null)
+			return false;
+		if (order.getStatus().equals("PAYED")) {
+
+			it.polito.ezshop.model.ProductType productType = null;
+			try {
+				productType = (it.polito.ezshop.model.ProductType) this.getProductTypeByBarCode(order.getProductCode());
+				if (productType.getLocation() == null || productType.getLocation().equals("")) {
+					throw new InvalidLocationException();
+				}
+			} catch (InvalidProductCodeException | UnauthorizedException e) {
+				return false;
+			}
+			
+			order.setStatus("COMPLETED");
+			productType.increaseQuantity(order.getQuantity());
+			Long rfid_tmp=rfid_from;
+			for(int i=0; i<order.getQuantity(); i++) {
+				if(listRFID.get(rfid_tmp)!=null) {
+					throw new InvalidRFIDException();
+				}
+				rfid_tmp ++;
+			}
+			
+			for(int i=0; i<order.getQuantity(); i++) {
+				Product p = new it.polito.ezshop.model.Product(rfid_from, productType);
+				listRFID.put(rfid_from, p);
+				rfid_from ++;
+			}
+			
+			boolean res = writeAppState();
+			return res;
+
+		} else {
+			return false;
+		}
+    	
     }
     
     @Override
     public boolean addProductToSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException{
-        return false;
+    	if (this.loggedUser == null
+				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator") && !this.loggedUser.getRole().equals("ShopManager")))
+			throw new UnauthorizedException();
+    	
+    	if (transactionId == null || transactionId <= 0)
+			throw new InvalidTransactionIdException();
+    	
+    	if(RFID==null || RFID.length() != 10) {
+    		throw new InvalidRFIDException();
+    	}
+    	Long rfid_from = null;
+    	try {
+    		rfid_from = Long.parseLong(RFID);    	
+    	} catch(NumberFormatException e) {
+    		throw new InvalidRFIDException();
+    	}
+    	
+    	it.polito.ezshop.model.SaleTransaction st = transactionList.get(transactionId);
+		if (st == null)
+			return false;
+    	
+		//remove or not from list????
+    	Product p = listRFID.get(rfid_from);
+    	
+    	if(p==null) {
+    		return false;
+    	}
+    	
+    	it.polito.ezshop.model.ProductType pt = p.getProductType();
+		
+		if (pt == null)
+			return false;
+
+
+		pt.decreaseQuantity(1);
+		st.addProduct(pt, 1); // to be checked
+    	
+    	return true;
+        
     }
     
     
@@ -1423,8 +1520,6 @@ InvalidLocationException, InvalidRFIDException {
     public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException{
         return false;
     }
-
-    
 
     
 
