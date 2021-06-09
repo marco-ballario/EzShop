@@ -1584,8 +1584,6 @@ public class EZShop implements EZShopInterface {
 			return false;
 		}
 		
-		System.out.print(st.getTicketEntry(pt.getBarCode()).getAmount());
-
 		boolean res = st.removeProducts(pt.getBarCode(), 1);
 		pt.increaseQuantity(1);
 

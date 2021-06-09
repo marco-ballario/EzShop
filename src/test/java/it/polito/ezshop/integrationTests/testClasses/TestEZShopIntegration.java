@@ -661,9 +661,9 @@ public class TestEZShopIntegration {
 		assertEquals(pt.getQuantity(), (Integer) (quantity - unitsN)); // X available quantity is decreased by N
 		assertTrue(ezShop.deleteProductFromSaleRFID(idSale, "0000000011"));
 		
-		assertEquals(pt.getQuantity(), (Integer) ((quantity - unitsN)-1)); 
+		assertEquals(pt.getQuantity(), (Integer) ((quantity - unitsN)+1)); 
 		
-		assertTrue(ezShop.endSaleTransaction(id));
+		assertFalse(ezShop.endSaleTransaction(id));
 		assertTrue(ezShop.deleteSaleTransaction(id));
 		ezShop.logout();
 
