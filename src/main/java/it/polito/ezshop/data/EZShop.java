@@ -1593,9 +1593,10 @@ public class EZShop implements EZShopInterface {
 	@Override
 	public boolean returnProductRFID(Integer returnId, String RFID)
 			throws InvalidTransactionIdException, InvalidRFIDException, UnauthorizedException {
-		if (this.loggedUser == null
-				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
-						&& !this.loggedUser.getRole().equals("ShopManager")))
+		if (this.loggedUser == null ||
+			(!this.loggedUser.getRole().equals("Cashier") &&
+			!this.loggedUser.getRole().equals("Administrator") &&
+			!this.loggedUser.getRole().equals("ShopManager")))
 			throw new UnauthorizedException();
 
 		if (returnId == null || returnId <= 0) {
@@ -1619,7 +1620,7 @@ public class EZShop implements EZShopInterface {
 
 		if (pt == null)
 			return false;
-
+		
 		ReturnTransaction rt = returnList.get(returnId);
 		if (rt == null) {
 			return false;
@@ -1639,5 +1640,6 @@ public class EZShop implements EZShopInterface {
 
 		return true;
 	}
+
 
 }
