@@ -1482,7 +1482,7 @@ public class EZShop implements EZShopInterface {
 			productType.increaseQuantity(order.getQuantity());
 			Long rfid_tmp = rfid_from;
 			for (int i = 0; i < order.getQuantity(); i++) {
-				if (listRFID.get(rfid_tmp) != null) {
+				if (this.listRFID.get(rfid_tmp) != null) {
 					throw new InvalidRFIDException();
 				}
 				rfid_tmp++;
@@ -1490,7 +1490,7 @@ public class EZShop implements EZShopInterface {
 
 			for (int i = 0; i < order.getQuantity(); i++) {
 				Product p = new it.polito.ezshop.model.Product(rfid_from, productType);
-				listRFID.put(rfid_from, p);
+				this.listRFID.put(rfid_from, p);
 				rfid_from++;
 			}
 

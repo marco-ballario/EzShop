@@ -1,6 +1,12 @@
 package it.polito.ezshop.model;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7213361125315629523L;
 	private Long RFID;
 	private ProductType productType;
 	

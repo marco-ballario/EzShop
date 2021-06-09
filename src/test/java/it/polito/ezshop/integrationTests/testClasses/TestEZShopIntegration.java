@@ -537,7 +537,6 @@ public class TestEZShopIntegration {
 
 		ezShop.login("ciao", "ciao"); // Cashier C exists and is logged in
 		int id = ezShop.startSaleTransaction();
-		double pricePerUnit = pt.getPricePerUnit();
 		int quantityX = pt.getQuantity();
 		int unitsN = 2;
 		assertTrue(ezShop.addProductToSale(id, "12345678901231", unitsN));
@@ -803,6 +802,42 @@ public class TestEZShopIntegration {
 		ezShop.login("admin", "admin");
 		assertNotNull(ezShop.computeBalance());
 		ezShop.logout();
+	}
+	
+	@Test
+	public void testRecordOrderArrivalRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidOrderIdException, UnauthorizedException, InvalidLocationException, InvalidRFIDException, InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException {
+		ezShop.logout();
+		ezShop.login("Beppe", "1234");
+		Integer id = ezShop.getOrderId() - 1;
+		assertThrows(UnauthorizedException.class, () -> ezShop.recordOrderArrivalRFID(id,"1111"));
+		ezShop.logout();
+
+		ezShop.login("ciao", "ciao");
+		assertThrows(UnauthorizedException.class, () -> ezShop.recordOrderArrivalRFID(id, "1111"));
+		ezShop.logout();
+
+		ezShop.login("admin", "admin");
+		assertThrows(InvalidOrderIdException.class, () -> ezShop.recordOrderArrivalRFID(null, "0000000001"));
+		assertThrows(InvalidOrderIdException.class, () -> ezShop.recordOrderArrivalRFID(-1, "00000001"));
+		assertThrows(InvalidRFIDException.class, () -> ezShop.recordOrderArrivalRFID(1, "00000001"));
+		assertThrows(InvalidRFIDException.class, () -> ezShop.recordOrderArrivalRFID(100, null));
+		assertThrows(InvalidRFIDException.class, () -> ezShop.recordOrderArrivalRFID(1, "111111111A"));
+
+
+		assertFalse(ezShop.recordOrderArrivalRFID(999999, "9999999999"));//no order
+		
+		
+		
+		int a = ezShop.payOrderFor("12345678901231", 10, 1.0);
+		int b = ezShop.payOrderFor("12345678901231", 20, 1.0);
+
+		assertTrue(ezShop.recordOrderArrivalRFID(a, "0000000001"));
+		assertThrows(InvalidRFIDException.class, ()->ezShop.recordOrderArrivalRFID(b, "0000000001"));
+
+		
+		
+		Integer ret2 = ezShop.payOrderFor("1234567890005", 10, 1.0);
+		assertThrows(InvalidLocationException.class, () -> ezShop.recordOrderArrivalRFID(ret2, "0000000009"));
 	}
 
 
