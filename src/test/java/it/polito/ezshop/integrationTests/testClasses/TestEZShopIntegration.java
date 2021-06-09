@@ -637,6 +637,37 @@ public class TestEZShopIntegration {
 		ezShop.logout();
 
 	}
+	
+	@Test
+	public void testDeleteProductFromSaleRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException, InvalidOrderIdException, InvalidLocationException, InvalidRFIDException, InvalidTransactionIdException, InvalidPaymentException{
+		ezShop.logout();
+		ezShop.login("admin", "admin");
+		Integer id = ezShop.getOrderId();
+		int productQuantity = 2;
+		assertEquals(id, ezShop.issueOrder("12345678901231", productQuantity, 1.0));
+		assertTrue(ezShop.payOrder(id));
+		assertTrue(ezShop.recordOrderArrivalRFID(id, "0000000010" ));
+
+
+		
+		it.polito.ezshop.data.ProductType pt = ezShop.getProductTypeByBarCode("12345678901231");
+		int quantity = pt.getQuantity();
+		int idSale = ezShop.startSaleTransaction();
+		int unitsN = 2;	
+		assertTrue(ezShop.addProductToSaleRFID(idSale, "0000000010"));
+		assertTrue(ezShop.addProductToSaleRFID(idSale, "0000000011"));
+		
+		
+		assertEquals(pt.getQuantity(), (Integer) (quantity - unitsN)); // X available quantity is decreased by N
+		assertTrue(ezShop.deleteProductFromSaleRFID(idSale, "0000000011"));
+		
+		assertEquals(pt.getQuantity(), (Integer) ((quantity - unitsN)-1)); 
+		
+		assertTrue(ezShop.endSaleTransaction(id));
+		assertTrue(ezShop.deleteSaleTransaction(id));
+		ezShop.logout();
+
+	}
 
 	@Test
 	public void testReturnTransactionAPI() throws InvalidUsernameException, InvalidPasswordException,

@@ -1542,6 +1542,7 @@ public class EZShop implements EZShopInterface {
 
 		pt.decreaseQuantity(1);
 		st.addProduct(pt, 1); // to be checked
+		System.out.print(st.getTicketEntry(pt.getBarCode()).getAmount());
 
 		return true;
 
@@ -1578,9 +1579,12 @@ public class EZShop implements EZShopInterface {
 
 		it.polito.ezshop.model.ProductType pt = p.getProductType();
 
+
 		if (st == null || !st.getStatus().equals("open") || pt == null) {
 			return false;
 		}
+		
+		System.out.print(st.getTicketEntry(pt.getBarCode()).getAmount());
 
 		boolean res = st.removeProducts(pt.getBarCode(), 1);
 		pt.increaseQuantity(1);
