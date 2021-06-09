@@ -1542,6 +1542,7 @@ public class EZShop implements EZShopInterface {
 
 		pt.decreaseQuantity(1);
 		st.addProduct(pt, 1); // to be checked
+		System.out.print(st.getTicketEntry(pt.getBarCode()).getAmount());
 
 		return true;
 
@@ -1578,10 +1579,11 @@ public class EZShop implements EZShopInterface {
 
 		it.polito.ezshop.model.ProductType pt = p.getProductType();
 
+
 		if (st == null || !st.getStatus().equals("open") || pt == null) {
 			return false;
 		}
-
+		
 		boolean res = st.removeProducts(pt.getBarCode(), 1);
 		pt.increaseQuantity(1);
 
@@ -1591,9 +1593,10 @@ public class EZShop implements EZShopInterface {
 	@Override
 	public boolean returnProductRFID(Integer returnId, String RFID)
 			throws InvalidTransactionIdException, InvalidRFIDException, UnauthorizedException {
-		if (this.loggedUser == null
-				|| (!this.loggedUser.getRole().equals("Cashier") && !this.loggedUser.getRole().equals("Administrator")
-						&& !this.loggedUser.getRole().equals("ShopManager")))
+		if (this.loggedUser == null ||
+			(!this.loggedUser.getRole().equals("Cashier") &&
+			!this.loggedUser.getRole().equals("Administrator") &&
+			!this.loggedUser.getRole().equals("ShopManager")))
 			throw new UnauthorizedException();
 
 		if (returnId == null || returnId <= 0) {
@@ -1617,7 +1620,7 @@ public class EZShop implements EZShopInterface {
 
 		if (pt == null)
 			return false;
-
+		
 		ReturnTransaction rt = returnList.get(returnId);
 		if (rt == null) {
 			return false;
@@ -1637,5 +1640,6 @@ public class EZShop implements EZShopInterface {
 
 		return true;
 	}
+
 
 }
