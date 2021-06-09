@@ -875,6 +875,32 @@ public class TestEZShopIntegration {
 		Integer ret2 = ezShop.payOrderFor("1234567890005", 10, 1.0);
 		assertThrows(InvalidLocationException.class, () -> ezShop.recordOrderArrivalRFID(ret2, "0000000009"));
 	}
+	
+	@Test
+	public void testAddProductToSaleRFID() throws InvalidUsernameException, InvalidPasswordException, UnauthorizedException, InvalidTransactionIdException, InvalidQuantityException,
+		InvalidRFIDException, InvalidProductCodeException, InvalidPricePerUnitException, InvalidOrderIdException, InvalidLocationException{
+	
+		ezShop.logout();
+		ezShop.login("Beppe", "1234");
+		assertThrows(UnauthorizedException.class, () -> ezShop.addProductToSaleRFID(1, "1111"));
+		ezShop.logout();
+	
+		ezShop.login("admin", "admin");
+		assertThrows(InvalidTransactionIdException.class, () -> ezShop.addProductToSaleRFID(-1, "0111"));
+		assertThrows(InvalidTransactionIdException.class, () -> ezShop.addProductToSaleRFID(null, "0111"));
+		assertThrows(InvalidRFIDException.class, () -> ezShop.addProductToSaleRFID(1, "1111"));
+		assertThrows(InvalidRFIDException.class, () -> ezShop.addProductToSaleRFID(1, null));
+		
+	
+		Integer id = ezShop.getSaleId();
+		int a = ezShop.payOrderFor("12345678901231", 10, 1.0);
+		ezShop.recordOrderArrivalRFID(a, "0000055000");
+		ezShop.startSaleTransaction();
+		assertFalse(ezShop.addProductToSaleRFID(id,  "0002040000"));
+		assertTrue(ezShop.addProductToSaleRFID(id,  "0000055000"));
+		ezShop.endSaleTransaction(id);
+	    ezShop.logout();
+	}
 
 	@Test
 	public void testReturnProductRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidTransactionIdException, InvalidRFIDException, UnauthorizedException, InvalidQuantityException, InvalidOrderIdException, InvalidLocationException, InvalidProductCodeException, InvalidPricePerUnitException {
