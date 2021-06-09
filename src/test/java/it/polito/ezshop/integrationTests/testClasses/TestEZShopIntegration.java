@@ -315,10 +315,10 @@ public class TestEZShopIntegration {
 		assertThrows(InvalidOrderIdException.class, () -> ezShop.recordOrderArrival(-1));
 		assertFalse(ezShop.recordOrderArrival(999999));
 		
-		ezShop.payOrderFor("12345678901231", 1, 1.0);
-		assertTrue(ezShop.recordOrderArrival(1));
+		int ret3 = ezShop.payOrderFor("12345678901231", 1, 1.0);
+		assertTrue(ezShop.recordOrderArrival(ret3));
 		
-		assertFalse(ezShop.recordOrderArrival(1));
+		assertFalse(ezShop.recordOrderArrival(ret3));
 		Integer ret = ezShop.payOrderFor("12345678901231", 1, 1.0);
 		assertTrue(ezShop.recordOrderArrival(ret));
 		Integer ret2 = ezShop.payOrderFor("1234567890005", 1, 1.0);
@@ -641,6 +641,11 @@ public class TestEZShopIntegration {
 	@Test
 	public void testDeleteProductFromSaleRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException, InvalidOrderIdException, InvalidLocationException, InvalidRFIDException, InvalidTransactionIdException, InvalidPaymentException{
 		ezShop.logout();
+		ezShop.login("Beppe", "1234");
+		assertThrows(UnauthorizedException.class, () -> ezShop.deleteProductFromSaleRFID(1,"1111111"));
+		ezShop.logout();
+		
+		ezShop.logout();
 		ezShop.login("admin", "admin");
 		Integer id = ezShop.getOrderId();
 		int productQuantity = 2;
@@ -862,8 +867,8 @@ public class TestEZShopIntegration {
 		int a = ezShop.payOrderFor("12345678901231", 10, 1.0);
 		int b = ezShop.payOrderFor("12345678901231", 20, 1.0);
 
-		assertTrue(ezShop.recordOrderArrivalRFID(a, "0000000001"));
-		assertThrows(InvalidRFIDException.class, ()->ezShop.recordOrderArrivalRFID(b, "0000000001"));
+		assertTrue(ezShop.recordOrderArrivalRFID(a, "1000000001"));
+		assertThrows(InvalidRFIDException.class, ()->ezShop.recordOrderArrivalRFID(b, "1000000001"));
 
 		
 		
