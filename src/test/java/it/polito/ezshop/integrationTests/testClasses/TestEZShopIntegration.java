@@ -643,10 +643,16 @@ public class TestEZShopIntegration {
 		ezShop.logout();
 		ezShop.login("Beppe", "1234");
 		assertThrows(UnauthorizedException.class, () -> ezShop.deleteProductFromSaleRFID(1,"1111111"));
+
 		ezShop.logout();
 		
 		ezShop.logout();
 		ezShop.login("admin", "admin");
+		assertThrows(InvalidTransactionIdException.class, () -> ezShop.deleteProductFromSaleRFID(null, "0000000001"));
+		assertThrows(InvalidRFIDException.class, () -> ezShop.deleteProductFromSaleRFID(1, "0"));
+		assertThrows(InvalidRFIDException.class, () -> ezShop.deleteProductFromSaleRFID(1, "ciao023956"));
+		assertFalse(ezShop.deleteProductFromSaleRFID(1, "5555555555"));
+
 		Integer id = ezShop.getOrderId();
 		int productQuantity = 2;
 		assertEquals(id, ezShop.issueOrder("12345678901231", productQuantity, 1.0));
@@ -664,6 +670,7 @@ public class TestEZShopIntegration {
 		
 		
 		assertEquals(pt.getQuantity(), (Integer) (quantity - unitsN)); // X available quantity is decreased by N
+		assertFalse(ezShop.deleteProductFromSaleRFID(85739, "0000000011"));
 		assertTrue(ezShop.deleteProductFromSaleRFID(idSale, "0000000011"));
 		
 		assertEquals(pt.getQuantity(), (Integer) ((quantity - unitsN)+1)); 
