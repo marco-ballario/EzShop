@@ -648,16 +648,16 @@ public class TestEZShopIntegration {
 		
 		ezShop.logout();
 		ezShop.login("admin", "admin");
-		assertThrows(InvalidTransactionIdException.class, () -> ezShop.deleteProductFromSaleRFID(null, "0000000001"));
+		assertThrows(InvalidTransactionIdException.class, () -> ezShop.deleteProductFromSaleRFID(null, "000000000001"));
 		assertThrows(InvalidRFIDException.class, () -> ezShop.deleteProductFromSaleRFID(1, "0"));
 		assertThrows(InvalidRFIDException.class, () -> ezShop.deleteProductFromSaleRFID(1, "ciao023956"));
-		assertFalse(ezShop.deleteProductFromSaleRFID(1, "5555555555"));
+		assertFalse(ezShop.deleteProductFromSaleRFID(1, "555555555555"));
 
 		Integer id = ezShop.getOrderId();
 		int productQuantity = 2;
 		assertEquals(id, ezShop.issueOrder("12345678901231", productQuantity, 1.0));
 		assertTrue(ezShop.payOrder(id));
-		assertTrue(ezShop.recordOrderArrivalRFID(id, "0000000010" ));
+		assertTrue(ezShop.recordOrderArrivalRFID(id, "000000000010" ));
 
 
 		
@@ -665,13 +665,13 @@ public class TestEZShopIntegration {
 		int quantity = pt.getQuantity();
 		int idSale = ezShop.startSaleTransaction();
 		int unitsN = 2;	
-		assertTrue(ezShop.addProductToSaleRFID(idSale, "0000000010"));
-		assertTrue(ezShop.addProductToSaleRFID(idSale, "0000000011"));
+		assertTrue(ezShop.addProductToSaleRFID(idSale, "000000000010"));
+		assertTrue(ezShop.addProductToSaleRFID(idSale, "000000000011"));
 		
 		
 		assertEquals(pt.getQuantity(), (Integer) (quantity - unitsN)); // X available quantity is decreased by N
-		assertFalse(ezShop.deleteProductFromSaleRFID(85739, "0000000011"));
-		assertTrue(ezShop.deleteProductFromSaleRFID(idSale, "0000000011"));
+		assertFalse(ezShop.deleteProductFromSaleRFID(85739, "000000000011"));
+		assertTrue(ezShop.deleteProductFromSaleRFID(idSale, "000000000011"));
 		
 		assertEquals(pt.getQuantity(), (Integer) ((quantity - unitsN)+1)); 
 		
@@ -860,27 +860,27 @@ public class TestEZShopIntegration {
 		ezShop.logout();
 
 		ezShop.login("admin", "admin");
-		assertThrows(InvalidOrderIdException.class, () -> ezShop.recordOrderArrivalRFID(null, "0000000001"));
-		assertThrows(InvalidOrderIdException.class, () -> ezShop.recordOrderArrivalRFID(-1, "00000001"));
-		assertThrows(InvalidRFIDException.class, () -> ezShop.recordOrderArrivalRFID(1, "00000001"));
+		assertThrows(InvalidOrderIdException.class, () -> ezShop.recordOrderArrivalRFID(null, "000000000001"));
+		assertThrows(InvalidOrderIdException.class, () -> ezShop.recordOrderArrivalRFID(-1, "0000000001"));
+		assertThrows(InvalidRFIDException.class, () -> ezShop.recordOrderArrivalRFID(1, "0000000001"));
 		assertThrows(InvalidRFIDException.class, () -> ezShop.recordOrderArrivalRFID(100, null));
-		assertThrows(InvalidRFIDException.class, () -> ezShop.recordOrderArrivalRFID(1, "111111111A"));
+		assertThrows(InvalidRFIDException.class, () -> ezShop.recordOrderArrivalRFID(1, "11111111111A"));
 
 
-		assertFalse(ezShop.recordOrderArrivalRFID(999999, "9999999999"));//no order
+		assertFalse(ezShop.recordOrderArrivalRFID(999999, "999999999999"));//no order
 		
 		
 		
 		int a = ezShop.payOrderFor("12345678901231", 10, 1.0);
 		int b = ezShop.payOrderFor("12345678901231", 20, 1.0);
 
-		assertTrue(ezShop.recordOrderArrivalRFID(a, "1000000001"));
-		assertThrows(InvalidRFIDException.class, ()->ezShop.recordOrderArrivalRFID(b, "1000000001"));
+		assertTrue(ezShop.recordOrderArrivalRFID(a, "100000000001"));
+		assertThrows(InvalidRFIDException.class, ()->ezShop.recordOrderArrivalRFID(b, "100000000001"));
 
 		
 		
 		Integer ret2 = ezShop.payOrderFor("1234567890005", 10, 1.0);
-		assertThrows(InvalidLocationException.class, () -> ezShop.recordOrderArrivalRFID(ret2, "0000000009"));
+		assertThrows(InvalidLocationException.class, () -> ezShop.recordOrderArrivalRFID(ret2, "000000000009"));
 	}
 	
 	@Test
@@ -901,10 +901,10 @@ public class TestEZShopIntegration {
 	
 		Integer id = ezShop.getSaleId();
 		int a = ezShop.payOrderFor("12345678901231", 10, 1.0);
-		ezShop.recordOrderArrivalRFID(a, "0000055000");
+		ezShop.recordOrderArrivalRFID(a, "000000055000");
 		ezShop.startSaleTransaction();
-		assertFalse(ezShop.addProductToSaleRFID(id,  "0002040000"));
-		assertTrue(ezShop.addProductToSaleRFID(id,  "0000055000"));
+		assertFalse(ezShop.addProductToSaleRFID(id,  "000002040000"));
+		assertTrue(ezShop.addProductToSaleRFID(id,  "000000055000"));
 		ezShop.endSaleTransaction(id);
 	    ezShop.logout();
 	}
@@ -913,30 +913,30 @@ public class TestEZShopIntegration {
 	public void testReturnProductRFID() throws InvalidUsernameException, InvalidPasswordException, InvalidTransactionIdException, InvalidRFIDException, UnauthorizedException, InvalidQuantityException, InvalidOrderIdException, InvalidLocationException, InvalidProductCodeException, InvalidPricePerUnitException {
 		ezShop.logout();
 		ezShop.login("Beppe", "1234");
-		assertThrows(UnauthorizedException.class, () -> ezShop.returnProductRFID(0, "0000000001"));
+		assertThrows(UnauthorizedException.class, () -> ezShop.returnProductRFID(0, "000000000001"));
 		ezShop.logout();
 		
 		ezShop.login("admin", "admin");
-		assertThrows(InvalidTransactionIdException.class, () -> ezShop.returnProductRFID(null, "0000000001"));
-		assertThrows(InvalidTransactionIdException.class, () -> ezShop.returnProductRFID(-1, "00000001"));
+		assertThrows(InvalidTransactionIdException.class, () -> ezShop.returnProductRFID(null, "000000000001"));
+		assertThrows(InvalidTransactionIdException.class, () -> ezShop.returnProductRFID(-1, "0000000001"));
 		assertThrows(InvalidRFIDException.class, () -> ezShop.returnProductRFID(1, ""));
 		assertThrows(InvalidRFIDException.class, () -> ezShop.returnProductRFID(100, null));
 		assertThrows(InvalidRFIDException.class, () -> ezShop.returnProductRFID(1, "00000001"));
-		assertThrows(InvalidRFIDException.class, () -> ezShop.returnProductRFID(1, "111111111A"));
+		assertThrows(InvalidRFIDException.class, () -> ezShop.returnProductRFID(1, "11111111111A"));
 
 		int tid = ezShop.getSaleId()-1;
 		int rid = ezShop.startReturnTransaction(tid);
 		int oid = ezShop.payOrderFor("12345678901231", 10, 1.0);
-		ezShop.recordOrderArrivalRFID(oid, "0000000042");		
+		ezShop.recordOrderArrivalRFID(oid, "000000000042");		
 		ezShop.addProductToSale(tid, "12345678901231", 1);
 		ezShop.endSaleTransaction(tid);
 		ezShop.startReturnTransaction(tid);
 
-		assertFalse(ezShop.returnProductRFID(999999, "9999999999"));
-		assertFalse(ezShop.returnProductRFID(999999, "0000000042"));
-		assertFalse(ezShop.returnProductRFID(rid, "9999999999"));
-		assertFalse(ezShop.returnProductRFID(rid, "9999999999"));
-		assertTrue(ezShop.returnProductRFID(rid, "0000000042"));
+		assertFalse(ezShop.returnProductRFID(999999, "999999999999"));
+		assertFalse(ezShop.returnProductRFID(999999, "000000000042"));
+		assertFalse(ezShop.returnProductRFID(rid, "999999999999"));
+		assertFalse(ezShop.returnProductRFID(rid, "999999999999"));
+		assertTrue(ezShop.returnProductRFID(rid, "000000000042"));
 	
 		ezShop.endReturnTransaction(rid, true);
 		ezShop.deleteReturnTransaction(rid);

@@ -1453,7 +1453,7 @@ public class EZShop implements EZShopInterface {
 
 		}
 
-		if (RFIDfrom == null || RFIDfrom.length() != 10) {
+		if (RFIDfrom == null || RFIDfrom.length() != 12) {
 			throw new InvalidRFIDException();
 		}
 		Long rfid_from = null;
@@ -1514,7 +1514,7 @@ public class EZShop implements EZShopInterface {
 		if (transactionId == null || transactionId <= 0)
 			throw new InvalidTransactionIdException();
 
-		if (RFID == null || RFID.length() != 10) {
+		if (RFID == null || RFID.length() != 12) {
 			throw new InvalidRFIDException();
 		}
 		Long rfid_from = null;
@@ -1559,7 +1559,7 @@ public class EZShop implements EZShopInterface {
 		if (transactionId == null || transactionId <= 0)
 			throw new InvalidTransactionIdException();
 
-		if (RFID == null || RFID.length() != 10) {
+		if (RFID == null || RFID.length() != 12) {
 			throw new InvalidRFIDException();
 		}
 		Long rfid_from = null;
@@ -1602,7 +1602,7 @@ public class EZShop implements EZShopInterface {
 		if (returnId == null || returnId <= 0) {
 			throw new InvalidTransactionIdException();
 		}
-		if (RFID == null || RFID.length() != 10) {
+		if (RFID == null || RFID.length() != 12) {
 			throw new InvalidRFIDException();
 		}
 		Long rfid_from = null;
