@@ -151,6 +151,11 @@ class ProductType{
 -decreaseQnt(in int quantity): boolean
 }
 
+class Product{
+- RFID: Integer
+- producType: ProductType
+}
+
 class Order{
 -product: ProductType
 -quantity: int
@@ -233,6 +238,8 @@ class ReturnTransaction{
 EZShop -u->"*"User
 EZShop -l->"*"Customer
 EZShop -l->"*"LoyaltyCard
+EZShop -l->"*"Product
+
 Customer -u- LoyaltyCard
 EZShop --> AccountBook
 AccountBook -->"*"BalanceOperation
@@ -249,6 +256,7 @@ SaleTransaction --> BalanceOperation
 ReturnTransaction--> BalanceOperation
 Tools --> EZShop
 TicketEntry "*"<-- SaleTransaction
+Product --> ProductType
 
 
 note "Persistency on this class is provided \nby methods saveAppState() and \nreadAppState() which serialize\na list of object that in our case \nare the list of user, customer, productType,\norders, sales, returns and \nthe Account Book class" as N1
