@@ -98,6 +98,10 @@ interface EZShopInterface{
     + recordBalanceUpdate(double toBeAdded): boolean
     + getCreditsAndDebits(LocalDate from, LocalDate to): List<BalanceOperation>
     + computeBalance(): double
+    + recordOrderArrivalRFID(): boolean
+    + addProductToSaleRFID(): boolean
+    + deleteProductFromSaleRFID(): boolean
+    + returnProductRFID(): boolean
 } 
 }
 @enduml
