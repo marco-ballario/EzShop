@@ -14,7 +14,7 @@ import it.polito.ezshop.unitTests.testClass.ToolsTests.TestUpdateStatus;
 
 @RunWith(Suite.class)
 @SuiteClasses({TestSaleAndTicket.class,TestSaleAndReturn.class,TestReturnAndProduct.class,TestProductTypeAndTicket.class,TestCustomerAndLoyalty.class, TestAccountAndBalanceOp.class,
-	TestOrder.class,TestCustomer.class,TestProductType.class, TestLoyaltyCard.class, TestBalanceOperation.class, TestUser.class, TestAddRemoveProduct.class,TestCheckDigits.class,
+	TestOrder.class,TestCustomer.class, TestProduct.class, TestProductType.class, TestLoyaltyCard.class, TestBalanceOperation.class, TestUser.class, TestAddRemoveProduct.class,TestCheckDigits.class,
 	TestCreditCardPayment.class,TestLuhn.class,TestUpdateStatus.class, TestAccountBook.class, TestSaleTransaction.class, TestTicketEntry.class, TestReturnTransaction.class, TestEZShopIntegration.class})
 
 public class IntegrationTests {	
